@@ -26,21 +26,11 @@ public enum AgentType {
         public String getShortString() {
             return "P";
         }
-
-        @Override
-        public String getClassName() {
-            return this.getClass().getPackage().getName()+".ProspectorAgent";
-        }
     },
     DIGGER {
         @Override
         public String getShortString() {
             return "D";
-        }
-
-        @Override
-        public String getClassName() {
-            return this.getClass().getPackage().getName()+".DiggerAgent";
         }
     },
     PROSPECTOR_COORDINATOR {
@@ -48,21 +38,11 @@ public enum AgentType {
         public String getShortString() {
             return "PC";
         }
-
-        @Override
-        public String getClassName() {
-            return this.getClass().getPackage().getName()+".ProspectorCoordinatorAgent";
-        }
     },
     DIGGER_COORDINATOR {
         @Override
         public String getShortString() {
             return "DC";
-        }
-
-        @Override
-        public String getClassName() {
-            return this.getClass().getPackage().getName()+".DiggerCoordinatorAgent";
         }
     },
     COORDINATOR {
@@ -70,23 +50,12 @@ public enum AgentType {
         public String getShortString() {
             return "C";
         }
-
-        @Override
-        public String getClassName() {
-            return this.getClass().getPackage().getName()+".CoordinatorAgent";
-        }
     },
     SYSTEM {
         @Override
         public String getShortString() {
             return "S";
         }
-
-        @Override
-        public String getClassName() {
-            return this.getClass().getPackage().getName()+".SystemAgent";
-        }
     };
     public abstract String getShortString();
-    public abstract String getClassName();
 }
