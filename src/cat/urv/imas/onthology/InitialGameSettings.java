@@ -19,8 +19,6 @@ package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.*;
-import jade.core.AID;
-
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,27 +69,27 @@ public class InitialGameSettings extends GameSettings {
      */
     private int[][] initialMap
             = {
-                {F, F, F, MCC, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-                {F, P, P, P, P, P, P, P, P, P, P, DC, P, P, P, P, P, P, P, F},
-                {F, P, PC, P, P, P, P, DC, P, P, P, P, P, P, P, P, P, P, DC, F},
-                {F, P, P, F, F, F, F, F, F, P, P, F, F, F, F, F, F, F, F, F},
-                {F, P, P, F, F, F, F, F, MCC, P, P, F, F, F, F, F, F, F, F, F},
-                {F, PC, P, F, F, P, P, P, P, P, P, F, F, P, P, P, P, P, P, F},
-                {F, P, P, F, F, P, P, P, P, P, P, F, F, P, P, P, P, P, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
-                {F, P, P, F, F, P, DC, F, F, P, P, F, F, P, P, F, F, P, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
-                {F, P, P, F, F, P, P, F, F, P, PC, F, F, P, P, F, F, P, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, MCC, F, P, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, DC, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, DC, P, F},
-                {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
-                {F, P, P, MCC, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
-                {F, P, PC, P, DC, P, P, F, F, P, P, P, P, P, P, F, F, P, P, F},
-                {F, P, P, P, P, P, P, F, F, P, P, P, P, P, P, F, F, DC, P, F},
-                {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            };
+            {F, F, F, MCC, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+            {F, P, P, P, P, P, P, P, P, P, P, DC, P, P, P, P, P, P, P, F},
+            {F, P, PC, P, P, P, P, DC, P, P, P, P, P, P, P, P, P, P, DC, F},
+            {F, P, P, F, F, F, F, F, F, P, P, F, F, F, F, F, F, F, F, F},
+            {F, P, P, F, F, F, F, F, MCC, P, P, F, F, F, F, F, F, F, F, F},
+            {F, PC, P, F, F, P, P, P, P, P, P, F, F, P, P, P, P, P, P, F},
+            {F, P, P, F, F, P, P, P, P, P, P, F, F, P, P, P, P, P, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
+            {F, P, P, F, F, P, DC, F, F, P, P, F, F, P, P, F, F, P, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
+            {F, P, P, F, F, P, P, F, F, P, PC, F, F, P, P, F, F, P, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, MCC, F, P, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, DC, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, DC, P, F},
+            {F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
+            {F, P, P, MCC, F, P, P, F, F, P, P, F, F, P, P, F, F, P, P, F},
+            {F, P, PC, P, DC, P, P, F, F, P, P, P, P, P, P, F, F, P, P, F},
+            {F, P, P, P, P, P, P, F, F, P, P, P, P, P, P, F, F, DC, P, F},
+            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+    };
 
     /**
      * Number of initial elements to put in the map.
@@ -162,15 +160,12 @@ public class InitialGameSettings extends GameSettings {
         int cols = this.initialMap[0].length;
         map = new Cell[rows][cols];
         int manufacturingCenterIndex = 0;
-        int diggerAgentIndex = 0;
-        int prospectorAgentIndex = 0;
         this.agentList = new HashMap();
         numberGenerator = new Random(this.getSeed());
 
         int cell;
         PathCell c;
         Map<CellType, List<Cell>> cells = new HashMap();
-        AID aid;
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -178,19 +173,15 @@ public class InitialGameSettings extends GameSettings {
                 switch (cell) {
                     case DC:
                         c = new PathCell(row, col);
-                        aid = new AID("Digger_"+diggerAgentIndex, false);
-                        c.addAgent(new DiggerInfoAgent(AgentType.DIGGER, aid, this.getDiggersCapacity()));
+                        c.addAgent(new DiggerInfoAgent(AgentType.DIGGER, this.getDiggersCapacity()));
                         map[row][col] = c;
                         addAgentToList(AgentType.DIGGER, c);
-                        diggerAgentIndex++;
                         break;
                     case PC:
                         c = new PathCell(row, col);
-                        aid = new AID("Prospector_"+prospectorAgentIndex, false);
-                        c.addAgent(new InfoAgent(AgentType.PROSPECTOR, aid));
+                        c.addAgent(new InfoAgent(AgentType.PROSPECTOR));
                         map[row][col] = c;
                         addAgentToList(AgentType.PROSPECTOR, c);
-                        prospectorAgentIndex++;
                         break;
                     case P:
                         map[row][col] = new PathCell(row, col);

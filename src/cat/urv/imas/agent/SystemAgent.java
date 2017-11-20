@@ -146,30 +146,7 @@ public class SystemAgent extends ImasAgent {
         log("Initial configuration settings loaded");
 
         // 3. Start other agents
-        diggerAgents = new LinkedList<>();
-        prospectorAgents = new LinkedList<>();
-        // start digger agents
-        for(Cell cell: this.game.getAgentList().get(AgentType.DIGGER)) {
-            PathCell pathCell = (PathCell) cell;
-            for (InfoAgent agent : pathCell.getAgents().get(AgentType.DIGGER)) {
-                UtilsAgents.createAgent(getContainerController(), agent.getAID().getLocalName(), agent.getType().getClassName(), null);
-                diggerAgents.add(agent);
-            }
-        }
-        // start prospector agent
-        for(Cell cell: this.game.getAgentList().get(AgentType.PROSPECTOR)) {
-            PathCell pathCell = (PathCell) cell;
-            for (InfoAgent agent : pathCell.getAgents().get(AgentType.PROSPECTOR)) {
-                UtilsAgents.createAgent(getContainerController(), agent.getAID().getLocalName(), agent.getType().getClassName(), null);
-                prospectorAgents.add(agent);
-            }
-        }
-        // start digger coordinator agent
-        UtilsAgents.createAgent(getContainerController(), "DiggerCoordinator", AgentType.DIGGER_COORDINATOR.getClassName(), null);
-        // start prospector coordinator agent
-        UtilsAgents.createAgent(getContainerController(), "ProspectorCoordinator", AgentType.PROSPECTOR_COORDINATOR.getClassName(), null);
-        // start coordinator agent
-        UtilsAgents.createAgent(getContainerController(), "Coordinator", AgentType.COORDINATOR.getClassName(), null);
+        startAgents();
 
         // 4. Load GUI
         try {
@@ -187,15 +164,6 @@ public class SystemAgent extends ImasAgent {
         log("The Coordinators AID is" + coordinatorAgent);
         // searchAgent is a blocking method, so we will obtain always a correct AID
 
-        // 5. tell agents what they need to know
-        // TODO implement methods
-        // 5.1 tell the DiggerCoordinator about their diggers
-
-        // 5.2 tell the ProspectorCoordinator about their prospectors
-
-        // 5.3 tell the Coordinator about DiggerCoordinator and ProspectorCoordinator
-
-
         // add behaviours
         // we wait for the initialization of the game
         MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchProtocol(InteractionProtocol.FIPA_REQUEST), MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
@@ -204,6 +172,54 @@ public class SystemAgent extends ImasAgent {
 
         // Setup finished. When the last inform is received, the agent itself will add
         // a behaviour to send/receive actions
+    }
+
+    private void startAgents() {
+        int diggerAgentsIndex = 0;
+        int prospectorAgentsIndex = 0;
+        diggerAgents = new LinkedList<>();
+        prospectorAgents = new LinkedList<>();
+        jade.wrapper.AgentContainer diggerContainer = null;
+        jade.wrapper.AgentContainer prospectorContainer = null;
+        // start digger agents
+        for(Cell cell: this.game.getAgentList().get(AgentType.DIGGER)) {
+            PathCell pathCell = (PathCell) cell;
+            for (InfoAgent agent : pathCell.getAgents().get(AgentType.DIGGER)) {
+                String name = "Digger_"+diggerAgentsIndex++;
+                if(diggerContainer == null) {
+                    diggerContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), null);
+                } else {
+                    UtilsAgents.createAgent(diggerContainer, name, agent.getType().getClassName(), null);
+                }
+                agent.setAID(new AID(name, AID.ISGUID));
+                diggerAgents.add(agent);
+            }
+        }
+        // start prospector agents
+        for(Cell cell: this.game.getAgentList().get(AgentType.PROSPECTOR)) {
+            PathCell pathCell = (PathCell) cell;
+            for (InfoAgent agent : pathCell.getAgents().get(AgentType.PROSPECTOR)) {
+                String name = "Prospector_"+prospectorAgentsIndex++;
+                if(prospectorContainer == null) {
+                    prospectorContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), null);
+                } else {
+                    UtilsAgents.createAgent(prospectorContainer, name, agent.getType().getClassName(), null);
+                }
+                agent.setAID(new AID(name, AID.ISGUID));
+                prospectorAgents.add(agent);
+            }
+        }
+
+        // start digger coordinator agent if at least one digger was in the map
+        if(diggerContainer != null) {
+            UtilsAgents.createAgent(diggerContainer, "DiggerCoordinator", AgentType.DIGGER_COORDINATOR.getClassName(), null);
+        }
+        // start prospector coordinator agent if at least one prospector was in the map
+        if(prospectorContainer != null) {
+            UtilsAgents.createAgent(prospectorContainer, "ProspectorCoordinator", AgentType.PROSPECTOR_COORDINATOR.getClassName(), null);
+        }
+        // start coordinator agent
+        UtilsAgents.createAgent(getContainerController(), "Coordinator", AgentType.COORDINATOR.getClassName(), null);
     }
 
     public void updateGUI() {
