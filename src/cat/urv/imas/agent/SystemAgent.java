@@ -181,6 +181,9 @@ public class SystemAgent extends ImasAgent {
      * Also it adds the AIDs of the agents to the game.
      */
     private void startAgents() {
+        if(game == null) {
+            throw new IllegalStateException("Game has not been initialized yet.");
+        }
         int diggerAgentsIndex = 0;
         int prospectorAgentsIndex = 0;
         diggerAgents = new LinkedList<>();
