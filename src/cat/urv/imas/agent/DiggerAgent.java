@@ -28,11 +28,7 @@ public class DiggerAgent extends ImasAgent {
         dfd.setName(getAID());
         dfd.addServices(sd);
 
-        // search SystemAgent
-        ServiceDescription searchCriterion = new ServiceDescription();
-        searchCriterion.setType(AgentType.SYSTEM.toString());
-        this.systemAgent = UtilsAgents.searchAgent(this, searchCriterion);
-        // searchAgent is a blocking method, so we will obtain always a correct AID
+        this.systemAgent = findSystemAgent();
 
         try {
             DFService.register(this,dfd);

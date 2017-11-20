@@ -17,7 +17,9 @@
  */
 package cat.urv.imas.agent;
 
+import jade.core.AID;
 import jade.core.Agent;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 /**
  * Agent abstraction used in this practical work.
@@ -77,5 +79,14 @@ public class ImasAgent extends Agent {
     public void errorLog(String str) {
         System.err.println(getLocalName() + ": " + str);
     }
-    
+
+
+    public AID findSystemAgent() {
+        // search SystemAgent
+        ServiceDescription searchCriterion = new ServiceDescription();
+        searchCriterion.setType(AgentType.SYSTEM.toString());
+        return UtilsAgents.searchAgent(this, searchCriterion);
+        // searchAgent is a blocking method, so we will obtain always a correct AID
+
+    }
 }
