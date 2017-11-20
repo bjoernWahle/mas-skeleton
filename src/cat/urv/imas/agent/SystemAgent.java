@@ -174,6 +174,12 @@ public class SystemAgent extends ImasAgent {
         // a behaviour to send/receive actions
     }
 
+    /**
+     * Starts the agents that are in defined in the game.
+     * It will start all the digger agents and their coordinator in one container and all the prospector agents and
+     * their coordinator in another container.
+     * Also it adds the AIDs of the agents to the game.
+     */
     private void startAgents() {
         int diggerAgentsIndex = 0;
         int prospectorAgentsIndex = 0;
