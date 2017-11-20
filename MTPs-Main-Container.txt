@@ -1,1 +1,1 @@
-http://BJOERN-PC:7778/acc
+http://10.192.11.22:7778/acc
