@@ -1,10 +1,9 @@
 package cat.urv.imas.gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 
 /**
  * <b>Company:</b> Universitat Rovira i Virgili (<a

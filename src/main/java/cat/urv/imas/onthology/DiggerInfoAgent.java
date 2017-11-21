@@ -18,11 +18,7 @@
 package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
-import cat.urv.imas.agent.UtilsAgents;
 import jade.core.AID;
-import jade.wrapper.AgentContainer;
-
-import javax.rmi.CORBA.Util;
 
 /**
  * Agent information for digger agents.

@@ -17,10 +17,7 @@
  */
 package cat.urv.imas.agent;
 
-import jade.core.Agent;
-import jade.core.AID;
-import jade.core.Profile;
-import jade.core.ProfileImpl;
+import jade.core.*;
 import jade.core.Runtime;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;

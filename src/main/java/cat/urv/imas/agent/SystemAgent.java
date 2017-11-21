@@ -17,21 +17,19 @@
  */
 package cat.urv.imas.agent;
 
+import cat.urv.imas.behaviour.system.RequestResponseBehaviour;
+import cat.urv.imas.gui.GraphicInterface;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
-import cat.urv.imas.onthology.DiggerInfoAgent;
+import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.InfoAgent;
 import cat.urv.imas.onthology.InitialGameSettings;
-import cat.urv.imas.onthology.GameSettings;
-import cat.urv.imas.gui.GraphicInterface;
-import cat.urv.imas.behaviour.system.RequestResponseBehaviour;
-import jade.core.*;
-import jade.domain.*;
-import jade.domain.FIPAAgentManagement.*;
+import jade.core.AID;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPANames.InteractionProtocol;
-import jade.lang.acl.*;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,26 +118,8 @@ public class SystemAgent extends ImasAgent {
      */
     @Override
     protected void setup() {
-
-        /* ** Very Important Line (VIL) ************************************* */
-        this.setEnabledO2ACommunication(true, 1);
-
-        // 1. Register the agent to the DF
-        ServiceDescription sd1 = new ServiceDescription();
-        sd1.setType(AgentType.SYSTEM.toString());
-        sd1.setName(getLocalName());
-        sd1.setOwnership(OWNER);
-
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.addServices(sd1);
-        dfd.setName(getAID());
-        try {
-            DFService.register(this, dfd);
-            log("Registered to the DF");
-        } catch (FIPAException e) {
-            System.err.println(getLocalName() + " failed registration to DF [ko]. Reason: " + e.getMessage());
-            doDelete();
-        }
+        // 1. Register with DF
+        super.setup();
 
         // 2. Load game settings.
         this.game = InitialGameSettings.load("game.settings");

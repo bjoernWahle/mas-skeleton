@@ -19,6 +19,7 @@ package cat.urv.imas.map;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.onthology.InfoAgent;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

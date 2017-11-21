@@ -17,19 +17,15 @@
  */
 package cat.urv.imas.gui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import javax.swing.border.Border;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
+import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 /**

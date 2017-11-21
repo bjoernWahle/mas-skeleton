@@ -17,8 +17,7 @@
 package cat.urv.imas.gui;
 
 
-import java.awt.Dimension;
-import java.awt.Point;
+ import java.awt.*;
 
 /** 
  * An object that encapsulates position and (optionally) size for

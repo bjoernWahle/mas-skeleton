@@ -1,12 +1,8 @@
 package cat.urv.imas.agent;
 
 import jade.core.AID;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
 
-public class DiggerAgent extends ImasAgent {
+public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     /**
      * System agent id.
@@ -18,37 +14,18 @@ public class DiggerAgent extends ImasAgent {
     }
 
     @Override
-    public void setup() { {
-        // Registration with the DF
-        DFAgentDescription dfd = new DFAgentDescription();
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType(type.getClassName());
-        sd.setName(getName());
-        sd.setOwnership(OWNER);
-        dfd.setName(getAID());
-        dfd.addServices(sd);
+    public void setup() {
+        super.setup();
 
         this.systemAgent = findSystemAgent();
 
-        try {
-            DFService.register(this,dfd);
+        // TODO implement and add behaviours
+    }
 
-        } catch (FIPAException e) {
-            doDelete();
-        }
-    }
-    }
 
     @Override
-    protected void takeDown() {
-        // Deregister from the yellow pages
-        try {
-            DFService.deregister(this);
-        }
-        catch (FIPAException fe) {
-            fe.printStackTrace();
-        }
-        // Printout a dismissal message
-        System.out.println(type+":"+getAID().getName()+" terminating.");
+    public int stepsToPosition(int row, int col) {
+        // TODO implement method
+        return 0;
     }
 }

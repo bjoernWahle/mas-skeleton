@@ -17,14 +17,12 @@
  */
 package cat.urv.imas.agent;
 
-import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.behaviour.coordinator.RequesterBehaviour;
+import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.MessageContent;
-import jade.core.*;
-import jade.domain.*;
-import jade.domain.FIPAAgentManagement.*;
+import jade.core.AID;
 import jade.domain.FIPANames.InteractionProtocol;
-import jade.lang.acl.*;
+import jade.lang.acl.ACLMessage;
 
 /**
  * The main Coordinator agent. 
@@ -55,27 +53,7 @@ public class CoordinatorAgent extends ImasAgent {
      */
     @Override
     protected void setup() {
-
-        /* ** Very Important Line (VIL) ***************************************/
-        this.setEnabledO2ACommunication(true, 1);
-        /* ********************************************************************/
-
-        // Register the agent to the DF
-        ServiceDescription sd1 = new ServiceDescription();
-        sd1.setType(AgentType.COORDINATOR.toString());
-        sd1.setName(getLocalName());
-        sd1.setOwnership(OWNER);
-        
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.addServices(sd1);
-        dfd.setName(getAID());
-        try {
-            DFService.register(this, dfd);
-            log("Registered to the DF");
-        } catch (FIPAException e) {
-            System.err.println(getLocalName() + " registration with DF unsucceeded. Reason: " + e.getMessage());
-            doDelete();
-        }
+        super.setup();
 
         this.systemAgent = findSystemAgent();
 

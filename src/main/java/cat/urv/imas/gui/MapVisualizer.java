@@ -1,17 +1,14 @@
 package cat.urv.imas.gui;
 
+import cat.urv.imas.map.Cell;
+import cat.urv.imas.map.FieldCell;
+import cat.urv.imas.map.ManufacturingCenterCell;
+import cat.urv.imas.map.PathCell;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.Toolkit;
-import java.awt.Point;
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.RenderingHints;
-import cat.urv.imas.map.*;
 
 /**
  * Visualization of the map. There are several elements to depict, as buildings,

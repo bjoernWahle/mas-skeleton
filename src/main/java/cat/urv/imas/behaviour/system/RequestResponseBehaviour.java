@@ -17,16 +17,11 @@
  */
 package cat.urv.imas.behaviour.system;
 
-import cat.urv.imas.agent.AgentType;
+import cat.urv.imas.agent.SystemAgent;
+import cat.urv.imas.onthology.MessageContent;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREResponder;
-import cat.urv.imas.agent.SystemAgent;
-import cat.urv.imas.map.Cell;
-import cat.urv.imas.map.PathCell;
-import cat.urv.imas.onthology.MessageContent;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A request-responder behaviour for System agent, answering to queries

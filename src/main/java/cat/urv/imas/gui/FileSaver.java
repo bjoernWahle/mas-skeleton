@@ -17,11 +17,10 @@
  */
 package cat.urv.imas.gui;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 
 public class FileSaver {
 

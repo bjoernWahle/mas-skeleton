@@ -5,16 +5,15 @@
  */
 package cat.urv.imas.onthology;
 
-import static cat.urv.imas.onthology.InitialGameSettings.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Random;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import static cat.urv.imas.onthology.InitialGameSettings.*;
 
 /**
  * Helper for updating the game settings. To do so, just update the content of

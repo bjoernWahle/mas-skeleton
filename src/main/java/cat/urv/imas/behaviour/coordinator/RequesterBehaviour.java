@@ -17,11 +17,11 @@
  */
 package cat.urv.imas.behaviour.coordinator;
 
+import cat.urv.imas.agent.CoordinatorAgent;
+import cat.urv.imas.onthology.GameSettings;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 import jade.proto.AchieveREInitiator;
-import cat.urv.imas.agent.CoordinatorAgent;
-import cat.urv.imas.onthology.GameSettings;
 
 /**
  * Behaviour for the Coordinator agent to deal with AGREE messages.

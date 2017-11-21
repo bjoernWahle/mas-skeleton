@@ -19,6 +19,7 @@ package cat.urv.imas.map;
 
 import cat.urv.imas.gui.CellVisualizer;
 import cat.urv.imas.onthology.MetalType;
+
 import java.util.HashMap;
 import java.util.Map;
 

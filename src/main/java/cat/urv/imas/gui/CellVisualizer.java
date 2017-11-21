@@ -17,8 +17,11 @@
  */
 package cat.urv.imas.gui;
 
-import java.awt.Graphics2D;
-import cat.urv.imas.map.*;
+import cat.urv.imas.map.FieldCell;
+import cat.urv.imas.map.ManufacturingCenterCell;
+import cat.urv.imas.map.PathCell;
+
+import java.awt.*;
 
 /**
  * Enabling draw each kind of cell.

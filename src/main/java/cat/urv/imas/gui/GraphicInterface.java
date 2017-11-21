@@ -19,12 +19,11 @@ package cat.urv.imas.gui;
 
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.onthology.GameSettings;
-import java.awt.*;
+
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.event.WindowEvent;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Main class of the graphical interface controlled by the System Agent. It

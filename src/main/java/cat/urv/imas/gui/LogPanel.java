@@ -17,10 +17,9 @@
 package cat.urv.imas.gui;
 
 import javax.swing.*;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Toolkit;
 
 /**
  * Class showing the area of logs. Initially it contains a textarea and a button
