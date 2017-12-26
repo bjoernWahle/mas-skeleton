@@ -19,6 +19,7 @@ package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.*;
+import jade.content.Predicate;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -33,7 +34,7 @@ import java.util.*;
  * Use the GenerateGameSettings to build the game.settings configuration file.
  */
 @XmlRootElement(name = "InitialGameSettings")
-public class InitialGameSettings extends GameSettings {
+public class InitialGameSettings extends GameSettings implements Predicate {
 
     /**
      * Path cell.

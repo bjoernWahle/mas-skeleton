@@ -25,7 +25,7 @@ import jade.domain.FIPANames.InteractionProtocol;
 import jade.lang.acl.ACLMessage;
 
 /**
- * The main Coordinator agent. 
+ * The main Coordinator agent.
  * TODO: This coordinator agent should get the game settings from the System
  * agent every round and share the necessary information to other coordinators.
  */

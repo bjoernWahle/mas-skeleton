@@ -99,7 +99,7 @@ abstract public class ImasAgent extends Agent {
 
         try {
             DFService.register(this, dfd);
-            log("Registered to the DF");
+            log("Hey there!");
         } catch (FIPAException e) {
             System.err.println(getLocalName() + " registration with DF unsucceeded. Reason: " + e.getMessage());
             doDelete();

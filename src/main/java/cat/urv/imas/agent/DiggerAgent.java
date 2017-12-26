@@ -15,6 +15,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.ContractNetResponder;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +31,8 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private AID diggerCoordinator;
 
-    private int currentCol;
-    private int currentRow;
+    private int currentX;
+    private int currentY;
     private int currentCapacity = 0;
     private MetalType currentMetal = null;
 
@@ -52,10 +53,12 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         // TODO implement and add behaviours
         // set starting position
         String[] args = (String[]) getArguments();
-        currentCol = Integer.parseInt(args[0]);
-        currentRow = Integer.parseInt(args[1]);
+        currentX = Integer.parseInt(args[0]);
+        currentY = Integer.parseInt(args[1]);
 
-        log("I am at ("+ currentCol +","+ currentRow +")");
+        tasks = new LinkedList<>();
+
+        log("I am at ("+ currentX +","+ currentY +")");
 
         MessageTemplate template = MessageTemplate.and(
                 MessageTemplate.MatchProtocol(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET),
@@ -66,6 +69,9 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
 
         addBehaviour(new ContractNetResponder(this, template) {
+            int tempX;
+            int tempY;
+
             @Override
             protected ACLMessage handleCfp(ACLMessage cfp) throws NotUnderstoodException, RefuseException {
                 String content = cfp.getContent();
@@ -75,11 +81,11 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                     String[] args = content.substring(content.indexOf("(")+1, content.indexOf(")")).split(",");
                     MetalType metalType = MetalType.fromShortString(args[0]);
                     int units = Integer.parseInt(args[1]);
-                    int x = Integer.parseInt(args[1]);
-                    int y = Integer.parseInt(args[1]);
+                    tempX = Integer.parseInt(args[2]);
+                    tempY = Integer.parseInt(args[3]);
                     if ((currentMetal == null || metalType == currentMetal) && currentCapacity < MAX_CAPACITY) {
                         // We provide a proposal
-                        int time = evaluateAction(x,y);
+                        int time = evaluateAction(tempX,tempY);
                         double percentage = Math.max((MAX_CAPACITY-currentCapacity)/units, 1.0);
                         String proposal = time+","+percentage;
                         log("Proposing "+proposal);
@@ -103,7 +109,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                 log("Proposal accepted: "+accept);
                 if (checkIfTaskCanBeDone()) {
                     log("Starting action: CollectMetal");
-                    // TODO add action to tasklist
+                    tasks.add(new DiggerTask(tempX, tempY,DiggerTask.TaskType.COLLECT_METAL));
                     ACLMessage inform = accept.createReply();
                     inform.setPerformative(ACLMessage.INFORM);
                     return inform;
@@ -194,8 +200,8 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private boolean checkPosition(int x, int y) {
-        int yDistance = Math.abs (x - currentRow);
-        int xDistance = Math.abs (y - currentCol);
+        int yDistance = Math.abs (x - currentY);
+        int xDistance = Math.abs (y - currentX);
         return yDistance + xDistance == 1;
     }
 
@@ -204,11 +210,11 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     @Override
-    public int stepsToPosition(int row, int col) {
-        // easy approach: euclidean distance
-        int yDistance = Math.abs (row - currentRow);
-        int xDistance = Math.abs (col - currentCol);
-        double distance = Math.sqrt((yDistance)*(yDistance) +(xDistance)*(xDistance));
-        return (int) Math.ceil(distance);
+    public int stepsToPosition(int x, int y) {
+        // easy approach: manhattan distance
+        // TODO calculate path
+        int yDistance = Math.abs (y - currentY);
+        int xDistance = Math.abs (x - currentX);
+        return xDistance+yDistance;
     }
 }

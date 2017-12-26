@@ -19,7 +19,6 @@ package cat.urv.imas.behaviour.coordinator;
 
 import cat.urv.imas.agent.CoordinatorAgent;
 import cat.urv.imas.onthology.GameSettings;
-import jade.content.ContentElement;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 import jade.proto.AchieveREInitiator;
@@ -27,10 +26,10 @@ import jade.proto.AchieveREInitiator;
 /**
  * Behaviour for the Coordinator agent to deal with AGREE messages.
  * The Coordinator Agent sends a REQUEST for the
- * information of the game settings. The System Agent sends an AGREE and 
- * then it informs of this information which is stored by the Coordinator Agent. 
- * 
- * NOTE: The game is processed by another behaviour that we add after the 
+ * information of the game settings. The System Agent sends an AGREE and
+ * then it informs of this information which is stored by the Coordinator Agent.
+ *
+ * NOTE: The game is processed by another behaviour that we add after the
  * INFORM has been processed.
  */
 public class RequesterBehaviour extends AchieveREInitiator {
@@ -61,15 +60,9 @@ public class RequesterBehaviour extends AchieveREInitiator {
         CoordinatorAgent agent = (CoordinatorAgent) this.getAgent();
         agent.log("INFORM received from " + ((AID) msg.getSender()).getLocalName());
         try {
-            ContentElement content = agent.manager.extractContent(msg);
-            if(content instanceof GameSettings) {
-                GameSettings game = (GameSettings) agent.manager.extractContent(msg);
-                agent.setGame(game);
-                agent.log(game.getShortString());
-            } else {
-                agent.errorLog("Unknown content" + content);
-            }
-
+            GameSettings game = (GameSettings) msg.getContentObject();
+            agent.setGame(game);
+            agent.log(game.getShortString());
         } catch (Exception e) {
             agent.errorLog("Incorrect content: " + e.toString());
         }

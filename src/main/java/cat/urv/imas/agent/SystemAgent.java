@@ -53,6 +53,12 @@ public class SystemAgent extends ImasAgent {
      * initial configuration settings.
      */
     private InitialGameSettings game;
+
+
+    /**
+     * Round number.
+     */
+    private int round;
     /**
      * The Coordinator agent with which interacts sharing game settings every
      * round.
@@ -155,6 +161,11 @@ public class SystemAgent extends ImasAgent {
 
         // Setup finished. When the last inform is received, the agent itself will add
         // a behaviour to send/receive actions
+        startSimulation();
+    }
+
+    private void startSimulation() {
+        round = 0;
     }
 
     /**

@@ -111,6 +111,6 @@ public class InfoAgent implements Concept {
      * @return short string with info about the agent type.
      */
     public String getMapMessage() {
-        return type.getShortString();
+        return type.getShortString()+ this.aid.getLocalName().substring(this.aid.getLocalName().length()-1);
     }
 }

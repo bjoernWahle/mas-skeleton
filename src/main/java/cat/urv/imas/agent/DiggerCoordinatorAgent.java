@@ -51,7 +51,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
                             diggerAgents = agentList.getAgentList().stream().filter(a -> a.getType() == AgentType.DIGGER).map(InfoAgent::getAID).collect(Collectors.toList());
                         }
                         // we received the list so now we can delegate
-                        delegateCollectMetalTask(MetalType.GOLD, 3, 3, 3);
+                        delegateCollectMetalTask(MetalType.SILVER, 4, 5, 0);
                         done = true;
                     } catch (Codec.CodecException e) {
                         e.printStackTrace();

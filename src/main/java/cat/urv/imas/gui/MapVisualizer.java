@@ -4,6 +4,7 @@ import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.ManufacturingCenterCell;
 import cat.urv.imas.map.PathCell;
+import cat.urv.imas.onthology.MetalType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +35,21 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
      * Light red color.
      */
     private static final Color LIGHT_RED = new Color(255, 102, 102);
+    /**
+     * Brown (field) color.
+     */
+    private static final Color BROWN = new Color(150, 100, 60);
+
+    /**
+     * Gold color
+     */
+    private static final Color GOLD = new Color(255, 215, 0);
+
+    /**
+     * Silver color
+     */
+    private static final Color SILVER = new Color(192, 192, 192);
+
     /**
      * City map.
      */
@@ -98,20 +114,34 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
         // 1. set graphics for painting
         this.updateGraphics(g2d);
 
+        int y = 0;
+
         // 2. iterate cells and paint them.
         for (Cell[] row : map) {
+            int x = 0;
 
             for (Cell cell : row) {
+                // 2.0 draw axes
+                if(y == 0) {
+                    drawString(Integer.toString(x),Color.BLACK,dx/2, 10);
+                }
+                if(x == 0) {
+                    drawString(Integer.toString(y),Color.BLACK,0, 40);
+                }
+
                 // 2.1. draw the border.
                 g2d.draw(cellBorder);
                 // 2.2. draw the cell
                 cell.draw(this);
                 // 2.3. move on
                 g2d.translate(dx, 0);
+
+                x++;
             }
 
             // 2.4. move on
             g2d.translate(-(dx * row.length), dy);
+            y++;
         }
 
         // 5. unsetting graphics
@@ -133,7 +163,7 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
         temporaryGraphics.translate((dx / 6), (dy / 6));
         temporaryGraphics.fill(agentFigure);
         temporaryGraphics.translate(-(dx / 6), -(dy / 6));
-        drawString(message, textColor, dx - 80, dy - 10);
+        drawString(message, textColor, dx - 40, dy - 10);
     }
 
     /**
@@ -179,7 +209,7 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
     @Override
     public void drawProspector(PathCell cell) {
         drawEmptyPath(cell);
-        drawAgent(Color.WHITE, cell.getMapMessage(), Color.BLACK);
+        drawAgent(Color.BLUE, cell.getMapMessage(), Color.BLACK);
     }
 
     @Override
@@ -190,19 +220,28 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
 
     @Override
     public void drawEmptyPath(PathCell cell) {
-        drawCell(Color.LIGHT_GRAY, Color.DARK_GRAY);
+        drawCell(Color.LIGHT_GRAY.brighter(), Color.DARK_GRAY);
     }
 
     @Override
     public void drawField(FieldCell cell) {
-        drawCell(Color.CYAN.darker(), Color.DARK_GRAY);
-        drawString(cell.getMapMessage(), Color.WHITE, dx - 40, dy);
+        Color color = BROWN;
+        if(!cell.isEmpty()) {
+            MetalType metalType = cell.getMetal().keySet().stream().findFirst().get();
+            if (metalType == MetalType.GOLD) {
+                color = GOLD;
+            } else {
+                color = SILVER;
+            }
+        }
+        drawCell(color, Color.DARK_GRAY);
+        drawString(cell.getMapMessage(), Color.BLACK, dx - 40, dy);
     }
 
     @Override
     public void drawManufacturingCenter(ManufacturingCenterCell cell) {
         drawCell(Color.RED, Color.GREEN);
-        drawString(cell.getMapMessage(), Color.BLACK, dx - 80, dy);
+        drawString(cell.getMapMessage(), Color.BLACK, dx - 40, dy);
     }
 
     @Override
