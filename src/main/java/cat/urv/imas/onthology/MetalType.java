@@ -17,11 +17,13 @@
  */
 package cat.urv.imas.onthology;
 
+import jade.content.Concept;
+
 /**
  * Type of metal.
  * It provides a way of representing this type of metal.
  */
-public enum MetalType {
+public enum MetalType implements Concept {
     SILVER {
         @Override
         public String getShortString() {

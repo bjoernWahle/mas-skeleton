@@ -1,19 +1,13 @@
 package cat.urv.imas.agent;
 
-import cat.urv.imas.agent.onthology.DiggerAction;
-import cat.urv.imas.onthology.DiggerTask;
-import cat.urv.imas.onthology.MetalType;
-import cat.urv.imas.onthology.Task;
+import cat.urv.imas.behaviour.digger.RoundBehaviour;
+import cat.urv.imas.map.PathCell;
+import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
-import jade.domain.FIPAAgentManagement.FailureException;
-import jade.domain.FIPAAgentManagement.NotUnderstoodException;
-import jade.domain.FIPAAgentManagement.RefuseException;
-import jade.domain.FIPANames;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import jade.proto.ContractNetResponder;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,13 +15,30 @@ import java.util.Optional;
 
 public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
+    public void startRound(RoundStart rs) {
+        setCurrentPosition(rs.getX(),rs.getY());
+        logPosition();
+    }
+
+    public MetalType getCurrentMetal() {
+        return currentMetal;
+    }
+
+    public int getCurrentCapacity() {
+        return currentCapacity;
+    }
+
+    public void addTask(DiggerTask diggerTask) {
+        tasks.add(diggerTask);
+    }
+
     public enum roundState {
         WAITING, COMMUNICATING, PERFORMING
     }
 
     private roundState currentRoundState;
 
-    private static final int MAX_CAPACITY = 5;
+    public static final int MAX_CAPACITY = 5;
 
     private AID diggerCoordinator;
 
@@ -40,7 +51,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private DiggerTask currentTask;
 
-    private DiggerAction currentAction;
+    private MobileAgentAction currentAction;
 
     public DiggerAgent() {
         super(AgentType.DIGGER);
@@ -50,6 +61,11 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     public void setup() {
         super.setup();
 
+        // find coordinator agent
+        ServiceDescription searchCriterion = new ServiceDescription();
+        searchCriterion.setType(AgentType.DIGGER_COORDINATOR.toString());
+        this.diggerCoordinator = UtilsAgents.searchAgent(this, searchCriterion);
+
         // TODO implement and add behaviours
         // set starting position
         String[] args = (String[]) getArguments();
@@ -58,83 +74,21 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
         tasks = new LinkedList<>();
 
-        log("I am at ("+ currentX +","+ currentY +")");
+        logPosition();
 
-        MessageTemplate template = MessageTemplate.and(
-                MessageTemplate.MatchProtocol(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET),
-                MessageTemplate.MatchPerformative(ACLMessage.CFP) );
-
-
-        // TODO add FSM behaviour
-
-
-        addBehaviour(new ContractNetResponder(this, template) {
-            int tempX;
-            int tempY;
-
-            @Override
-            protected ACLMessage handleCfp(ACLMessage cfp) throws NotUnderstoodException, RefuseException {
-                String content = cfp.getContent();
-                log("CFP received from "+cfp.getSender().getLocalName()+". Action is "+content);
-                String task = content.substring(0, content.indexOf("("));
-                if(task.equals("CollectMetal")) {
-                    String[] args = content.substring(content.indexOf("(")+1, content.indexOf(")")).split(",");
-                    MetalType metalType = MetalType.fromShortString(args[0]);
-                    int units = Integer.parseInt(args[1]);
-                    tempX = Integer.parseInt(args[2]);
-                    tempY = Integer.parseInt(args[3]);
-                    if ((currentMetal == null || metalType == currentMetal) && currentCapacity < MAX_CAPACITY) {
-                        // We provide a proposal
-                        int time = evaluateAction(tempX,tempY);
-                        double percentage = Math.max((MAX_CAPACITY-currentCapacity)/units, 1.0);
-                        String proposal = time+","+percentage;
-                        log("Proposing "+proposal);
-                        ACLMessage propose = cfp.createReply();
-                        propose.setPerformative(ACLMessage.PROPOSE);
-                        propose.setContent(proposal);
-                        return propose;
-                    }
-                    else {
-                        // We refuse to provide a proposal
-                        log("Refusing "+cfp);
-                        throw new RefuseException("evaluation-failed");
-                    }
-                } else {
-                    throw new NotUnderstoodException("Didn't understand that task mate.");
-                }
-            }
-
-            @Override
-            protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose,ACLMessage accept) throws FailureException {
-                log("Proposal accepted: "+accept);
-                if (checkIfTaskCanBeDone()) {
-                    log("Starting action: CollectMetal");
-                    tasks.add(new DiggerTask(tempX, tempY,DiggerTask.TaskType.COLLECT_METAL));
-                    ACLMessage inform = accept.createReply();
-                    inform.setPerformative(ACLMessage.INFORM);
-                    return inform;
-                }
-                else {
-                    throw new FailureException("unexpected-error");
-                }
-            }
-
-            protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject) {
-                log("I didn't wanna dig that crap anyways!");
-            }
-        } );
+        addBehaviour(new RoundBehaviour(this));
     }
 
-    private int evaluateAction(int x, int y) {
+    public int evaluateAction(int x, int y) {
         return stepsToPosition(x, y);
     }
 
-    private boolean checkIfTaskCanBeDone() {
+    public boolean checkIfTaskCanBeDone() {
         // TODO maybe return false if in the meanwhile the agent changed its mind (better offer or whatever)
         return true;
     }
 
-    private void performAction() {
+    public void performAction() {
         if(currentTask == null) {
             Optional<DiggerTask> nextTask = getNextTask();
             if(!nextTask.isPresent()) {
@@ -144,7 +98,8 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                 currentTask = nextTask.get();
             }
         }
-        switch(currentTask.getTaskType()) {
+        TaskType currentTaskType = TaskType.fromString(currentTask.taskType);
+        switch(currentTaskType) {
             case COLLECT_METAL:
                 if(checkPosition(currentTask.x, currentTask.y)) {
                     if(currentCapacity < MAX_CAPACITY) {
@@ -177,21 +132,32 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         log("I will return my metal now");
     }
 
-    private void notifyDiggerCoordinator(DiggerAction currentAction) {
-        ACLMessage message = prepareMessage(ACLMessage.INFORM, diggerCoordinator);
+    private void notifyDiggerCoordinator(MobileAgentAction currentAction) {
+        ACLMessage message = prepareMessage(ACLMessage.INFORM);
+        message.addReceiver(diggerCoordinator);
         try {
-            getContentManager().fillContent(message, currentAction);
+            getContentManager().fillContent(message, new InformAgentAction(currentAction));
+            log("Sending msg with my current action: " + message);
             send(message);
-        } catch (Codec.CodecException e) {
+        } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
-        } catch (OntologyException e) {
-            e.printStackTrace();
+            log("Some error while sending?");
         }
     }
 
     private void moveTowards(int x, int y) {
-        // TODO set currentTask
+        Plan movePlan = getPathTo(x, y);
+        PathCell pc = movePlan.getFirst();
+        currentAction = new MoveAction(getAID(),pc.getCol(), pc.getRow());
         log("I am on my way to "+x+","+y);
+    }
+
+    private Plan getPathTo(int x, int y) {
+        List<PathCell> pathCells = new LinkedList<>();
+        pathCells.add(new PathCell(2, 6));
+        pathCells.add(new PathCell(2, 5));
+        pathCells.add(new PathCell(1, 5));
+        return new Plan(pathCells);
     }
 
     private void collectMetal(int x, int y) {
@@ -206,7 +172,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private Optional<DiggerTask> getNextTask() {
-        return tasks.stream().filter(task -> task.getCurrentState() == Task.TaskState.NOT_STARTED).findFirst();
+        return tasks.stream().filter(task -> task.getCurrentState().equals(TaskState.NOT_STARTED.toString())).findFirst();
     }
 
     @Override
@@ -216,5 +182,14 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         int yDistance = Math.abs (y - currentY);
         int xDistance = Math.abs (x - currentX);
         return xDistance+yDistance;
+    }
+
+    public void setCurrentPosition(int x, int y) {
+        currentX = x;
+        currentY = y;
+    }
+
+    public void logPosition() {
+        log("I am at ("+ currentX +","+ currentY +")");
     }
 }

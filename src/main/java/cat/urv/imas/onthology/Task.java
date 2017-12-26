@@ -1,36 +1,38 @@
 package cat.urv.imas.onthology;
 
-public abstract class Task {
+import jade.content.Predicate;
 
-    public enum TaskState {
-        NOT_STARTED, IN_PROGRESS, DONE
-    }
+public abstract class Task implements Predicate {
 
-    private TaskState currentState;
-
-    public Task() {
-        this.currentState = TaskState.NOT_STARTED;
-    }
-
-    public Task(TaskState currentState) {
+    public void setCurrentState(String currentState) {
         this.currentState = currentState;
     }
 
-    public TaskState getCurrentState() {
+    private String currentState;
+
+    public Task() {
+        this.currentState = "not_started";
+    }
+
+    public Task(String currentState) {
+        this.currentState = currentState;
+    }
+
+    public String getCurrentState() {
         return currentState;
     }
 
     public void startTask() {
-        if(currentState == TaskState.NOT_STARTED) {
-            currentState = TaskState.IN_PROGRESS;
+        if(currentState == TaskState.NOT_STARTED.toString()) {
+            currentState = TaskState.IN_PROGRESS.toString();
         } else {
             throw new IllegalStateException("Illegal state to start task: " +currentState);
         }
     }
 
     public void finishTask() {
-        if(currentState == TaskState.IN_PROGRESS) {
-            currentState = TaskState.DONE;
+        if(currentState == TaskState.IN_PROGRESS.toString()) {
+            currentState = TaskState.DONE.toString();
         } else {
             throw new IllegalStateException("Illegal state to finish task:" + currentState);
         }

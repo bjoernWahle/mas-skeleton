@@ -18,6 +18,7 @@
 package cat.urv.imas.behaviour.system;
 
 import cat.urv.imas.agent.AgentType;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREResponder;
@@ -36,6 +37,8 @@ import java.util.Map;
  */
 public class RequestResponseBehaviour extends AchieveREResponder {
 
+    private String END = "END";
+
     /**
      * Sets up the System agent and the template of messages to catch.
      *
@@ -44,6 +47,14 @@ public class RequestResponseBehaviour extends AchieveREResponder {
      */
     public RequestResponseBehaviour(SystemAgent agent, MessageTemplate mt) {
         super(agent, mt);
+        registerLastState(new OneShotBehaviour() {
+            @Override
+            public void action() {
+                agent.log("RequestResponseBehaviour done");
+            }
+        }, END);
+        deregisterDefaultTransition("Send-result-notification");
+        registerDefaultTransition("Send-result-notification", END);
         agent.log("Waiting REQUESTs from authorized agents");
     }
 

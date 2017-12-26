@@ -17,7 +17,7 @@
  */
 package cat.urv.imas.agent;
 
-import cat.urv.imas.behaviour.system.RequestResponseBehaviour;
+import cat.urv.imas.behaviour.system.StepBehaviour;
 import cat.urv.imas.gui.GraphicInterface;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
@@ -29,9 +29,7 @@ import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPANames.InteractionProtocol;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +56,7 @@ public class SystemAgent extends ImasAgent {
     /**
      * Round number.
      */
-    private int round;
+    private int currentRound;
     /**
      * The Coordinator agent with which interacts sharing game settings every
      * round.
@@ -153,19 +151,14 @@ public class SystemAgent extends ImasAgent {
         log("The Coordinators AID is" + coordinatorAgent);
         // searchAgent is a blocking method, so we will obtain always a correct AID
 
-        // add behaviours
-        // we wait for the initialization of the game
-        MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchProtocol(InteractionProtocol.FIPA_REQUEST), MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
-
-        this.addBehaviour(new RequestResponseBehaviour(this, mt));
-
         // Setup finished. When the last inform is received, the agent itself will add
         // a behaviour to send/receive actions
         startSimulation();
+        addBehaviour(new StepBehaviour(this));
     }
 
     private void startSimulation() {
-        round = 0;
+        currentRound = 0;
     }
 
     /**
@@ -231,27 +224,21 @@ public class SystemAgent extends ImasAgent {
         // start coordinator agent
         UtilsAgents.createAgent(getContainerController(), "Coordinator", AgentType.COORDINATOR.getClassName(), null);
 
-        // tell digger coordinator about diggers
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.setSender(getAID());
-        msg.addReceiver(diggerCoordinator);
-        msg.setLanguage(LANGUAGE);
-        msg.setOntology(ONTOLOGY);
-        AgentList diggerList = new AgentList();
-        diggerList.setAgentList(diggerAgents);
-        try {
-            manager.fillContent(msg, diggerList);
-            send(msg);
-        } catch (Codec.CodecException e) {
-            e.printStackTrace();
-        } catch (OntologyException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void updateGUI() {
         this.gui.updateGame();
     }
 
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    public void advanceToNextRound() {
+        // TODO get planned actions for this round and apply them
+        addElementsForThisSimulationStep();
+        updateGUI();
+        currentRound++;
+        log("Starting round "+currentRound);
+    }
 }

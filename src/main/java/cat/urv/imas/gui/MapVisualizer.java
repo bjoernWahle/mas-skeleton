@@ -227,7 +227,7 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
     public void drawField(FieldCell cell) {
         Color color = BROWN;
         if(!cell.isEmpty()) {
-            MetalType metalType = cell.getMetal().keySet().stream().findFirst().get();
+            MetalType metalType = MetalType.fromShortString(cell.getMapMessage().substring(0,1));
             if (metalType == MetalType.GOLD) {
                 color = GOLD;
             } else {

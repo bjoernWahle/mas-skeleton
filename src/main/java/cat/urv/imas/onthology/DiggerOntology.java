@@ -23,9 +23,14 @@ public class DiggerOntology extends BeanOntology {
     private DiggerOntology() throws BeanOntologyException {
         super(ONTOLOGY_NAME);
 
-        add(AgentList.class);
         add(InfoAgent.class);
-        add(DiggerInfoAgent.class);
+        add(RoundStart.class);
+        add(DiggerTask.class);
+        add(MetalType.class);
+        add(MobileAgentAction.class);
+        add(MoveAction.class);
+        add(ActionList.class);
+        add(InformAgentAction.class);
     }
 
 }

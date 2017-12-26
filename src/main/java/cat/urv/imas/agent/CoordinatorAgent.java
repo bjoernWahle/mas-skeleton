@@ -17,12 +17,16 @@
  */
 package cat.urv.imas.agent;
 
+import cat.urv.imas.behaviour.coordinator.CoordinatorBehaviour;
 import cat.urv.imas.behaviour.coordinator.RequesterBehaviour;
 import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.MessageContent;
 import jade.core.AID;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPANames.InteractionProtocol;
 import jade.lang.acl.ACLMessage;
+
+import java.io.IOException;
 
 /**
  * The main Coordinator agent.
@@ -41,6 +45,16 @@ public class CoordinatorAgent extends ImasAgent {
     private AID systemAgent;
 
     /**
+     * Digger coordinator agent
+     */
+    private AID diggerCoordinatorAgent;
+
+    /**
+     * prospector coordinator agent
+     */
+    private AID prospectorCoordinatorAgent;
+
+    /**
      * Builds the coordinator agent.
      */
     public CoordinatorAgent() {
@@ -55,7 +69,13 @@ public class CoordinatorAgent extends ImasAgent {
     protected void setup() {
         super.setup();
 
+
         this.systemAgent = findSystemAgent();
+        ServiceDescription searchCriterion = new ServiceDescription();
+        searchCriterion.setType(AgentType.DIGGER_COORDINATOR.toString());
+        this.diggerCoordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
+        searchCriterion.setType(AgentType.PROSPECTOR_COORDINATOR.toString());
+        this.prospectorCoordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
 
         /* ********************************************************************/
         ACLMessage initialRequest = new ACLMessage(ACLMessage.REQUEST);
@@ -75,6 +95,7 @@ public class CoordinatorAgent extends ImasAgent {
 
         // setup finished. When we receive the last inform, the agent itself will add
         // a behaviour to send/receive actions
+        //this.addBehaviour(new CoordinatorBehaviour(this));
     }
 
     /**
@@ -95,4 +116,17 @@ public class CoordinatorAgent extends ImasAgent {
         return this.game;
     }
 
+    public void broadcastCurrentGameStatus() {
+        log("Broadcasting the current game status");
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        message.addReceiver(diggerCoordinatorAgent);
+        message.addReceiver(prospectorCoordinatorAgent);
+        try {
+            message.setContentObject(getGame());
+            send(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

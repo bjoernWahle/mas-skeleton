@@ -155,10 +155,9 @@ abstract public class ImasAgent extends Agent {
 
     }
 
-    ACLMessage prepareMessage(int messageType, AID receiver) {
+    public ACLMessage prepareMessage(int messageType) {
         ACLMessage message = new ACLMessage(messageType);
         message.setSender(getAID());
-        message.addReceiver(receiver);
         message.setLanguage(LANGUAGE);
         message.setOntology(ONTOLOGY);
         return message;
