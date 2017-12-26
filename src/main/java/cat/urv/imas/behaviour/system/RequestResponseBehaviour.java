@@ -92,7 +92,7 @@ public class RequestResponseBehaviour extends AchieveREResponder {
 
         try {
             agent.addElementsForThisSimulationStep();
-            reply.setContentObject(agent.getGame());
+            agent.manager.fillContent(reply, agent.getGame());
         } catch (Exception e) {
             reply.setPerformative(ACLMessage.FAILURE);
             agent.errorLog(e.toString());

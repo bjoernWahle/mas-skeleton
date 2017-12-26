@@ -17,19 +17,32 @@
  */
 package cat.urv.imas.agent;
 
+import cat.urv.imas.onthology.DiggerOntology;
+import jade.content.ContentManager;
+import jade.content.lang.Codec;
+import jade.content.lang.sl.SLCodec;
+import jade.content.onto.BeanOntology;
+import jade.content.onto.BeanOntologyException;
+import jade.content.onto.Ontology;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.lang.acl.ACLMessage;
 
 /**
  * Agent abstraction used in this practical work.
  * It gathers common attributes and functionality from all agents.
  */
 abstract public class ImasAgent extends Agent {
-    
+    public ContentManager manager = getContentManager();
+    // This agent "speaks" the SL language
+    private Codec codec = new SLCodec();
+    private Ontology ontology;
+
+
     /**
      * Type of this agent.
      */
@@ -42,11 +55,11 @@ abstract public class ImasAgent extends Agent {
     /**
      * Language used for communication.
      */
-    public static final String LANGUAGE = "serialized-object";
+    public static final String LANGUAGE = "fipa-sl";
     /**
      * Onthology used in the communication.
      */
-    public static final String ONTOLOGY = "serialized-object";
+    public static final String ONTOLOGY = "digger-ontology";
     
     /**
      * Creates the agent.
@@ -73,6 +86,17 @@ abstract public class ImasAgent extends Agent {
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.addServices(sd1);
         dfd.setName(getAID());
+
+        // Set ontology
+        try {
+            ontology = DiggerOntology.getInstance();
+        } catch (BeanOntologyException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        manager.registerLanguage(codec);
+        manager.registerOntology(ontology);
+
         try {
             DFService.register(this, dfd);
             log("Registered to the DF");
@@ -129,5 +153,14 @@ abstract public class ImasAgent extends Agent {
         return UtilsAgents.searchAgent(this, searchCriterion);
         // searchAgent is a blocking method, so we will obtain always a correct AID
 
+    }
+
+    ACLMessage prepareMessage(int messageType, AID receiver) {
+        ACLMessage message = new ACLMessage(messageType);
+        message.setSender(getAID());
+        message.addReceiver(receiver);
+        message.setLanguage(LANGUAGE);
+        message.setOntology(ONTOLOGY);
+        return message;
     }
 }

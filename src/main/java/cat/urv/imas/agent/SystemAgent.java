@@ -21,9 +21,12 @@ import cat.urv.imas.behaviour.system.RequestResponseBehaviour;
 import cat.urv.imas.gui.GraphicInterface;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
+import cat.urv.imas.onthology.AgentList;
 import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.InfoAgent;
 import cat.urv.imas.onthology.InitialGameSettings;
+import jade.content.lang.Codec;
+import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPANames.InteractionProtocol;
@@ -175,12 +178,15 @@ public class SystemAgent extends ImasAgent {
             PathCell pathCell = (PathCell) cell;
             for (InfoAgent agent : pathCell.getAgents().get(AgentType.DIGGER)) {
                 String name = "Digger_"+diggerAgentsIndex++;
+                String[] args = new String[2];
+                args[0] = Integer.toString(cell.getCol());
+                args[1] = Integer.toString(cell.getRow());
                 if(diggerContainer == null) {
-                    diggerContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), null);
+                    diggerContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), args);
                 } else {
-                    UtilsAgents.createAgent(diggerContainer, name, agent.getType().getClassName(), null);
+                    UtilsAgents.createAgent(diggerContainer, name, agent.getType().getClassName(), args);
                 }
-                agent.setAID(new AID(name, AID.ISGUID));
+                agent.setAID(new AID(name, AID.ISLOCALNAME));
                 diggerAgents.add(agent);
             }
         }
@@ -189,19 +195,23 @@ public class SystemAgent extends ImasAgent {
             PathCell pathCell = (PathCell) cell;
             for (InfoAgent agent : pathCell.getAgents().get(AgentType.PROSPECTOR)) {
                 String name = "Prospector_"+prospectorAgentsIndex++;
+                String[] args = new String[2];
+                args[0] = Integer.toString(cell.getCol());
+                args[1] = Integer.toString(cell.getRow());
                 if(prospectorContainer == null) {
-                    prospectorContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), null);
+                    prospectorContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), args);
                 } else {
-                    UtilsAgents.createAgent(prospectorContainer, name, agent.getType().getClassName(), null);
+                    UtilsAgents.createAgent(prospectorContainer, name, agent.getType().getClassName(), args);
                 }
-                agent.setAID(new AID(name, AID.ISGUID));
+                agent.setAID(new AID(name, AID.ISLOCALNAME));
                 prospectorAgents.add(agent);
             }
         }
 
+        AID diggerCoordinator = new AID("DiggerCoordinator", AID.ISLOCALNAME);
         // start digger coordinator agent if at least one digger was in the map
         if(diggerContainer != null) {
-            UtilsAgents.createAgent(diggerContainer, "DiggerCoordinator", AgentType.DIGGER_COORDINATOR.getClassName(), null);
+            UtilsAgents.createAgent(diggerContainer, diggerCoordinator.getLocalName(), AgentType.DIGGER_COORDINATOR.getClassName(), null);
         }
         // start prospector coordinator agent if at least one prospector was in the map
         if(prospectorContainer != null) {
@@ -209,6 +219,24 @@ public class SystemAgent extends ImasAgent {
         }
         // start coordinator agent
         UtilsAgents.createAgent(getContainerController(), "Coordinator", AgentType.COORDINATOR.getClassName(), null);
+
+        // tell digger coordinator about diggers
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.setSender(getAID());
+        msg.addReceiver(diggerCoordinator);
+        msg.setLanguage(LANGUAGE);
+        msg.setOntology(ONTOLOGY);
+        AgentList diggerList = new AgentList();
+        diggerList.setAgentList(diggerAgents);
+        try {
+            manager.fillContent(msg, diggerList);
+            send(msg);
+        } catch (Codec.CodecException e) {
+            e.printStackTrace();
+        } catch (OntologyException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void updateGUI() {

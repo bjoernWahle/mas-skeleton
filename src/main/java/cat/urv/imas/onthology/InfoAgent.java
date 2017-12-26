@@ -1,6 +1,7 @@
 package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
+import jade.content.Concept;
 import jade.core.AID;
 
 /**
@@ -10,7 +11,7 @@ import jade.core.AID;
  * <b>Company:</b> Universitat Rovira i Virgili (<a
  * href="http://www.urv.cat">URV</a>)</p>
  */
-public class InfoAgent implements java.io.Serializable {
+public class InfoAgent implements Concept {
 
     /**
      * Type of this agent.

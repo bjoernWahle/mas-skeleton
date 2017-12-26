@@ -20,6 +20,7 @@ package cat.urv.imas.onthology;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.CellType;
+import jade.content.Predicate;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +36,7 @@ import java.util.Map;
  *
  */
 @XmlRootElement(name = "GameSettings")
-public class GameSettings implements java.io.Serializable {
+public class GameSettings implements Predicate {
 
     /* Default values set to all attributes, just in case. */
     /**

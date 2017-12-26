@@ -1,6 +1,6 @@
 package cat.urv.imas.agent;
 
-public interface MovingAgentInterface {
+interface MovingAgentInterface {
 
     /**
      * Returns the steps that agent needs to arrive at position (row, col).

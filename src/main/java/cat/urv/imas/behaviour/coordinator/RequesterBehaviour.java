@@ -19,6 +19,7 @@ package cat.urv.imas.behaviour.coordinator;
 
 import cat.urv.imas.agent.CoordinatorAgent;
 import cat.urv.imas.onthology.GameSettings;
+import jade.content.ContentElement;
 import jade.core.AID;
 import jade.lang.acl.ACLMessage;
 import jade.proto.AchieveREInitiator;
@@ -60,9 +61,15 @@ public class RequesterBehaviour extends AchieveREInitiator {
         CoordinatorAgent agent = (CoordinatorAgent) this.getAgent();
         agent.log("INFORM received from " + ((AID) msg.getSender()).getLocalName());
         try {
-            GameSettings game = (GameSettings) msg.getContentObject();
-            agent.setGame(game);
-            agent.log(game.getShortString());
+            ContentElement content = agent.manager.extractContent(msg);
+            if(content instanceof GameSettings) {
+                GameSettings game = (GameSettings) agent.manager.extractContent(msg);
+                agent.setGame(game);
+                agent.log(game.getShortString());
+            } else {
+                agent.errorLog("Unknown content" + content);
+            }
+
         } catch (Exception e) {
             agent.errorLog("Incorrect content: " + e.toString());
         }

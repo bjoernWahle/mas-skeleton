@@ -30,8 +30,8 @@ public class DiggerInfoAgent extends InfoAgent {
      */
     protected int capacity;
 
-    public DiggerInfoAgent(AgentType type) {
-        super(type);
+    public DiggerInfoAgent() {
+        super(AgentType.DIGGER);
     }
 
     public DiggerInfoAgent(AgentType type, int capacity) {
@@ -61,4 +61,11 @@ public class DiggerInfoAgent extends InfoAgent {
                 + ")";
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 }
