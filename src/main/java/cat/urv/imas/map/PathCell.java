@@ -66,14 +66,14 @@ public class PathCell extends Cell {
      * @param newAgent agent
      * @throws Exception
      */
-    public void addAgent(InfoAgent newAgent) throws Exception {
+    public void addAgent(InfoAgent newAgent) throws IllegalStateException {
         if (this.isThereADiggerAgentWorking()) {
-            throw new Exception("Full STREET cell");
+            throw new IllegalStateException("Full Path cell");
         }
         agents.add(newAgent);
     }
 
-    public void removeAgent(InfoAgent oldInfoAgent) throws Exception {
+    public void removeAgent(InfoAgent oldInfoAgent) {
         agents.remove(oldInfoAgent);
     }
 
@@ -140,9 +140,12 @@ public class PathCell extends Cell {
                 first = agents.getFirst();
                 return first.getMapMessage();
             } catch (Exception e) {
+                e.printStackTrace();
+                return "";
                 // do nothing: we already checked that an agent exists.
             }
         }
+        System.out.println(agents.get(AgentType.DIGGER));
         return agents.getMapMessage();
     }
 

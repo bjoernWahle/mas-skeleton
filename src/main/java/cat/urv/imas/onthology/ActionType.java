@@ -1,7 +1,7 @@
 package cat.urv.imas.onthology;
 
 public enum ActionType {
-    MOVE, COLLECT, RETURN, DETECT;
+    MOVE, COLLECT, RETURN, DETECT, IDLE;
 
     @Override
     public String toString() {

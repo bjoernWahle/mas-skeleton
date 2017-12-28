@@ -1,5 +1,6 @@
 package cat.urv.imas.behaviour.digger_coordinator;
 
+import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.onthology.ActionType;
@@ -9,15 +10,20 @@ import cat.urv.imas.onthology.MoveAction;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
+import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class CollectingActionsBehaviour extends SimpleBehaviour {
     DiggerCoordinatorAgent agent;
     long millis;
     long endTime;
     boolean finished = false;
+    List<AID> diggers;
     MessageTemplate messageTemplate;
     public CollectingActionsBehaviour(DiggerCoordinatorAgent agent, long millis) {
         this.agent = agent;
@@ -31,6 +37,7 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
     @Override
     public void onStart() {
         super.onStart();
+        diggers = new LinkedList<>(agent.getDiggers());
         endTime = System.currentTimeMillis() + millis;
         agent.log("Waiting for action informations");
     }
@@ -41,32 +48,40 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
         ACLMessage msg = agent.receive(messageTemplate);
 
         if(msg != null) {
-            agent.log("Received message" + msg);
             try {
-                ContentElement ce = agent.getContentManager().extractContent(msg);
-                if(ce instanceof InformAgentAction) {
-                    ActionType actionType = ActionType.fromString(((InformAgentAction) ce).getAction().getActionType());
-                    switch (actionType) {
-                        case MOVE:
-                            agent.addRoundAction(((InformAgentAction) ce).getAction());
-                            break;
-                        case COLLECT:
-                            // todo implement
-                            break;
-                        case RETURN:
-                            // todo implement
-                            break;
-                        default:
-                            throw new IllegalArgumentException("Illegal action type for a digger: " + actionType);
+                AID sender = msg.getSender();
+                if(diggers.contains(sender)) {
+                    agent.log("Received action from "+ sender.getLocalName());
+                    ContentElement ce = agent.getContentManager().extractContent(msg);
+                    if(ce instanceof InformAgentAction) {
+                        MobileAgentAction action = ((InformAgentAction) ce).getAction();
+                        ActionType actionType = ActionType.fromString(action.getActionType());
+                        switch (actionType) {
+                            case MOVE:
+                            case IDLE:
+                            case COLLECT:
+                            case RETURN:
+                                // add agent info
+                                action.setAgent(agent.getGameSettings().getInfoAgent(AgentType.DIGGER, sender));
+                                agent.addRoundAction(action);
+                                diggers.remove(msg.getSender());
+                                break;
+                            case DETECT:
+                            default:
+                                throw new IllegalArgumentException("Illegal action type for a digger: " + actionType);
+                        }
                     }
+                } else {
+                    agent.log("Receiving action from " + sender.getLocalName() + ". Either I do not know this Agent yet or he already told me about his action.");
                 }
+
             } catch (Codec.CodecException | OntologyException e) {
                 agent.log("Not readable: " + msg);
                 e.printStackTrace();
             }
         }
 
-        if(System.currentTimeMillis() >= endTime) {
+        if(diggers.isEmpty() || System.currentTimeMillis() >= endTime) {
             agent.informCoordinator();
             finished = true;
         }

@@ -23,7 +23,7 @@ public abstract class Task implements Predicate {
     }
 
     public void startTask() {
-        if(currentState == TaskState.NOT_STARTED.toString()) {
+        if(currentState.equals(TaskState.NOT_STARTED.toString())) {
             currentState = TaskState.IN_PROGRESS.toString();
         } else {
             throw new IllegalStateException("Illegal state to start task: " +currentState);
@@ -31,7 +31,7 @@ public abstract class Task implements Predicate {
     }
 
     public void finishTask() {
-        if(currentState == TaskState.IN_PROGRESS.toString()) {
+        if(currentState.equals(TaskState.IN_PROGRESS.toString())) {
             currentState = TaskState.DONE.toString();
         } else {
             throw new IllegalStateException("Illegal state to finish task:" + currentState);

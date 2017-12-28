@@ -115,6 +115,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
 
                     protected void handleInform(ACLMessage inform) {
                         agent.log("Brave "+inform.getSender().getLocalName()+" gonna collect that metal. Big up fella!");
+                        task.startTask();
                     }
                 };
 

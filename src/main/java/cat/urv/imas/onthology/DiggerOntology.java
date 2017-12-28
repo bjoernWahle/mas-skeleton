@@ -24,11 +24,13 @@ public class DiggerOntology extends BeanOntology {
         super(ONTOLOGY_NAME);
 
         add(InfoAgent.class);
+        add(DiggerInfoAgent.class);
         add(RoundStart.class);
         add(DiggerTask.class);
         add(MetalType.class);
         add(MobileAgentAction.class);
         add(MoveAction.class);
+        add(IdleAction.class);
         add(ActionList.class);
         add(InformAgentAction.class);
     }

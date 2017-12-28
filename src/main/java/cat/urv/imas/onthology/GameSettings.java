@@ -20,13 +20,16 @@ package cat.urv.imas.onthology;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.CellType;
+import cat.urv.imas.map.PathCell;
 import jade.content.Predicate;
+import jade.core.AID;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Current game settings. Cell coordinates are zero based: row and column values
@@ -36,7 +39,7 @@ import java.util.Map;
  *
  */
 @XmlRootElement(name = "GameSettings")
-public class GameSettings implements Predicate {
+public class GameSettings implements java.io.Serializable {
 
     /* Default values set to all attributes, just in case. */
     /**
@@ -44,12 +47,12 @@ public class GameSettings implements Predicate {
      */
     private long seed = 0;
     /**
-     * Metal price for each manufacturing center. They appear inthe same order
+     * Metal price for each manufacturing center. They appear in the same order
      * than they appear in the map.
      */
     protected int[] manufacturingCenterPrice = {8, 9, 6, 7};
     /**
-     * Metal type for each manufacturing center. They appear inthe same order
+     * Metal type for each manufacturing center. They appear in the same order
      * than they appear in the map.
      */
     protected MetalType[] manufacturingCenterMetalType = {
@@ -250,4 +253,24 @@ public class GameSettings implements Predicate {
         return max;
     }
 
+    public void updateAgentList() {
+        for(AgentType type : AgentType.values()) {
+
+            for(Cell cell: agentList.get(type)) {
+                PathCell pc = (PathCell) cell;
+                if(pc.isEmpty()) {
+
+                }
+            }
+        }
+    }
+
+    public InfoAgent getInfoAgent(AgentType agentType, AID sender) {
+        Optional<InfoAgent> infoAgent = agentList.get(agentType).stream().flatMap(cell -> ((PathCell) cell).getAgents().get(agentType).stream()).filter(i -> i.getAID().equals(sender)).findFirst();
+        if(infoAgent.isPresent()) {
+            return infoAgent.get();
+        } else {
+            throw new IllegalArgumentException("AID " +sender + " not found as a "+ agentType + " in the game");
+        }
+    }
 }

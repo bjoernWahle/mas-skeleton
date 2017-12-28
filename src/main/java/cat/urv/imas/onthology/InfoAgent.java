@@ -49,7 +49,7 @@ public class InfoAgent implements Concept {
      */
     @Override
     public boolean equals(Object a) {
-        if (a instanceof InfoAgent) {
+        if (a instanceof InfoAgent | a instanceof DiggerInfoAgent) {
             return ((InfoAgent) a).getAID().equals(this.aid);
         } else {
             return false;

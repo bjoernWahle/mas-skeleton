@@ -19,8 +19,12 @@ package cat.urv.imas.agent;
 
 import cat.urv.imas.behaviour.coordinator.CoordinatorBehaviour;
 import cat.urv.imas.behaviour.coordinator.RequesterBehaviour;
+import cat.urv.imas.onthology.ActionList;
+import cat.urv.imas.onthology.GameHasEnded;
 import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.MessageContent;
+import jade.content.lang.Codec;
+import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPANames.InteractionProtocol;
@@ -42,17 +46,21 @@ public class CoordinatorAgent extends ImasAgent {
     /**
      * System agent id.
      */
-    private AID systemAgent;
+    public AID systemAgent;
 
     /**
      * Digger coordinator agent
      */
-    private AID diggerCoordinatorAgent;
+    public AID diggerCoordinatorAgent;
 
     /**
      * prospector coordinator agent
      */
-    private AID prospectorCoordinatorAgent;
+    public AID prospectorCoordinatorAgent;
+
+    private ActionList diggerActions;
+    private ActionList prospectorActions;
+    // TODO stats
 
     /**
      * Builds the coordinator agent.
@@ -77,25 +85,9 @@ public class CoordinatorAgent extends ImasAgent {
         searchCriterion.setType(AgentType.PROSPECTOR_COORDINATOR.toString());
         this.prospectorCoordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
 
-        /* ********************************************************************/
-        ACLMessage initialRequest = new ACLMessage(ACLMessage.REQUEST);
-        initialRequest.clearAllReceiver();
-        initialRequest.addReceiver(this.systemAgent);
-        initialRequest.setProtocol(InteractionProtocol.FIPA_REQUEST);
-        log("Request message to agent");
-        try {
-            initialRequest.setContent(MessageContent.GET_MAP);
-            log("Request message content:" + initialRequest.getContent());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //we add a behaviour that sends the message and waits for an answer
-        this.addBehaviour(new RequesterBehaviour(this, initialRequest));
-
         // setup finished. When we receive the last inform, the agent itself will add
         // a behaviour to send/receive actions
-        //this.addBehaviour(new CoordinatorBehaviour(this));
+        this.addBehaviour(new CoordinatorBehaviour(this));
     }
 
     /**
@@ -127,6 +119,48 @@ public class CoordinatorAgent extends ImasAgent {
             send(message);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void resetDiggerActions() {
+        diggerActions = null;
+    }
+
+    public void resetProspectorActions() {
+        prospectorActions = null;
+    }
+
+    public void setDiggerActions(ActionList diggerActions) {
+        this.diggerActions = diggerActions;
+    }
+
+    public void setProspectorActions(ActionList prospectorActions) {
+        this.prospectorActions = prospectorActions;
+    }
+
+    public void notifySystemAgent() {
+        log("Sending received actions and stats to the almighty System Agent. God bless him.");
+        ACLMessage msg = prepareMessage(ACLMessage.INFORM);
+        msg.addReceiver(systemAgent);
+        try {
+            getContentManager().fillContent(msg, diggerActions);
+            send(msg);
+        } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+            log("Unable to fill message content: " + diggerActions);
+        }
+    }
+
+    public void broadCastGameHasEnded() {
+        ACLMessage message = prepareMessage(ACLMessage.INFORM);
+        message.addReceiver(diggerCoordinatorAgent);
+        message.addReceiver(prospectorCoordinatorAgent);
+        try {
+            getContentManager().fillContent(message, new GameHasEnded());
+            send(message);
+        } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+            log("Error filling message content");
         }
     }
 }

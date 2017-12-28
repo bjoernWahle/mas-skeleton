@@ -21,16 +21,14 @@ import cat.urv.imas.behaviour.system.StepBehaviour;
 import cat.urv.imas.gui.GraphicInterface;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
-import cat.urv.imas.onthology.AgentList;
-import cat.urv.imas.onthology.GameSettings;
-import cat.urv.imas.onthology.InfoAgent;
-import cat.urv.imas.onthology.InitialGameSettings;
+import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,6 +49,8 @@ public class SystemAgent extends ImasAgent {
      * initial configuration settings.
      */
     private InitialGameSettings game;
+
+    private List<MobileAgentAction> requestedActions;
 
 
     /**
@@ -182,9 +182,10 @@ public class SystemAgent extends ImasAgent {
             PathCell pathCell = (PathCell) cell;
             for (InfoAgent agent : pathCell.getAgents().get(AgentType.DIGGER)) {
                 String name = "Digger_"+diggerAgentsIndex++;
-                String[] args = new String[2];
+                String[] args = new String[3];
                 args[0] = Integer.toString(cell.getCol());
                 args[1] = Integer.toString(cell.getRow());
+                args[2] = Integer.toString(((DiggerInfoAgent) agent).getCapacity());
                 if(diggerContainer == null) {
                     diggerContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), args);
                 } else {
@@ -235,10 +236,52 @@ public class SystemAgent extends ImasAgent {
     }
 
     public void advanceToNextRound() {
-        // TODO get planned actions for this round and apply them
+        // TODO get planned actions for this round and apply them (started...)
+        // TODO add stats for last round
+        checkAndApplyActions();
         addElementsForThisSimulationStep();
         updateGUI();
         currentRound++;
         log("Starting round "+currentRound);
+    }
+
+    private void checkAndApplyActions() {
+        // TODO maybe deep clone gameSettings before
+        // check move actions
+        for(MobileAgentAction action : requestedActions) {
+            if(action instanceof MoveAction) {
+                MoveAction moveAction = (MoveAction) action;
+                try {
+                    this.game.applyMove(moveAction);
+                } catch (IllegalStateException | IllegalArgumentException e) {
+                    log(e.getMessage());
+                    // TODO notify agents about their illegal moves
+                }
+            }
+        }
+        // TODO check collect actions
+        // TODO check return actions (needed)
+        // TODO blame agents that wanna be idle
+    }
+
+    public void storeActions(ActionList diggerActions) {
+        log("Storing actions");
+        // remove last rounds actions (just in case - they should be deleted after being applied)
+        requestedActions = new LinkedList<>();
+        // store actions
+        requestedActions.addAll(diggerActions.getAgentActions());
+    }
+
+    public void notifyCoordinator() {
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.setSender(getAID());
+        msg.addReceiver(coordinatorAgent);
+        try {
+            msg.setContentObject(this.game);
+            send(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log("Error while serializing InitialGameSettings object");
+        }
     }
 }

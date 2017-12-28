@@ -21,13 +21,13 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
 
     private final String PLANNING = "planning";
     private final String NEGOTIATING = "negotiating";
-    private final String BUILDING_COALITION = "building_coalition";
+    private final String BUILDING_COALITION = "building_coalition"; // TODO add behaviour
     private final String END = "end";
 
     @Override
     public void onStart() {
         super.onStart();
-        agent.log("This behaviour should not start yet.");
+        agent.log("Start delegating tasks.");
     }
 
     public DelegateTasksBehaviour(DiggerCoordinatorAgent agent) {
@@ -40,8 +40,6 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
 
                 // check if there is metal that nobody is collecting
                 // TODO implement
-
-                agent.addTask(new DiggerTask(5, 0, TaskType.COLLECT_METAL.toString(), MetalType.SILVER.getShortString(), 4));
             }
 
             @Override

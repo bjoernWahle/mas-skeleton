@@ -17,6 +17,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     public void startRound(RoundStart rs) {
         setCurrentPosition(rs.getX(),rs.getY());
+        roundEnd = rs.getRoundEnd();
         logPosition();
     }
 
@@ -32,13 +33,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         tasks.add(diggerTask);
     }
 
-    public enum roundState {
-        WAITING, COMMUNICATING, PERFORMING
-    }
-
-    private roundState currentRoundState;
-
-    public static final int MAX_CAPACITY = 5;
+    public int maxCapacity;
 
     private AID diggerCoordinator;
 
@@ -50,6 +45,8 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     private List<DiggerTask> tasks;
 
     private DiggerTask currentTask;
+    private Plan currentMovementPlan;
+    private long roundEnd;
 
     private MobileAgentAction currentAction;
 
@@ -66,11 +63,11 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         searchCriterion.setType(AgentType.DIGGER_COORDINATOR.toString());
         this.diggerCoordinator = UtilsAgents.searchAgent(this, searchCriterion);
 
-        // TODO implement and add behaviours
         // set starting position
         String[] args = (String[]) getArguments();
         currentX = Integer.parseInt(args[0]);
         currentY = Integer.parseInt(args[1]);
+        maxCapacity = Integer.parseInt(args[2]);
 
         tasks = new LinkedList<>();
 
@@ -92,7 +89,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         if(currentTask == null) {
             Optional<DiggerTask> nextTask = getNextTask();
             if(!nextTask.isPresent()) {
-                log("I am idle.");
+                doNothing();
                 return;
             } else {
                 currentTask = nextTask.get();
@@ -102,7 +99,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         switch(currentTaskType) {
             case COLLECT_METAL:
                 if(checkPosition(currentTask.x, currentTask.y)) {
-                    if(currentCapacity < MAX_CAPACITY) {
+                    if(currentCapacity < maxCapacity) {
                         collectMetal(currentTask.x, currentTask.y);
                     } else {
                         // TODO add return task to the start of the list
@@ -124,7 +121,11 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         }
         // tell digger coordinator about plan
         notifyDiggerCoordinator(currentAction);
-        currentRoundState = roundState.WAITING;
+    }
+
+    private void doNothing() {
+        log("I won't do anything this round. No tasks for me bro.");
+        notifyDiggerCoordinator(new IdleAction(getAID()));
     }
 
     private void returnMetal(int x, int y) {
@@ -137,7 +138,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         message.addReceiver(diggerCoordinator);
         try {
             getContentManager().fillContent(message, new InformAgentAction(currentAction));
-            log("Sending msg with my current action: " + message);
+            log("Sending msg with my current action: " + message.getContent());
             send(message);
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
@@ -146,9 +147,17 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void moveTowards(int x, int y) {
-        Plan movePlan = getPathTo(x, y);
-        PathCell pc = movePlan.getFirst();
-        currentAction = new MoveAction(getAID(),pc.getCol(), pc.getRow());
+        if(currentMovementPlan == null) {
+            currentMovementPlan = getPathTo(x, y);
+        } else {
+            // check if I have moved
+            PathCell pc = currentMovementPlan.getFirst();
+            if(pc.getCol() == currentX && pc.getRow() == currentY) {
+                currentMovementPlan.dropFirst();
+            }
+        }
+        PathCell pc = currentMovementPlan.getFirst();
+        currentAction = new MoveAction(pc.getCol(), pc.getRow());
         log("I am on my way to "+x+","+y);
     }
 

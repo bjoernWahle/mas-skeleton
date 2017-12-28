@@ -24,4 +24,12 @@ public class Plan {
     public PathCell getFirst() {
         return pathCellList.get(0);
     }
+
+    public void dropFirst() {
+        pathCellList.remove(0);
+    }
+
+    public boolean isEmpty() {
+        return pathCellList.isEmpty();
+    }
 }

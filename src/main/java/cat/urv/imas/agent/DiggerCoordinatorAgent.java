@@ -22,6 +22,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     List<DiggerTask> tasks;
+    List<DiggerTask> currentTasks;
 
     List<MobileAgentAction> roundActions;
 
@@ -39,6 +40,9 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         this.coordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
 
         tasks = new LinkedList<>();
+
+        addTask(new DiggerTask(5, 0, TaskType.COLLECT_METAL.toString(), MetalType.SILVER.getShortString(), 4));
+
 
         addBehaviour(new RoundBehaviour(this));
     }
@@ -74,6 +78,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     public void setGameSettings(GameSettings gameSettings) {
+        log(" "+ gameSettings.getAgentList());
         this.gameSettings = gameSettings;
     }
 
@@ -98,6 +103,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         msg.addReceiver(coordinatorAgent);
         try {
             getContentManager().fillContent(msg, new ActionList(roundActions));
+            log("Sending message with the list of actions to my boss: "+ msg.getContent());
             send(msg);
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();

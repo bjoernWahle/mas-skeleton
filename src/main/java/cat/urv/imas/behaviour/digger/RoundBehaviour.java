@@ -19,8 +19,6 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.ContractNetResponder;
 
-import static cat.urv.imas.agent.DiggerAgent.MAX_CAPACITY;
-
 public class RoundBehaviour extends FSMBehaviour {
     DiggerAgent agent;
 

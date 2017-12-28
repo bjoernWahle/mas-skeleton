@@ -19,6 +19,8 @@ package cat.urv.imas.map;
 
 import cat.urv.imas.gui.CellVisualizer;
 
+import java.util.Objects;
+
 /**
  * This class keeps all the information about a cell in the map.
  * Coordinates (row, col) are zero based. This means all values goes from
@@ -126,5 +128,25 @@ public abstract class Cell implements java.io.Serializable {
      */
     public String getMapMessage() {
         return "";
+    }
+
+    public boolean adjacent(Cell cell) {
+        return Math.abs(row - cell.getRow())+Math.abs(col - cell.getCol()) == 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return row == cell.row &&
+                col == cell.col &&
+                type == cell.type;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(type, row, col);
     }
 }

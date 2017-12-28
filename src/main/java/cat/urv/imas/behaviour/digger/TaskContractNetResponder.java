@@ -1,7 +1,6 @@
 package cat.urv.imas.behaviour.digger;
 
 import cat.urv.imas.agent.DiggerAgent;
-import cat.urv.imas.agent.SystemAgent;
 import cat.urv.imas.onthology.DiggerTask;
 import cat.urv.imas.onthology.MetalType;
 import cat.urv.imas.onthology.TaskType;
@@ -15,10 +14,7 @@ import jade.domain.FIPAAgentManagement.RefuseException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.proto.ContractNetInitiator;
 import jade.proto.ContractNetResponder;
-
-import static cat.urv.imas.agent.DiggerAgent.MAX_CAPACITY;
 
 public class TaskContractNetResponder extends SimpleBehaviour {
     ContractNetResponder cnr;
@@ -57,11 +53,11 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                     TaskType taskType = TaskType.fromString(tempTask.taskType);
                     MetalType metalType = MetalType.fromShortString(tempTask.metalType);
                     if (taskType == TaskType.COLLECT_METAL) {
-                        if ((agent.getCurrentMetal() == null || metalType == agent.getCurrentMetal()) && agent.getCurrentCapacity() < agent.MAX_CAPACITY) {
+                        if ((agent.getCurrentMetal() == null || metalType == agent.getCurrentMetal()) && agent.getCurrentCapacity() < agent.maxCapacity) {
                             agent.log("proposal");
                             // We provide a proposal
                             int time = agent.evaluateAction(tempTask.x, tempTask.y);
-                            double percentage = Math.max((MAX_CAPACITY - agent.getCurrentCapacity()) / tempTask.amount, 1.0);
+                            double percentage = Math.max((agent.maxCapacity - agent.getCurrentCapacity()) / tempTask.amount, 1.0);
                             String proposal = time + "," + percentage;
                             agent.log("Proposing " + proposal);
                             ACLMessage propose = cfp.createReply();

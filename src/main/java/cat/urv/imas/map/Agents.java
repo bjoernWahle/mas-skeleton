@@ -43,22 +43,22 @@ public class Agents implements java.io.Serializable {
         amount = 0;
     }
 
-    public void add(InfoAgent agent) throws Exception {
+    public void add(InfoAgent agent) {
          if (agent == null) {
-            throw new Exception("No valid agent to be set (null)");
+            throw new IllegalArgumentException("No valid agent to be set (null)");
         }
         // if everything is OK, we add the new agent to the cell
         this.agents.get(agent.getType()).add(agent);
         amount += 1;
     }
 
-    public void remove(InfoAgent agent) throws Exception {
+    public void remove(InfoAgent agent) throws IllegalStateException, IllegalArgumentException {
         if (isEmpty()) {
-            throw new Exception("There is no agent in cell");
+            throw new IllegalStateException("There is no agent in cell");
         } else if (agent == null) {
-            throw new Exception("No valid agent to be remove (null).");
+            throw new IllegalArgumentException("No valid agent to be remove (null).");
         } else if (!agents.get(agent.getType()).contains(agent)) {
-            throw new Exception("No matching agent to be removed.");
+            throw new IllegalArgumentException("No matching agent to be removed.");
         }
         // if everything is OK, we remove the agent from the cell
         this.agents.get(agent.getType()).remove(agent);
@@ -101,7 +101,7 @@ public class Agents implements java.io.Serializable {
     public String toString() {
         StringBuilder string = new StringBuilder("(");
         for (AgentType type : AgentType.values()) {
-            string.append("(").append(type.getShortString()).append(":").append(agents.get(type).size()).append(")");
+            //string.append("(").append(type.getShortString()).append(":").append(agents.get(type).size()).append(")");
         }
         string.append(")");
         return string.toString();

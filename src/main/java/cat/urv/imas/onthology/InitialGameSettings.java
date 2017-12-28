@@ -26,6 +26,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.FileReader;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -93,7 +94,6 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     /**
      * Number of those initial elements which will be visible from
      * the very beginning. At maximum, this value will be numberInitialElements.
-     * @see numberInitialElements
      */
     private int numberVisibleInitialElements = 0;
     /**
@@ -168,7 +168,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                 switch (cell) {
                     case DC:
                         c = new PathCell(row, col);
-                        c.addAgent(new DiggerInfoAgent(AgentType.DIGGER, this.getDiggersCapacity()));
+                        c.addAgent(new DiggerInfoAgent(AgentType.DIGGER, getDiggersCapacity()));
                         map[row][col] = c;
                         addAgentToList(AgentType.DIGGER, c);
                         break;
@@ -360,5 +360,45 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             this.agentList.put(type, list);
         }
         list.add(cell);
+    }
+
+    public Cell findAgentsCell(InfoAgent agent) {
+        Optional<Cell> cell = getAgentList().get(agent.getType()).stream().filter(c -> ((PathCell) c).getAgents().get(agent.getType()).contains(agent)).findFirst();
+        if(cell.isPresent()) {
+            return cell.get();
+        } else {
+            throw new IllegalArgumentException("Agent "+ agent+ "was not found in the game");
+        }
+    }
+
+    public void applyMove(MoveAction moveAction) throws IllegalStateException,IllegalArgumentException {
+        InfoAgent agent = moveAction.getAgent();
+        Cell newCell = get(moveAction.y, moveAction.x);
+        if(newCell instanceof PathCell) {
+            // if everything ok, remove agent from old cell and add it to the new cell
+
+            PathCell newPathCell = (PathCell) newCell;
+            Cell oldCell = findAgentsCell(agent);
+            PathCell oldPathCell = (PathCell) oldCell;
+            if(!oldCell.adjacent(newCell)) {
+                throw new IllegalArgumentException("Refusing move request to "+moveAction.x +"," + moveAction.y +" because the cell is not adjacent to the current cell" );
+            }
+            newPathCell.addAgent(agent);
+            oldPathCell.removeAgent(agent);
+            // check cells that were updated
+            // check new cell
+            if(!agentList.get(agent.getType()).contains(newCell)) {
+                // add cell to agentList
+                this.agentList.get(agent.getType()).add(newCell);
+            }
+            // check old cell
+            if(oldPathCell.getAgents().get(AgentType.DIGGER).isEmpty()) {
+                System.out.println("I want to remove the old cell;");
+                this.agentList.get(agent.getType()).remove(oldCell);
+                System.out.println("Should be removed now: "+this.agentList.get(agent.getType()));
+            }
+        } else {
+            throw new IllegalArgumentException("Refusing move request to " +moveAction.x +"," + moveAction.y + " because the Cell is not a PathCell.");
+        }
     }
 }

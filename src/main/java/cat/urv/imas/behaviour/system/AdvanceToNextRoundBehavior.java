@@ -22,11 +22,12 @@ public class AdvanceToNextRoundBehavior extends OneShotBehaviour {
         // check and apply actions
         agent.advanceToNextRound();
         // send game settings to the agents
+        agent.notifyCoordinator();
     }
 
     @Override
     public int onEnd() {
-        if (agent.getCurrentRound() == agent.getGame().getSimulationSteps()) {
+        if (agent.getCurrentRound() >= agent.getGame().getSimulationSteps()) {
             return 1;
         } else return 0;
     }
