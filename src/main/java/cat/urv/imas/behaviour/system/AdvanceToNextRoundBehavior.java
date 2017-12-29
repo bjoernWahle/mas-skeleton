@@ -27,7 +27,7 @@ public class AdvanceToNextRoundBehavior extends OneShotBehaviour {
 
     @Override
     public int onEnd() {
-        if (agent.getCurrentRound() >= agent.getGame().getSimulationSteps()) {
+        if (agent.getGame().hasEnded()) {
             return 1;
         } else return 0;
     }

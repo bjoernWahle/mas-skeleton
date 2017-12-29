@@ -60,7 +60,7 @@ public abstract class Cell implements java.io.Serializable {
      *
      * @return the current row number in the map, in zero base.
      */
-    public int getRow() {
+    public int getY() {
         return this.row;
     }
 
@@ -69,7 +69,7 @@ public abstract class Cell implements java.io.Serializable {
      *
      * @return Column number in the map, in zero base.
      */
-    public int getCol() {
+    public int getX() {
         return this.col;
     }
 
@@ -99,8 +99,8 @@ public abstract class Cell implements java.io.Serializable {
     @Override
     public String toString() {
         String str = "(cell-type " + this.getCellType() + " "
-                + "(r " + this.getRow() + ")"
-                + "(c " + this.getCol() + ")";
+                + "(r " + this.getY() + ")"
+                + "(c " + this.getX() + ")";
         str += this.toStringSpecialization();
         return str + ")";
     }
@@ -131,7 +131,7 @@ public abstract class Cell implements java.io.Serializable {
     }
 
     public boolean adjacent(Cell cell) {
-        return Math.abs(row - cell.getRow())+Math.abs(col - cell.getCol()) == 1;
+        return Math.abs(row - cell.getY())+Math.abs(col - cell.getX()) == 1;
     }
 
     @Override
@@ -149,4 +149,5 @@ public abstract class Cell implements java.io.Serializable {
 
         return Objects.hash(type, row, col);
     }
+
 }

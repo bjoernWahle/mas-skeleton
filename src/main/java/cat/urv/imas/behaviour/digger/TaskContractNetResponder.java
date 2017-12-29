@@ -27,7 +27,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
     @Override
     public void onStart() {
-        timeEnd = System.currentTimeMillis() + 10000;
+        timeEnd = agent.getRoundEnd()-agent.getRoundTime()/3;
     }
 
     @Override
@@ -90,6 +90,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
                 protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject) {
                     agent.log("I didn't wanna dig that crap anyways!");
+                    finished = true;
                 }
             };
             agent.addBehaviour(cnr);

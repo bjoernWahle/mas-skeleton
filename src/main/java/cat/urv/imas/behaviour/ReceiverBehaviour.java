@@ -1,5 +1,6 @@
 package cat.urv.imas.behaviour;
 
+import cat.urv.imas.agent.ImasAgent;
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -7,27 +8,31 @@ import jade.lang.acl.MessageTemplate;
 
 public class ReceiverBehaviour extends SimpleBehaviour
 {
-
+    private ImasAgent agent;
     private MessageTemplate template;
-    private long    timeOut,
-            wakeupTime;
-    private boolean finished;
+    private boolean finished = false;
     private int exitCode = 0;
+    boolean waitTillRoundEnd = false;
 
     private ACLMessage msg;
 
     public ACLMessage getMessage() { return msg; }
 
-    public ReceiverBehaviour(Agent a, int millis, MessageTemplate mt) {
+    public ReceiverBehaviour(ImasAgent a, MessageTemplate mt) {
         super(a);
-        timeOut = millis;
+        agent = a;
         template = mt;
+    }
+
+    public ReceiverBehaviour(ImasAgent a, MessageTemplate mt, boolean waitTillRoundEnd) {
+        super(a);
+        agent = a;
+        template = mt;
+        this.waitTillRoundEnd = waitTillRoundEnd;
     }
 
     public void onStart() {
         reset();
-        wakeupTime = (timeOut<0 ? Long.MAX_VALUE
-                :System.currentTimeMillis() + timeOut);
     }
 
     @Override
@@ -53,11 +58,15 @@ public class ReceiverBehaviour extends SimpleBehaviour
             finished = true;
             return;
         }
-        long dt = wakeupTime - System.currentTimeMillis();
-        if ( dt > 0 )
-            block(dt);
-        else {
-            finished = true;
+        if(waitTillRoundEnd) {
+            long dt = agent.getRoundEnd() - System.currentTimeMillis();
+            if ( dt > 0 )
+                block(dt);
+            else {
+                finished = true;
+            }
+        } else {
+            block();
         }
     }
 

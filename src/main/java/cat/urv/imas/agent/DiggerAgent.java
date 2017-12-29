@@ -1,6 +1,7 @@
 package cat.urv.imas.agent;
 
-import cat.urv.imas.behaviour.digger.RoundBehaviour;
+import cat.urv.imas.behaviour.digger.DiggerBehaviour;
+import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
@@ -9,9 +10,11 @@ import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
@@ -44,6 +47,8 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private List<DiggerTask> tasks;
 
+    private GameSettings game;
+
     private DiggerTask currentTask;
     private Plan currentMovementPlan;
     private long roundEnd;
@@ -71,9 +76,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
         tasks = new LinkedList<>();
 
-        logPosition();
-
-        addBehaviour(new RoundBehaviour(this));
+        addBehaviour(new DiggerBehaviour(this));
     }
 
     public int evaluateAction(int x, int y) {
@@ -152,31 +155,38 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         } else {
             // check if I have moved
             PathCell pc = currentMovementPlan.getFirst();
-            if(pc.getCol() == currentX && pc.getRow() == currentY) {
+            if(pc.getX() == currentX && pc.getY() == currentY) {
                 currentMovementPlan.dropFirst();
             }
         }
         PathCell pc = currentMovementPlan.getFirst();
-        currentAction = new MoveAction(pc.getCol(), pc.getRow());
+        currentAction = new MoveAction(pc.getX(), pc.getY());
         log("I am on my way to "+x+","+y);
     }
 
     private Plan getPathTo(int x, int y) {
-        List<PathCell> pathCells = new LinkedList<>();
-        pathCells.add(new PathCell(2, 6));
-        pathCells.add(new PathCell(2, 5));
-        pathCells.add(new PathCell(1, 5));
-        return new Plan(pathCells);
+        Cell currentCell = game.get(currentY, currentX);
+        Cell destCell = game.get(y, x);
+
+        List<Cell> pathNeighbors = new ArrayList<>(game.getPathNeighbors(destCell));
+
+        List<Cell> vList = game.getMapGraph().getShortestPath(currentCell, pathNeighbors);
+        if (!(vList.get(vList.size() - 1) instanceof PathCell)) {
+            vList.remove(vList.size() -1);
+        }
+        vList.remove(0);
+        List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
+        return new Plan(pc);
     }
 
     private void collectMetal(int x, int y) {
-        // TODO set currentTask
+        // TODO set current action
         log("I gonna collect that metal now.");
     }
 
     private boolean checkPosition(int x, int y) {
-        int yDistance = Math.abs (x - currentY);
-        int xDistance = Math.abs (y - currentX);
+        int yDistance = Math.abs (x - currentX);
+        int xDistance = Math.abs (y - currentY);
         return yDistance + xDistance == 1;
     }
 
@@ -186,11 +196,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     @Override
     public int stepsToPosition(int x, int y) {
-        // easy approach: manhattan distance
-        // TODO calculate path
-        int yDistance = Math.abs (y - currentY);
-        int xDistance = Math.abs (x - currentX);
-        return xDistance+yDistance;
+        return getPathTo(x, y).getPathCellList().size();
     }
 
     public void setCurrentPosition(int x, int y) {
@@ -200,5 +206,17 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     public void logPosition() {
         log("I am at ("+ currentX +","+ currentY +")");
+    }
+
+    public long getRoundEnd() {
+        return roundEnd;
+    }
+
+    public GameSettings getGame() {
+        return game;
+    }
+
+    public void setGame(GameSettings game) {
+        this.game = game;
     }
 }

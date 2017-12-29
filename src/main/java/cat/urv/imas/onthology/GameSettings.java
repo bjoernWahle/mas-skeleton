@@ -21,15 +21,15 @@ import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.CellType;
 import cat.urv.imas.map.PathCell;
-import jade.content.Predicate;
+import cat.urv.imas.util.Graph;
+import cat.urv.imas.util.Vertex;
 import jade.core.AID;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Current game settings. Cell coordinates are zero based: row and column values
@@ -66,10 +66,30 @@ public class GameSettings implements java.io.Serializable {
      * Total number of simulation steps.
      */
     private int simulationSteps = 100;
+
+    /**
+     * Current simulation step.
+     */
+    int currentSimulationStep = 0;
+    /**
+     * current round end
+     */
+    long currentRoundEnd = 0;
+
+    /**
+     * how long a round is
+     */
+    int stepTime = 20000;
+
     /**
      * City map.
      */
     protected Cell[][] map;
+
+    /**
+     * Graph representation of the map.
+     */
+    protected Graph<Cell> mapGraph;
     /**
      * From 0 to 100 (meaning percentage) of probability of having new
      * metal in the city at every step.
@@ -253,18 +273,6 @@ public class GameSettings implements java.io.Serializable {
         return max;
     }
 
-    public void updateAgentList() {
-        for(AgentType type : AgentType.values()) {
-
-            for(Cell cell: agentList.get(type)) {
-                PathCell pc = (PathCell) cell;
-                if(pc.isEmpty()) {
-
-                }
-            }
-        }
-    }
-
     public InfoAgent getInfoAgent(AgentType agentType, AID sender) {
         Optional<InfoAgent> infoAgent = agentList.get(agentType).stream().flatMap(cell -> ((PathCell) cell).getAgents().get(agentType).stream()).filter(i -> i.getAID().equals(sender)).findFirst();
         if(infoAgent.isPresent()) {
@@ -272,5 +280,76 @@ public class GameSettings implements java.io.Serializable {
         } else {
             throw new IllegalArgumentException("AID " +sender + " not found as a "+ agentType + " in the game");
         }
+    }
+
+    public int getCurrentSimulationStep() {
+        return currentSimulationStep;
+    }
+
+    public boolean hasEnded() {
+        return currentSimulationStep >= simulationSteps;
+    }
+
+    public long getCurrentRoundEnd() {
+        return currentRoundEnd;
+    }
+
+    public int getStepTime() {
+        return stepTime;
+    }
+
+    public void setStepTime(int stepTime) {
+        this.stepTime = stepTime;
+    }
+
+    public Graph<Cell> getMapGraph() {
+        if(mapGraph == null) {
+            buildGraphFromMap();
+        }
+        return mapGraph;
+    }
+
+    private void buildGraphFromMap() {
+        ArrayList<Vertex<Cell>> vertices = new ArrayList<>();
+        for(Cell[] cellRow: map) {
+            for(Cell cell : cellRow) {
+                vertices.add(new Vertex<>(cell));
+            }
+        }
+        this.mapGraph = new Graph<Cell>(vertices);
+        // add edges
+        int[] adj = {-1, 0, 1};
+        for(Vertex<Cell> vc : mapGraph.getVertices().values()) {
+            // get neighbour cells
+            Cell c = vc.getLabel();
+            for(PathCell pc : getPathNeighbors(c)) {
+                Vertex<Cell> nvc = mapGraph.getVertex(pc);
+                mapGraph.addEdge(vc, nvc);
+            }
+        }
+
+    }
+
+    public List<PathCell> getPathNeighbors(Cell destCell) {
+        return getNeighbors(destCell).stream().filter(c -> c instanceof PathCell).map(c -> (PathCell) c).collect(Collectors.toList());
+    }
+
+    private List<Cell> getNeighbors(Cell destCell) {
+        List<Cell> neighbors = new LinkedList<>();
+        int x = destCell.getX();
+        int y = destCell.getY();
+        int [] adj = {-1,0,1};
+        for(int dx : adj) {
+            for(int dy : adj) {
+                if(Math.abs(dx)+Math.abs(dy)==1) {
+                    int nx = x + dx;
+                    int ny = y + dy;
+                    if(nx >= 0 && ny >= 0 && ny < map.length && nx < map[0].length) {
+                        neighbors.add(map[ny][nx]);
+                    }
+                }
+            }
+        }
+        return neighbors;
     }
 }

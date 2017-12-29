@@ -21,7 +21,7 @@ public class StepBehaviour extends FSMBehaviour {
 
     public StepBehaviour(SystemAgent systemAgent) {
         agent = systemAgent;
-        ReceiverBehaviour waiting = new ReceiverBehaviour(agent, 30000, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
+        ReceiverBehaviour waiting = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), true) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -38,9 +38,7 @@ public class StepBehaviour extends FSMBehaviour {
                         // TODO later we should have one message with actions and stats
                         agent.storeActions(diggerActions);
                     }
-                } catch (Codec.CodecException e) {
-                    e.printStackTrace();
-                } catch (OntologyException e) {
+                } catch (Codec.CodecException | OntologyException e) {
                     e.printStackTrace();
                 }
             }

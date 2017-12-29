@@ -10,6 +10,7 @@ import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,8 @@ public class DiggerCoordinatorAgent extends ImasAgent {
 
     List<DiggerTask> tasks;
     List<DiggerTask> currentTasks;
+    
+    private long roundEnd;
 
     List<MobileAgentAction> roundActions;
 
@@ -54,7 +57,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
                 ACLMessage msg = prepareMessage(ACLMessage.INFORM);
                 msg.addReceiver(digger.getAID());
                 try {
-                    getContentManager().fillContent(msg, new RoundStart(pathCell.getCol(), pathCell.getRow()));
+                    getContentManager().fillContent(msg, new RoundStart(pathCell.getX(), pathCell.getY(), this.gameSettings.getCurrentRoundEnd()));
                     send(msg);
                 } catch (Codec.CodecException e) {
                     e.printStackTrace();
@@ -106,6 +109,28 @@ public class DiggerCoordinatorAgent extends ImasAgent {
             log("Sending message with the list of actions to my boss: "+ msg.getContent());
             send(msg);
         } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public long getRoundEnd() {
+        return roundEnd;
+    }
+
+    public void setRoundEnd(long roundEnd) {
+        this.roundEnd = roundEnd;
+    }
+
+    public void initDiggers() {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        for(AID digger : getDiggers()) {
+            message.addReceiver(digger);
+        }
+        try {
+            message.setContentObject(gameSettings);
+            send(message);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

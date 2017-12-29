@@ -60,7 +60,17 @@ abstract public class ImasAgent extends Agent {
      * Onthology used in the communication.
      */
     public static final String ONTOLOGY = "digger-ontology";
-    
+
+    /**
+     *  when the current round ends
+     */
+    private long roundEnd;
+
+    /**
+     * how long a round is
+     */
+    private long roundTime = 20000; // TODO get from game settings
+
     /**
      * Creates the agent.
      * @param type type of agent to set.
@@ -161,5 +171,17 @@ abstract public class ImasAgent extends Agent {
         message.setLanguage(LANGUAGE);
         message.setOntology(ONTOLOGY);
         return message;
+    }
+
+    public long getRoundEnd() {
+        return roundEnd;
+    }
+
+    public void setRoundEnd(long roundEnd) {
+        this.roundEnd = roundEnd;
+    }
+
+    public long getRoundTime() {
+        return roundTime;
     }
 }

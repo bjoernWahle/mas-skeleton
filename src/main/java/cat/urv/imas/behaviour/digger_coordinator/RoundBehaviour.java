@@ -33,7 +33,7 @@ public class RoundBehaviour extends FSMBehaviour {
         super(a);
         this.agent = a;
 
-        ReceiverBehaviour waiting = new ReceiverBehaviour(a, -1, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
+        ReceiverBehaviour waiting = new ReceiverBehaviour(a,  MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
             @Override
             public void handle(ACLMessage m) {
                 agent.log("Received message.");
@@ -44,9 +44,7 @@ public class RoundBehaviour extends FSMBehaviour {
                         if(ce instanceof GameHasEnded) {
                             setExitCode(1);
                         }
-                    } catch (Codec.CodecException e) {
-                        e.printStackTrace();
-                    } catch (OntologyException e) {
+                    } catch (Codec.CodecException | OntologyException e) {
                         e.printStackTrace();
                     }
 
@@ -57,6 +55,12 @@ public class RoundBehaviour extends FSMBehaviour {
                             // set game
                             agent.log("I received the game settings for this round.");
                             agent.setGameSettings((GameSettings) contentObject);
+
+                            if(agent.getGameSettings().getCurrentSimulationStep() == 1) {
+                                agent.log("Game starts. Sending GameSettings once to the diggers");
+                                agent.initDiggers();
+                            }
+
                             // inform diggers about their new position and the start of the new round
                             agent.informDiggers();
                             agent.resetRoundActions();

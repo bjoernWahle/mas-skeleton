@@ -22,8 +22,6 @@ import cat.urv.imas.gui.GraphicInterface;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.onthology.*;
-import jade.content.lang.Codec;
-import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
@@ -52,11 +50,6 @@ public class SystemAgent extends ImasAgent {
 
     private List<MobileAgentAction> requestedActions;
 
-
-    /**
-     * Round number.
-     */
-    private int currentRound;
     /**
      * The Coordinator agent with which interacts sharing game settings every
      * round.
@@ -153,12 +146,18 @@ public class SystemAgent extends ImasAgent {
 
         // Setup finished. When the last inform is received, the agent itself will add
         // a behaviour to send/receive actions
-        startSimulation();
         addBehaviour(new StepBehaviour(this));
     }
 
-    private void startSimulation() {
-        currentRound = 0;
+    public void startSimulation() {
+        game.setCurrentSimulationStep(0);
+        game.advanceToNextRound();
+        requestedActions = new LinkedList<>();
+    }
+
+    @Override
+    public long getRoundEnd() {
+        return game.getCurrentRoundEnd();
     }
 
     /**
@@ -183,8 +182,8 @@ public class SystemAgent extends ImasAgent {
             for (InfoAgent agent : pathCell.getAgents().get(AgentType.DIGGER)) {
                 String name = "Digger_"+diggerAgentsIndex++;
                 String[] args = new String[3];
-                args[0] = Integer.toString(cell.getCol());
-                args[1] = Integer.toString(cell.getRow());
+                args[0] = Integer.toString(cell.getX());
+                args[1] = Integer.toString(cell.getY());
                 args[2] = Integer.toString(((DiggerInfoAgent) agent).getCapacity());
                 if(diggerContainer == null) {
                     diggerContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), args);
@@ -201,8 +200,8 @@ public class SystemAgent extends ImasAgent {
             for (InfoAgent agent : pathCell.getAgents().get(AgentType.PROSPECTOR)) {
                 String name = "Prospector_"+prospectorAgentsIndex++;
                 String[] args = new String[2];
-                args[0] = Integer.toString(cell.getCol());
-                args[1] = Integer.toString(cell.getRow());
+                args[0] = Integer.toString(cell.getX());
+                args[1] = Integer.toString(cell.getY());
                 if(prospectorContainer == null) {
                     prospectorContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), args);
                 } else {
@@ -231,18 +230,14 @@ public class SystemAgent extends ImasAgent {
         this.gui.updateGame();
     }
 
-    public int getCurrentRound() {
-        return currentRound;
-    }
-
     public void advanceToNextRound() {
         // TODO get planned actions for this round and apply them (started...)
         // TODO add stats for last round
         checkAndApplyActions();
         addElementsForThisSimulationStep();
         updateGUI();
-        currentRound++;
-        log("Starting round "+currentRound);
+        this.game.advanceToNextRound();
+        log("Starting round "+this.game.getCurrentSimulationStep());
     }
 
     private void checkAndApplyActions() {

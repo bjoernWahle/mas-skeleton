@@ -401,4 +401,13 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             throw new IllegalArgumentException("Refusing move request to " +moveAction.x +"," + moveAction.y + " because the Cell is not a PathCell.");
         }
     }
+
+    public void setCurrentSimulationStep(int currentSimulationStep) {
+        this.currentSimulationStep = currentSimulationStep;
+    }
+
+    public void advanceToNextRound() {
+        this.currentSimulationStep++;
+        this.currentRoundEnd = System.currentTimeMillis() + stepTime;
+    }
 }

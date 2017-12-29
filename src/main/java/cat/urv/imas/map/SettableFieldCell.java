@@ -32,7 +32,7 @@ public class SettableFieldCell extends FieldCell {
 
     public void setElements(MetalType type, int amount) {
         if (!metal.isEmpty()) {
-            throw new IllegalStateException("This cell (" + this.getRow() + "," + this.getCol() + ") has already elements: " + this.getMapMessage());
+            throw new IllegalStateException("This cell (" + this.getY() + "," + this.getX() + ") has already elements: " + this.getMapMessage());
         }
         metal.put(type, amount);
     }

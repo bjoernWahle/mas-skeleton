@@ -30,7 +30,17 @@ public class RoundBehaviour extends FSMBehaviour {
     public RoundBehaviour(DiggerAgent diggerAgent) {
         agent = diggerAgent;
 
-        ReceiverBehaviour rs = new ReceiverBehaviour(agent,-1, MessageTemplate.and(MessageTemplate.MatchOntology("digger-ontology"), MessageTemplate.MatchPerformative(ACLMessage.INFORM))) {
+        ReceiverBehaviour rs = new ReceiverBehaviour(agent, MessageTemplate.and(MessageTemplate.MatchOntology("digger-ontology"), MessageTemplate.MatchPerformative(ACLMessage.INFORM)), false) {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public int onEnd() {
+                return super.onEnd();
+            }
+
             @Override
             public void handle(ACLMessage m) {
                 super.handle(m);
@@ -44,9 +54,7 @@ public class RoundBehaviour extends FSMBehaviour {
                     } else if (ce instanceof GameHasEnded) {
                         setExitCode(1);
                     }
-                } catch (Codec.CodecException e) {
-                    e.printStackTrace();
-                } catch (OntologyException e) {
+                } catch (Codec.CodecException | OntologyException e) {
                     e.printStackTrace();
                 }
             }
