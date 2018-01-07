@@ -364,29 +364,4 @@ public class GameSettings implements java.io.Serializable {
         }
         return neighbors;
     }
-    
-    //TODO: Bjorn, I got some problems running getNeighbors, it seems like the x and y are switch here neighbors.add(map[ny][nx]), but changing it gives problems. 
-    public List<PathCell> getMovableCells(Cell currentCell) {
-        return getNeighbors(currentCell).stream().filter(c -> c instanceof PathCell).map(c -> (PathCell) c).collect(Collectors.toList());
-    }
-
-    private List<Cell> getClosePaths(Cell currentCell) {
-        List<Cell> neighbors = new LinkedList<>();
-        int x = currentCell.getX();
-        int y = currentCell.getY();
-        int [] adj = {-1,0,1};
-        for(int dx : adj) {
-            for(int dy : adj) {
-                if(Math.abs(dx)+Math.abs(dy)==1) {
-                    int nx = x + dx;
-                    int ny = y + dy;
-                    if(nx >= 0 && ny >= 0 && nx < map.length && ny < map[0].length) {
-                        neighbors.add(map[nx][ny]);
-                    }
-                }
-            }
-        }
-        return neighbors;
-    }
-    
 }
