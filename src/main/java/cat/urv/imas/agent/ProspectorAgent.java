@@ -2,6 +2,8 @@ package cat.urv.imas.agent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import cat.urv.imas.behaviour.digger.DiggerBehaviour;
@@ -17,7 +19,9 @@ import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.FieldCell;
+import cat.urv.imas.map.PathCell;
 
 public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
 
@@ -84,10 +88,14 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     
     public void moveNextCell() {
     	//Make a random move.
-    	int inc_x = ThreadLocalRandom.current().nextInt(-1, 2);
-    	int inc_y = ThreadLocalRandom.current().nextInt(-1, 2);
-    	currentAction = new MoveAction(currentX + inc_x, currentY + inc_y);
-    	log("I want to move to ("+ currentX + "," + currentY +")!");
+    	List<PathCell> possibleMovements = game.getMovableCells(game.get(currentX,currentY));
+    	Random rand = new Random();
+    	PathCell nextCell = possibleMovements.get(rand.nextInt(possibleMovements.size()));
+    	if(nextCell == null) {
+    		nextCell = (PathCell) game.get(currentX, currentY);
+    	}
+    	currentAction = new MoveAction(nextCell.getX(), nextCell.getY());
+    	log("I want to move to ("+ nextCell.getX() + "," + nextCell.getY() +")!");
     	
     	//TODO: Implementation of an intelligent movement to efficiently explore the map.
     }
