@@ -25,6 +25,7 @@ public class DiggerOntology extends BeanOntology {
 
         add(InfoAgent.class);
         add(DiggerInfoAgent.class);
+        add(ProspectorInfoAgent.class);
         add(RoundStart.class);
         add(DiggerTask.class);
         add(MetalType.class);

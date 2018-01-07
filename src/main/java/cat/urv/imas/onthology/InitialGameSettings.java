@@ -174,7 +174,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                         break;
                     case PC:
                         c = new PathCell(row, col);
-                        c.addAgent(new InfoAgent(AgentType.PROSPECTOR));
+                        c.addAgent(new ProspectorInfoAgent(AgentType.PROSPECTOR));
                         map[row][col] = c;
                         addAgentToList(AgentType.PROSPECTOR, c);
                         break;

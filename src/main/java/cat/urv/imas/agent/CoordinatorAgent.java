@@ -139,15 +139,19 @@ public class CoordinatorAgent extends ImasAgent {
     }
 
     public void notifySystemAgent() {
+    	//We concatenate both digger actions and prospector actions
+    	ActionList agentActions = new ActionList(diggerActions.getAgentActions());
+    	agentActions.addAgentActions(prospectorActions.getAgentActions());
+    	
         log("Sending received actions and stats to the almighty System Agent. God bless him.");
         ACLMessage msg = prepareMessage(ACLMessage.INFORM);
         msg.addReceiver(systemAgent);
         try {
-            getContentManager().fillContent(msg, diggerActions);
+            getContentManager().fillContent(msg, agentActions);
             send(msg);
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
-            log("Unable to fill message content: " + diggerActions);
+            log("Unable to fill message content: " + agentActions);
         }
     }
 

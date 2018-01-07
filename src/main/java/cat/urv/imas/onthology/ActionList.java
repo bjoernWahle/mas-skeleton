@@ -22,4 +22,8 @@ public class ActionList implements Predicate {
     public void setAgentActions(List<MobileAgentAction> agentActions) {
         this.agentActions = agentActions;
     }
+    
+    public void addAgentActions(List<MobileAgentAction> agentActions) {
+        this.agentActions.addAll(agentActions);
+    }
 }

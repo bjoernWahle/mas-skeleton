@@ -5,6 +5,7 @@ import cat.urv.imas.onthology.ActionList;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
+import jade.content.onto.UngroundedException;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -39,8 +40,8 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
         ACLMessage msg = agent.receive(mt);
         if(msg != null) {
             agent.log("Received some actions broo: "+msg);
-            agent.log("AID: "+agent.diggerCoordinatorAgent);
             AID sender = msg.getSender();
+            agent.log("AID: "+sender);
             ContentElement ce = null;
             try {
                 ce = agent.getContentManager().extractContent(msg);
@@ -57,6 +58,7 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
                     // check if actions or stats
                     if(ce instanceof ActionList) {
                         agent.setProspectorActions((ActionList) ce);
+                        prospectorActionsReceived = true;
                     } else {
                         // TODO stats
                     }
@@ -67,9 +69,10 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
                 e.printStackTrace();
                 agent.log("Not readable message: " + msg);
             }
+            
         }
         // TODO time and actions (prospector) + stats
-        if(diggerActionsReceived) {
+        if(diggerActionsReceived && prospectorActionsReceived) {
             finished = true;
         }
 

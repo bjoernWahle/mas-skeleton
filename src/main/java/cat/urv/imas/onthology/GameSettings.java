@@ -20,6 +20,7 @@ package cat.urv.imas.onthology;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.CellType;
+import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.util.Graph;
 import cat.urv.imas.util.Vertex;
@@ -214,11 +215,22 @@ public class GameSettings implements java.io.Serializable {
         return map;
     }
 
-    public Cell[] detectFieldsWithMetal(int row, int col) {
-        //TODO: find all surrounding cells to (row,col) that are
-        //      buildings and have garbage on it.
-        //      Use: FieldCell.detectMetal() to do so.
-        return null;
+    public ArrayList<FieldCell> detectFieldsWithMetal(int row, int col) {
+        //Find all surrounding cells to (row,col) that are
+        //buildings and have garbage on it.
+        //Use: FieldCell.detectMetal() to do so.
+    	ArrayList<FieldCell> detectedMetals = new ArrayList<FieldCell>();
+    	for (int i=-1; i<2; i++) {
+    		for (int j=-1;j<2;j++) {
+	    		if((row+i) <= map.length && (col+j) <= map[0].length && (row+i)>=0 && (col+j) >= 0) {
+	    			if (map[row+i][col+j].getCellType() == CellType.FIELD) {
+	    				FieldCell tempCell = (FieldCell) map[row+i][col+j];
+	    				detectedMetals.add(tempCell);
+	    			}
+	    		}
+    		}
+    	}
+        return detectedMetals;
     }
 
     /**
