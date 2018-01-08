@@ -225,8 +225,9 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
 
     @Override
     public void drawField(FieldCell cell) {
+    	
         Color color = BROWN;
-        if(!cell.isEmpty()) {
+        if(!cell.getMapMessage().equals("")) {
             MetalType metalType = MetalType.fromShortString(cell.getMapMessage().substring(0,1));
             if (metalType == MetalType.GOLD) {
                 color = GOLD;
@@ -236,6 +237,7 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
         }
         drawCell(color, Color.DARK_GRAY);
         drawString(cell.getMapMessage(), Color.BLACK, dx - 40, dy);
+        
     }
 
     @Override
@@ -246,8 +248,13 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
 
     @Override
     public void drawAgents(PathCell cell) {
-        drawEmptyPath(cell);
-        drawAgent(LIGHT_RED, cell.getMapMessage(), Color.BLACK);
+    	try {
+    		drawEmptyPath(cell);
+            drawAgent(LIGHT_RED, cell.getMapMessage(), Color.BLACK);
+    	}catch(NullPointerException e) {
+    		e.printStackTrace();
+    	}
+        
     }
 
 }

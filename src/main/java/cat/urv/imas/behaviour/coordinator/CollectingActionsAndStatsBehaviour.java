@@ -42,34 +42,35 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
             agent.log("Received some actions broo: "+msg);
             AID sender = msg.getSender();
             agent.log("AID: "+sender);
-            ContentElement ce = null;
-            try {
-                ce = agent.getContentManager().extractContent(msg);
-                // check who send message
-                if(sender.equals(agent.diggerCoordinatorAgent)) {
-                    // check if actions or stats
-                    if(ce instanceof ActionList) {
-                        agent.setDiggerActions((ActionList) ce);
-                        diggerActionsReceived = true;
-                    } else {
-                        // TODO stats
-                    }
-                } else if (sender.equals(agent.prospectorCoordinatorAgent)) {
-                    // check if actions or stats
-                    if(ce instanceof ActionList) {
-                        agent.setProspectorActions((ActionList) ce);
-                        prospectorActionsReceived = true;
-                    } else {
-                        // TODO stats
-                    }
-                } else {
-                    agent.log("Message from unknown sender: " + msg);
-                }
-            } catch (Codec.CodecException | OntologyException e) {
-                e.printStackTrace();
-                agent.log("Not readable message: " + msg);
-            }
-            
+	        if(!sender.equals(agent.systemAgent)) {
+            	ContentElement ce = null;
+	            try {
+	                ce = agent.getContentManager().extractContent(msg);
+	                // check who send message
+	                if(sender.equals(agent.diggerCoordinatorAgent)) {
+	                    // check if actions or stats
+	                    if(ce instanceof ActionList) {
+	                        agent.setDiggerActions((ActionList) ce);
+	                        diggerActionsReceived = true;
+	                    } else {
+	                        // TODO stats
+	                    }
+	                } else if (sender.equals(agent.prospectorCoordinatorAgent)) {
+	                    // check if actions or stats
+	                    if(ce instanceof ActionList) {
+	                        agent.setProspectorActions((ActionList) ce);
+	                        prospectorActionsReceived = true;
+	                    } else {
+	                        // TODO stats
+	                    }
+	                } else {
+	                    agent.log("Message from unknown sender: " + msg);
+	                }
+	            } catch (Codec.CodecException | OntologyException e) {
+	                e.printStackTrace();
+	                agent.log("Not readable message: " + msg);
+	            }
+	        }
         }
         // TODO time and actions (prospector) + stats
         if(diggerActionsReceived && prospectorActionsReceived) {

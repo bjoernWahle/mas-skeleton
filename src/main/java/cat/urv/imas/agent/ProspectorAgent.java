@@ -9,9 +9,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import cat.urv.imas.behaviour.digger.DiggerBehaviour;
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
 import cat.urv.imas.onthology.DiggerInfoAgent;
-import cat.urv.imas.onthology.FoundMetalsList;
 import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.InformAgentAction;
+import cat.urv.imas.onthology.InformProspector;
 import cat.urv.imas.onthology.MobileAgentAction;
 import cat.urv.imas.onthology.MoveAction;
 import cat.urv.imas.onthology.RoundStart;
@@ -103,33 +103,23 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     
     public void examine() {
     	detectedMetals = game.detectFieldsWithMetal(currentY, currentX);
-    	log("Hey fella, I found "+ detectedMetals.size() + " new metals!");
+    	if(!detectedMetals.isEmpty()) {
+    		log("Hey fella, I found "+ detectedMetals.size() + " new metals!");
+    	}
     }
     
     public void informCoordinator() {
-    	//Send new position of the prospector
+    	//Send new position of the prospector and metals found (if any)
     	ACLMessage message = prepareMessage(ACLMessage.INFORM);
         message.addReceiver(prospectorCoordinator);
         try {
-        	getContentManager().fillContent(message, new InformAgentAction(currentAction));
-            log("Sending msg with my current action: " + message.getContent());
-            send(message);
-        } catch (Codec.CodecException | OntologyException e) {
-            e.printStackTrace();
-            log("Some error while sending?");
-        }
-        
-        //Send metals found by the prospector
-        message = prepareMessage(ACLMessage.INFORM);
-        message.addReceiver(prospectorCoordinator);
-        try {
-        	getContentManager().fillContent(message, new FoundMetalsList(detectedMetals));
-            log("Sending msg with detected metals: " + message.getContent());
+        	getContentManager().fillContent(message, new InformProspector(currentAction,detectedMetals));
+            log("Sending msg with my current action and metals found: " + message.getContent());
             send(message);
             detectedMetals.clear();
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
             log("Some error while sending?");
-        }      
+        }     
     }
 }

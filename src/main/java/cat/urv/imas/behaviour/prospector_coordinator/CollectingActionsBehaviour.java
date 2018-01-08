@@ -5,8 +5,8 @@ import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
 import cat.urv.imas.onthology.ActionType;
-import cat.urv.imas.onthology.FoundMetalsList;
 import cat.urv.imas.onthology.InformAgentAction;
+import cat.urv.imas.onthology.InformProspector;
 import cat.urv.imas.onthology.MobileAgentAction;
 import cat.urv.imas.onthology.MoveAction;
 import jade.content.ContentElement;
@@ -38,7 +38,6 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
     public void onStart() {
         super.onStart();
         prospectors = new LinkedList<>(agent.getProspectors());
-        prospectors.addAll(agent.getProspectors());
         endTime = System.currentTimeMillis() + millis;
         agent.log("Waiting for action informations");
     }
@@ -52,10 +51,14 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
             try {
                 AID sender = msg.getSender();
                 if(prospectors.contains(sender)) {
-                    agent.log("Received action from "+ sender.getLocalName());
                     ContentElement ce = agent.getContentManager().extractContent(msg);
-                    if(ce instanceof InformAgentAction) {
-                        MobileAgentAction action = ((InformAgentAction) ce).getAction();
+                    if(ce instanceof InformProspector) {
+                    	MobileAgentAction action = ((InformProspector) ce).getAction();
+                    	
+                        if (((InformProspector) ce).anyElements()) {
+                    		agent.log("Received discovered metals from "+ sender.getLocalName());
+                    		agent.addFoundMetals(((InformProspector) ce).getFoundMetalsList());
+                    	}
                         ActionType actionType = ActionType.fromString(action.getActionType());
                         switch (actionType) {
                             case MOVE:
@@ -63,6 +66,7 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
                             case COLLECT:
                             case RETURN:
                                 // add agent info
+                            	agent.log("Received action from "+ sender.getLocalName());
                                 action.setAgent(agent.getGameSettings().getInfoAgent(AgentType.PROSPECTOR, sender));
                                 agent.addRoundAction(action);
                                 prospectors.remove(msg.getSender());
@@ -71,11 +75,6 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
                             default:
                                 throw new IllegalArgumentException("Illegal action type for a prospector: " + actionType);
                         }
-                    }else if(ce instanceof FoundMetalsList) {
-                    	if (((FoundMetalsList) ce).anyElements()) {
-                    		agent.addFoundMetals(((FoundMetalsList) ce).getFoundMetalsList());
-                    	}
-                    	prospectors.remove(msg.getSender());
                     }
                 } else {
                     agent.log("Receiving action from " + sender.getLocalName() + ". Either I do not know this Agent yet or he already told me about his action.");
@@ -87,12 +86,10 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
             }
         }
 
-        if(prospectors.isEmpty() || System.currentTimeMillis() >= endTime) {
+        if((prospectors.isEmpty()) /*|| System.currentTimeMillis() >= endTime*/) {
             agent.informCoordinator();
             finished = true;
         }
-
-
     }
 
     @Override

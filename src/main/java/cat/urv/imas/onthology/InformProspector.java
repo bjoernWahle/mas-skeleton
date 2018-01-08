@@ -1,20 +1,21 @@
 package cat.urv.imas.onthology;
 
-import jade.content.Predicate;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cat.urv.imas.map.FieldCell;
+import jade.content.Predicate;
 
-public class FoundMetalsList implements Predicate {
-    private List<FieldCell> foundMetalsList;
+public class InformProspector extends InformAgentAction {
+	private List<FieldCell> foundMetalsList;
 
-    public FoundMetalsList() {
+    public InformProspector() {
+    	super();
     	this.foundMetalsList = new ArrayList<FieldCell>();
     }
-
-    public FoundMetalsList(List<FieldCell> foundMetalsList) {
+    
+    public InformProspector(MobileAgentAction action,List<FieldCell> foundMetalsList) {
+    	super(action);
     	if(foundMetalsList != null) {
     		this.foundMetalsList = foundMetalsList;
     	}else {

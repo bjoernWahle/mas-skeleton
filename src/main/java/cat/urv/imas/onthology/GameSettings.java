@@ -229,7 +229,9 @@ public class GameSettings implements java.io.Serializable {
 	    		if((row+i) < map.length && (col+j) < map[0].length && (row+i)>=0 && (col+j) >= 0) {
 	    			if (map[row+i][col+j].getCellType() == CellType.FIELD) {
 	    				FieldCell tempCell = (FieldCell) map[row+i][col+j];
-	    				detectedMetals.add(tempCell);
+	    				if(!tempCell.detectMetal().isEmpty()) {
+	    					detectedMetals.add(tempCell);
+	    				}
 	    			}
 	    		}
     		}
@@ -377,7 +379,7 @@ public class GameSettings implements java.io.Serializable {
     	foundMetals.removeAll(newMetals);
     	//Then we add them to have them all
     	foundMetals.addAll(newMetals);
-    	updateFoundedMetals();
+    	//updateFoundedMetals();
     }
     
     private void updateFoundedMetals() {
