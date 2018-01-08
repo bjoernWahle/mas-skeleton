@@ -63,6 +63,10 @@ public class FieldCell extends Cell {
         found = (!metal.isEmpty());
         return metal;
     }
+    
+    public void removeDetected() {
+    	found = false;
+    }
 
     /**
      * Whenever the metal has been detected, it informs about the

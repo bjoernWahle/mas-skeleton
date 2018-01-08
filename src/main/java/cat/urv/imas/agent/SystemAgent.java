@@ -254,6 +254,9 @@ public class SystemAgent extends ImasAgent {
                 }
             }
         }
+        //Clear requested actions because they have already been checked
+        requestedActions.clear();
+        
         // TODO check collect actions
         // TODO check return actions (needed)
         // TODO blame agents that wanna be idle

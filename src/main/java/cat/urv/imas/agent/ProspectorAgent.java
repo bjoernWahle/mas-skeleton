@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import cat.urv.imas.behaviour.digger.DiggerBehaviour;
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
 import cat.urv.imas.onthology.DiggerInfoAgent;
+import cat.urv.imas.onthology.FoundMetalsList;
 import cat.urv.imas.onthology.GameSettings;
 import cat.urv.imas.onthology.InformAgentAction;
 import cat.urv.imas.onthology.MobileAgentAction;
@@ -30,7 +31,7 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private AID prospectorCoordinator;
     private GameSettings game;
     private long roundEnd;
-    private ArrayList<FieldCell> detectedMetals = new ArrayList<FieldCell>(); 
+    private List<FieldCell> detectedMetals = new ArrayList<FieldCell>(); 
     private MobileAgentAction currentAction;
     
     public ProspectorAgent() {
@@ -106,7 +107,7 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     }
     
     public void informCoordinator() {
-    	//TODO: Add detected metals to the message
+    	//Send new position of the prospector
     	ACLMessage message = prepareMessage(ACLMessage.INFORM);
         message.addReceiver(prospectorCoordinator);
         try {
@@ -116,6 +117,19 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
             log("Some error while sending?");
-        }       
+        }
+        
+        //Send metals found by the prospector
+        message = prepareMessage(ACLMessage.INFORM);
+        message.addReceiver(prospectorCoordinator);
+        try {
+        	getContentManager().fillContent(message, new FoundMetalsList(detectedMetals));
+            log("Sending msg with detected metals: " + message.getContent());
+            send(message);
+            detectedMetals.clear();
+        } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+            log("Some error while sending?");
+        }      
     }
 }

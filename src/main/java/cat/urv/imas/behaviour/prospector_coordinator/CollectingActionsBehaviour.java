@@ -5,6 +5,7 @@ import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
 import cat.urv.imas.onthology.ActionType;
+import cat.urv.imas.onthology.FoundMetalsList;
 import cat.urv.imas.onthology.InformAgentAction;
 import cat.urv.imas.onthology.MobileAgentAction;
 import cat.urv.imas.onthology.MoveAction;
@@ -37,6 +38,7 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
     public void onStart() {
         super.onStart();
         prospectors = new LinkedList<>(agent.getProspectors());
+        prospectors.addAll(agent.getProspectors());
         endTime = System.currentTimeMillis() + millis;
         agent.log("Waiting for action informations");
     }
@@ -69,6 +71,11 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
                             default:
                                 throw new IllegalArgumentException("Illegal action type for a prospector: " + actionType);
                         }
+                    }else if(ce instanceof FoundMetalsList) {
+                    	if (((FoundMetalsList) ce).anyElements()) {
+                    		agent.addFoundMetals(((FoundMetalsList) ce).getFoundMetalsList());
+                    	}
+                    	prospectors.remove(msg.getSender());
                     }
                 } else {
                     agent.log("Receiving action from " + sender.getLocalName() + ". Either I do not know this Agent yet or he already told me about his action.");

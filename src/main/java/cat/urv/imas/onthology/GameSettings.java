@@ -123,8 +123,12 @@ public class GameSettings implements java.io.Serializable {
      * List of cells per type of cell.
      */
     protected Map<CellType, List<Cell>> cellsOfType;
-
-
+    
+    /**
+     * List of metals already discovered by the prospectors
+     */
+    List<FieldCell> foundMetals;
+    
     public long getSeed() {
         return seed;
     }
@@ -215,11 +219,11 @@ public class GameSettings implements java.io.Serializable {
         return map;
     }
 
-    public ArrayList<FieldCell> detectFieldsWithMetal(int row, int col) {
+    public List<FieldCell> detectFieldsWithMetal(int row, int col) {
         //Find all surrounding cells to (row,col) that are
         //buildings and have garbage on it.
         //Use: FieldCell.detectMetal() to do so.
-    	ArrayList<FieldCell> detectedMetals = new ArrayList<FieldCell>();
+    	List<FieldCell> detectedMetals = new ArrayList<FieldCell>();
     	for (int i=-1; i<2; i++) {
     		for (int j=-1;j<2;j++) {
 	    		if((row+i) < map.length && (col+j) < map[0].length && (row+i)>=0 && (col+j) >= 0) {
@@ -363,5 +367,29 @@ public class GameSettings implements java.io.Serializable {
             }
         }
         return neighbors;
+    }
+    
+    /**
+     * Method for adding metals found by the prospectors
+     */
+    public void addFoundMetals(List<FieldCell> newMetals) {
+    	//We first remove them to avoid repetition
+    	foundMetals.removeAll(newMetals);
+    	//Then we add them to have them all
+    	foundMetals.addAll(newMetals);
+    	updateFoundedMetals();
+    }
+    
+    private void updateFoundedMetals() {
+    	List<Cell> fields = cellsOfType.get(CellType.FIELD);
+    	for (Cell field : fields) {
+    		FieldCell temp = (FieldCell) field;
+    		if (foundMetals.contains(temp)){
+    			temp.detectMetal();
+    		}else {
+    			temp.removeDetected();
+    		}
+    		
+    	}
     }
 }

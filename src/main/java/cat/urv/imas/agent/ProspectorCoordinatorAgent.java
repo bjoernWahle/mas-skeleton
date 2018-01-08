@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import cat.urv.imas.behaviour.prospector_coordinator.RoundBehaviour;
 import cat.urv.imas.map.Cell;
+import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.onthology.ActionList;
 import cat.urv.imas.onthology.DiggerTask;
@@ -71,6 +72,10 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
 
     public List<MobileAgentAction> getRoundActions() {
         return roundActions;
+    }
+    
+    public void addFoundMetals(List<FieldCell> newMetals) {
+    	gameSettings.addFoundMetals(newMetals);
     }
     
     public void initProspectors() {
