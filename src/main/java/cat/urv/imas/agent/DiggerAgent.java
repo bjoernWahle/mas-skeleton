@@ -2,6 +2,8 @@ package cat.urv.imas.agent;
 
 import cat.urv.imas.behaviour.digger.DiggerBehaviour;
 import cat.urv.imas.map.Cell;
+import cat.urv.imas.map.FieldCell;
+import cat.urv.imas.map.ManufacturingCenterCell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
@@ -18,9 +20,9 @@ import java.util.stream.Collectors;
 
 public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
-    public void startRound(RoundStart rs) {
-        setCurrentPosition(rs.getX(),rs.getY());
-        roundEnd = rs.getRoundEnd();
+    public void startRound(int x, int y) {
+        setCurrentPosition(x, y);
+        roundEnd = game.getCurrentRoundEnd();
         logPosition();
     }
 
@@ -96,16 +98,36 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                 return;
             } else {
                 currentTask = nextTask.get();
+                if(currentTask.taskType.equals(TaskType.COLLECT_METAL.toString())) {
+                    currentMetal = MetalType.fromString(currentTask.getMetalType());
+                }
             }
         }
         TaskType currentTaskType = TaskType.fromString(currentTask.taskType);
         switch(currentTaskType) {
             case COLLECT_METAL:
                 if(checkPosition(currentTask.x, currentTask.y)) {
-                    if(currentCapacity < maxCapacity) {
+                    FieldCell fieldCell;
+                    Cell cell = game.get(currentTask.x, currentTask.y);
+                    if(cell instanceof FieldCell) {
+                        fieldCell = (FieldCell) cell;
+                    } else {
+                        throw new IllegalArgumentException("Collect metal cells have to be always field cells.");
+                    }
+                    int metalCapacity;
+                    if(fieldCell.wasFound()) {
+                        log("Cell was found.");
+                    }
+                    log(fieldCell.getMetal().toString());
+                    if(fieldCell.getMetal().containsKey(currentMetal)) {
+                        metalCapacity = fieldCell.getMetalAmount();
+                    } else {
+                        throw new IllegalArgumentException("Seems that the cell does not have any metal of the current type.");
+                    }
+                    if(currentCapacity < maxCapacity && metalCapacity > 0) {
                         collectMetal(currentTask.x, currentTask.y);
                     } else {
-                        // TODO add return task to the start of the list
+                        startReturnMetal();
                         log("I gonna go return that metal.");
                     }
                 } else {
@@ -124,6 +146,37 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         }
         // tell digger coordinator about plan
         notifyDiggerCoordinator(currentAction);
+    }
+
+    private void startReturnMetal() {
+        // remove current task from the list
+        tasks.remove(currentTask);
+        // find closest manufacturing center
+        List<Cell> mfcs = game.getManufacturingCenters();
+        ManufacturingCenterCell bestManufacturingCenter = null;
+        double bestRatio = 0;
+        List<Cell> bestPath = null;
+        Cell currentCell = game.get(currentX, currentY);
+        for(Cell cell: mfcs) {
+            ManufacturingCenterCell manufacturingCenter = (ManufacturingCenterCell) cell;
+            if(manufacturingCenter.getMetal() != currentMetal) {
+                continue;
+            }
+            List<Cell> pathNeighbors = new ArrayList<>(game.getPathNeighbors(cell));
+            List<Cell> shortestPath = game.getMapGraph().getShortestPath(currentCell, pathNeighbors);
+            double ratio = manufacturingCenter.getPrice() / shortestPath.size();
+            if(ratio > bestRatio) {
+                bestRatio = ratio;
+                bestPath = shortestPath;
+                bestManufacturingCenter = manufacturingCenter;
+            }
+        }
+
+
+        currentTask = new DiggerTask(bestManufacturingCenter.getX(), bestManufacturingCenter.getY(), TaskType.RETURN_METAL.toString(), currentMetal.toString(), currentCapacity);
+        List<PathCell> pc = bestPath.stream().map(c -> (PathCell) c).collect(Collectors.toList());
+        currentMovementPlan = new Plan(pc);
+        moveTowards(bestManufacturingCenter.getX(), bestManufacturingCenter.getY());
     }
 
     private void doNothing() {
@@ -172,10 +225,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         List<Cell> pathNeighbors = new ArrayList<>(game.getPathNeighbors(destCell));
 
         List<Cell> vList = game.getMapGraph().getShortestPath(currentCell, pathNeighbors);
-        if (!(vList.get(vList.size() - 1) instanceof PathCell)) {
-            vList.remove(vList.size() -1);
-        }
-        vList.remove(0);
         List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
         return new Plan(pc);
     }

@@ -1,24 +1,17 @@
 package cat.urv.imas.behaviour.digger_coordinator;
 
-import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.behaviour.ReceiverBehaviour;
-import cat.urv.imas.onthology.AgentList;
 import cat.urv.imas.onthology.GameHasEnded;
 import cat.urv.imas.onthology.GameSettings;
-import cat.urv.imas.onthology.InfoAgent;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.behaviours.FSMBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
-import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import jade.proto.ContractNetInitiator;
-
-import java.util.stream.Collectors;
 
 public class RoundBehaviour extends FSMBehaviour {
     private DiggerCoordinatorAgent agent;
@@ -55,13 +48,6 @@ public class RoundBehaviour extends FSMBehaviour {
                             // set game
                             agent.log("I received the game settings for this round.");
                             agent.setGameSettings((GameSettings) contentObject);
-
-                            if(agent.getGameSettings().getCurrentSimulationStep() == 1) {
-                                agent.log("Game starts. Sending GameSettings once to the diggers");
-                                agent.initDiggers();
-                            }
-
-                            // inform diggers about their new position and the start of the new round
                             agent.informDiggers();
                             agent.resetRoundActions();
                             setExitCode(0);

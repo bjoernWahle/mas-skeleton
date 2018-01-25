@@ -156,6 +156,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         map = new Cell[rows][cols];
         int manufacturingCenterIndex = 0;
         this.agentList = new HashMap();
+        this.foundMetals = new LinkedList<>();
         numberGenerator = new Random(this.getSeed());
 
         int cell;
@@ -314,6 +315,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         cell.setElements(type, amount);
         if (visible) {
             cell.detectMetal();
+            foundMetals.add(cell);
         }
     }
 
@@ -376,12 +378,14 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         Cell newCell = get(moveAction.y, moveAction.x);
         if(newCell instanceof PathCell) {
             // if everything ok, remove agent from old cell and add it to the new cell
-
             PathCell newPathCell = (PathCell) newCell;
             Cell oldCell = findAgentsCell(agent);
             PathCell oldPathCell = (PathCell) oldCell;
             if(!oldCell.adjacent(newCell)) {
                 throw new IllegalArgumentException("Refusing move request to "+moveAction.x +"," + moveAction.y +" because the cell is not adjacent to the current cell" );
+            }
+            if(((PathCell) newCell).isThereADiggerAgentWorking()) {
+                throw new IllegalArgumentException("Refusing move request to "+moveAction.x +"," + moveAction.y +" because there is a digger working at this cell");
             }
             newPathCell.addAgent(agent);
             oldPathCell.removeAgent(agent);
@@ -409,5 +413,29 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     public void advanceToNextRound() {
         this.currentSimulationStep++;
         this.currentRoundEnd = System.currentTimeMillis() + stepTime;
+    }
+
+    public void applyCollectMetal(CollectMetalAction collectAction) {
+        InfoAgent agent = collectAction.getAgent();
+        PathCell agentCell = getAgentCell(agent.getType(), agent.getAID());
+        if(agentCell.isThereADiggerAgentWorking()) {
+            throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is a digger working at this cell");
+        }
+        Cell destCell = get(collectAction.x, collectAction.y);
+        if(!destCell.adjacent(agentCell)) {
+            throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because it is not adjacent to the diggers position.");
+        }
+        if(!(destCell instanceof FieldCell)) {
+            throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because it is not a field cell");
+        } else {
+            FieldCell fieldCell = (FieldCell) destCell;
+            if(!fieldCell.wasFound()) {
+                throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because it was not found yet.");
+            }
+            if(fieldCell.getMetalAmount() == 0) {
+                throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is no metal left.");
+            }
+            fieldCell.removeMetal();
+        }
     }
 }

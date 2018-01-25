@@ -206,7 +206,12 @@ public class Graph<T> {
         }
         List<Vertex> vertices = algo.getPath(bestDest);
         System.out.println(vertices);
-        return vertices.stream().map(Vertex<T>::getLabel).collect(Collectors.toList());
+        List<T> vList = vertices.stream().map(Vertex<T>::getLabel).collect(Collectors.toList());
+        if (!(vList.get(vList.size() - 1) instanceof PathCell)) {
+            vList.remove(vList.size() -1);
+        }
+        vList.remove(0);
+        return vList;
     }
 
 }

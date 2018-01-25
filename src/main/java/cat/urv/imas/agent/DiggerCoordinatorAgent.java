@@ -2,6 +2,7 @@ package cat.urv.imas.agent;
 
 import cat.urv.imas.behaviour.digger_coordinator.RoundBehaviour;
 import cat.urv.imas.map.Cell;
+import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
@@ -23,7 +24,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     List<DiggerTask> tasks;
-    List<DiggerTask> currentTasks;
+    Set<FieldCell> metalsBeingCollected;
     
     private long roundEnd;
 
@@ -43,29 +44,9 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         this.coordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
 
         tasks = new LinkedList<>();
-
-        addTask(new DiggerTask(5, 0, TaskType.COLLECT_METAL.toString(), MetalType.SILVER.getShortString(), 4));
-
+        metalsBeingCollected = new HashSet<>();
 
         addBehaviour(new RoundBehaviour(this));
-    }
-
-    public void informDiggers() {
-        for (Cell cell: (gameSettings.getAgentList().get(AgentType.DIGGER))) {
-            PathCell pathCell = (PathCell) cell;
-            for(InfoAgent digger: ((PathCell) cell).getAgents().get(AgentType.DIGGER)) {
-                ACLMessage msg = prepareMessage(ACLMessage.INFORM);
-                msg.addReceiver(digger.getAID());
-                try {
-                    getContentManager().fillContent(msg, new RoundStart(pathCell.getX(), pathCell.getY(), this.gameSettings.getCurrentRoundEnd()));
-                    send(msg);
-                } catch (Codec.CodecException e) {
-                    e.printStackTrace();
-                } catch (OntologyException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void addTask(DiggerTask task) {
@@ -121,7 +102,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         this.roundEnd = roundEnd;
     }
 
-    public void initDiggers() {
+    public void informDiggers() {
         ACLMessage message = new ACLMessage(ACLMessage.INFORM);
         message.setSender(getAID());
         for(AID digger : getDiggers()) {
@@ -132,6 +113,11 @@ public class DiggerCoordinatorAgent extends ImasAgent {
             send(message);
         } catch (IOException e) {
             e.printStackTrace();
+            log("Something went wrong sending the message.");
         }
+    }
+
+    public Set<FieldCell> getMetalsBeingCollected() {
+        return metalsBeingCollected;
     }
 }

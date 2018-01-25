@@ -29,6 +29,15 @@ public class ManufacturingCenterCell extends Cell {
      * Price of manufacturing silver or gold.
      */
     private final int price;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public MetalType getMetal() {
+        return metal;
+    }
+
     /**
      * Type of metal that this center manufactures.
      */

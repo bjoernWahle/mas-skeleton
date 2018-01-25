@@ -2,10 +2,8 @@ package cat.urv.imas.behaviour.digger;
 
 import cat.urv.imas.agent.DiggerAgent;
 import cat.urv.imas.behaviour.ReceiverBehaviour;
-import cat.urv.imas.onthology.DiggerTask;
-import cat.urv.imas.onthology.GameHasEnded;
-import cat.urv.imas.onthology.MetalType;
-import cat.urv.imas.onthology.RoundStart;
+import cat.urv.imas.map.Cell;
+import cat.urv.imas.onthology.*;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
@@ -17,6 +15,7 @@ import jade.domain.FIPAAgentManagement.RefuseException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 import jade.proto.ContractNetResponder;
 
 public class RoundBehaviour extends FSMBehaviour {
@@ -30,7 +29,7 @@ public class RoundBehaviour extends FSMBehaviour {
     public RoundBehaviour(DiggerAgent diggerAgent) {
         agent = diggerAgent;
 
-        ReceiverBehaviour rs = new ReceiverBehaviour(agent, MessageTemplate.and(MessageTemplate.MatchOntology("digger-ontology"), MessageTemplate.MatchPerformative(ACLMessage.INFORM)), false) {
+        ReceiverBehaviour rs = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -44,18 +43,29 @@ public class RoundBehaviour extends FSMBehaviour {
             @Override
             public void handle(ACLMessage m) {
                 super.handle(m);
-                try {
-                    ContentElement ce = agent.getContentManager().extractContent(m);
-                    if(ce instanceof RoundStart) {
-                        RoundStart rs = (RoundStart) ce;
-                        agent.startRound(rs);
-                        setExitCode(0);
-
-                    } else if (ce instanceof GameHasEnded) {
-                        setExitCode(1);
+                if(m.getOntology() != null && m.getOntology().equals("digger-ontology")) {
+                    try {
+                        ContentElement ce = agent.getContentManager().extractContent(m);
+                        if(ce instanceof GameHasEnded) {
+                            setExitCode(1);
+                        }
+                    } catch (Codec.CodecException | OntologyException e) {
+                        e.printStackTrace();
                     }
-                } catch (Codec.CodecException | OntologyException e) {
-                    e.printStackTrace();
+
+                } else {
+                    GameSettings game = null;
+                    try {
+                        game = (GameSettings) m.getContentObject();
+                        agent.setGame(game);
+                        Cell cell = game.getAgentCell(agent.getType(), agent.getAID());
+                        // get own position
+                        agent.startRound(cell.getX(), cell.getY());
+                    } catch (UnreadableException e) {
+                        e.printStackTrace();
+                        agent.log("Content was not readable, sending old game status... Content:" + m);
+                    }
+                    setExitCode(0);
                 }
             }
         };
@@ -77,8 +87,8 @@ public class RoundBehaviour extends FSMBehaviour {
         };
 
 
-        registerFirstState(rs, WAITING);
-        registerState(communicationBehaviour, COMMUNICATING);
+        registerFirstState(communicationBehaviour, COMMUNICATING);
+        registerState(rs, WAITING);
         registerState(performBehaviour, PERFORMING);
         registerLastState(endBehaviour, END);
 
