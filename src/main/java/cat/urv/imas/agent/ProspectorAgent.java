@@ -2,7 +2,9 @@ package cat.urv.imas.agent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,6 +35,7 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private long roundEnd;
     private List<FieldCell> detectedMetals = new ArrayList<FieldCell>(); 
     private MobileAgentAction currentAction;
+    private Map<FieldCell,Integer> subMapToExplore = new HashMap<FieldCell,Integer>();
     
     public ProspectorAgent() {
         super(AgentType.PROSPECTOR);
@@ -55,6 +58,7 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
         currentY = Integer.parseInt(args[1]);
 
         log("I am at ("+ currentX +","+ currentY +")!");
+        
 
         // add behaviours
         addBehaviour(new ProspectorBehaviour(this));
