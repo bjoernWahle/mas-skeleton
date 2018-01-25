@@ -143,6 +143,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
             getContentManager().fillContent(message, new InformAgentAction(currentAction));
             log("Sending msg with my current action: " + message.getContent());
             send(message);
+            this.currentAction = null;
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
             log("Some error while sending?");
@@ -180,7 +181,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void collectMetal(int x, int y) {
-        // TODO set current action
+        this.currentAction = new CollectMetalAction(x, y);
         log("I gonna collect that metal now.");
     }
 
@@ -199,12 +200,12 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         return getPathTo(x, y).getPathCellList().size();
     }
 
-    public void setCurrentPosition(int x, int y) {
+    private void setCurrentPosition(int x, int y) {
         currentX = x;
         currentY = y;
     }
 
-    public void logPosition() {
+    private void logPosition() {
         log("I am at ("+ currentX +","+ currentY +")");
     }
 
