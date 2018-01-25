@@ -11,8 +11,39 @@ public class DiggerTask extends Task {
     public String metalType;
     public int amount;
 
+    @Override
+    public String toString() {
+        return "DiggerTask{" +
+                "x=" + x +
+                ", y=" + y +
+                ", taskType='" + taskType + '\'' +
+                ", metalType='" + metalType + '\'' +
+                ", amount=" + amount +
+                ", last=" + last +
+                ", state=" + getCurrentState() +
+                '}';
+    }
+
+    public boolean isLast() {
+        return last;
+    }
+
+    public void setLast(boolean last) {
+        this.last = last;
+    }
+
+    public boolean last = false;
+
     public DiggerTask() {
 
+    }
+
+    public DiggerTask(DiggerTask task) {
+        this.x = task.x;
+        this.y = task.y;
+        this.taskType = task.taskType;
+        this.metalType = task.metalType;
+        this.amount = task.amount;
     }
 
     public int getX() {

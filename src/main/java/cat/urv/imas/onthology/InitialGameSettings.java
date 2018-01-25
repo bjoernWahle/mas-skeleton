@@ -421,7 +421,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         if(agentCell.isThereADiggerAgentWorking()) {
             throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is a digger working at this cell");
         }
-        Cell destCell = get(collectAction.x, collectAction.y);
+        Cell destCell = get(collectAction.y, collectAction.x);
         if(!destCell.adjacent(agentCell)) {
             throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because it is not adjacent to the diggers position.");
         }

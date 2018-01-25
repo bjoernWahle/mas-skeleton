@@ -24,7 +24,6 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     List<DiggerTask> tasks;
-    Set<FieldCell> metalsBeingCollected;
     
     private long roundEnd;
 
@@ -44,7 +43,6 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         this.coordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
 
         tasks = new LinkedList<>();
-        metalsBeingCollected = new HashSet<>();
 
         addBehaviour(new RoundBehaviour(this));
     }
@@ -117,7 +115,11 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         }
     }
 
-    public Set<FieldCell> getMetalsBeingCollected() {
-        return metalsBeingCollected;
+    public List<FieldCell> getMetalsBeingCollected() {
+        return tasks.stream().map(t -> (FieldCell) gameSettings.get(t.y, t.x)).collect(Collectors.toList());
+    }
+
+    public List<DiggerTask> getNotStartedTasks() {
+        return getTasks().stream().filter(t -> t.getCurrentState().equals(TaskState.NOT_STARTED.toString())).collect(Collectors.toList());
     }
 }

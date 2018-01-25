@@ -94,7 +94,8 @@ public class RoundBehaviour extends FSMBehaviour {
 
         registerTransition(WAITING, COMMUNICATING, 0);
         registerTransition(WAITING, END, 1);
-        registerDefaultTransition(COMMUNICATING, PERFORMING);
+        registerTransition(COMMUNICATING, COMMUNICATING, 1);
+        registerTransition(COMMUNICATING, PERFORMING, 0);
         registerDefaultTransition(PERFORMING, WAITING);
 
     }

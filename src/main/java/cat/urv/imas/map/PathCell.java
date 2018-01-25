@@ -145,7 +145,6 @@ public class PathCell extends Cell {
                 // do nothing: we already checked that an agent exists.
             }
         }
-        System.out.println(agents.get(AgentType.DIGGER));
         return agents.getMapMessage();
     }
 

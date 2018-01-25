@@ -101,6 +101,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                 if(currentTask.taskType.equals(TaskType.COLLECT_METAL.toString())) {
                     currentMetal = MetalType.fromString(currentTask.getMetalType());
                 }
+                currentTask.startTask();
             }
         }
         TaskType currentTaskType = TaskType.fromString(currentTask.taskType);
@@ -108,15 +109,15 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
             case COLLECT_METAL:
                 if(checkPosition(currentTask.x, currentTask.y)) {
                     FieldCell fieldCell;
-                    Cell cell = game.get(currentTask.x, currentTask.y);
+                    Cell cell = game.get(currentTask.y, currentTask.x);
                     if(cell instanceof FieldCell) {
                         fieldCell = (FieldCell) cell;
                     } else {
                         throw new IllegalArgumentException("Collect metal cells have to be always field cells.");
                     }
                     int metalCapacity;
-                    if(fieldCell.wasFound()) {
-                        log("Cell was found.");
+                    if(!fieldCell.wasFound()) {
+                        log("Cell " +fieldCell.toString() + " was not found.");
                     }
                     log(fieldCell.getMetal().toString());
                     if(fieldCell.getMetal().containsKey(currentMetal)) {
@@ -156,7 +157,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         ManufacturingCenterCell bestManufacturingCenter = null;
         double bestRatio = 0;
         List<Cell> bestPath = null;
-        Cell currentCell = game.get(currentX, currentY);
+        Cell currentCell = game.get(currentY, currentX);
         for(Cell cell: mfcs) {
             ManufacturingCenterCell manufacturingCenter = (ManufacturingCenterCell) cell;
             if(manufacturingCenter.getMetal() != currentMetal) {
@@ -268,5 +269,9 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     public void setGame(GameSettings game) {
         this.game = game;
+    }
+
+    public DiggerTask getCurrentTask() {
+        return currentTask;
     }
 }
