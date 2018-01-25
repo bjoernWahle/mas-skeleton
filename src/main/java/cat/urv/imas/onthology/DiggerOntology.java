@@ -31,6 +31,7 @@ public class DiggerOntology extends BeanOntology {
         add(MetalType.class);
         add(MobileAgentAction.class);
         add(MoveAction.class);
+        add(CollectMetalAction.class);
         add(IdleAction.class);
         add(ActionList.class);
         add(InformAgentAction.class);
