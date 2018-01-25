@@ -34,6 +34,7 @@ public class ProspectorBehaviour extends FSMBehaviour {
                         // set game settings
                         agent.log("I received the initial game settings");
                         agent.setGame((GameSettings) contentObject);
+                        agent.setCellsToExplore();
                     }
                 } catch (UnreadableException e) {
                     e.printStackTrace();
