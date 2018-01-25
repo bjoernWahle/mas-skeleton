@@ -375,6 +375,9 @@ public class GameSettings implements java.io.Serializable {
      * Method for adding metals found by the prospectors
      */
     public void addFoundMetals(List<FieldCell> newMetals) {
+    	if(foundMetals == null) {
+    		foundMetals = new ArrayList<FieldCell>();
+    	}
     	//We first remove them to avoid repetition
     	foundMetals.removeAll(newMetals);
     	//Then we add them to have them all

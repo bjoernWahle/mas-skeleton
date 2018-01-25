@@ -16,7 +16,7 @@ public class InformProspector extends InformAgentAction {
     
     public InformProspector(MobileAgentAction action,List<FieldCell> foundMetalsList) {
     	super(action);
-    	if(foundMetalsList != null) {
+    	if(!foundMetalsList.isEmpty()) {
     		this.foundMetalsList = foundMetalsList;
     	}else {
     		this.foundMetalsList = new ArrayList<FieldCell>();
