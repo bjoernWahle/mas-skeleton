@@ -18,10 +18,7 @@
 package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
-import cat.urv.imas.map.Cell;
-import cat.urv.imas.map.CellType;
-import cat.urv.imas.map.FieldCell;
-import cat.urv.imas.map.PathCell;
+import cat.urv.imas.map.*;
 import cat.urv.imas.util.Graph;
 import cat.urv.imas.util.Vertex;
 import jade.core.AID;
@@ -29,6 +26,7 @@ import jade.core.AID;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -128,7 +126,11 @@ public class GameSettings implements java.io.Serializable {
      * List of metals already discovered by the prospectors
      */
     List<FieldCell> foundMetals;
-    
+
+    public List<FieldCell> getFoundMetals() {
+        return foundMetals;
+    }
+
     public long getSeed() {
         return seed;
     }
@@ -396,5 +398,13 @@ public class GameSettings implements java.io.Serializable {
     		}
     		
     	}
+    }
+
+    public PathCell getAgentCell(AgentType agentType, AID aid) {
+        return (PathCell) getAgentList().get(agentType).stream().filter(c -> ((PathCell) c).getAgents().get(agentType).contains(new InfoAgent(agentType, aid)) ).findFirst().get();
+    }
+
+    public List<Cell> getManufacturingCenters() {
+        return cellsOfType.get(CellType.MANUFACTURING_CENTER);
     }
 }

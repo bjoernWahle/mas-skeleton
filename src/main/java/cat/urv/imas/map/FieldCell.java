@@ -83,6 +83,24 @@ public class FieldCell extends Cell {
         return found;
     }
 
+    public boolean wasFound() {
+        return found;
+    }
+
+    public MetalType getMetalType() {
+        for (Map.Entry<MetalType, Integer> entry: metal.entrySet()) {
+            return entry.getKey();
+        }
+        throw new IllegalStateException("No metal at this field cell");
+    }
+
+    public int getMetalAmount() {
+        for (Map.Entry<MetalType, Integer> entry: metal.entrySet()) {
+            return entry.getValue();
+        }
+        throw new IllegalStateException("No metal at this field cell");
+    }
+
 
     /**
      * Removes an item of the current metal, if any.

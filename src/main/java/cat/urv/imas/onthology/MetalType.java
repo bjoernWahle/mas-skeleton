@@ -56,4 +56,8 @@ public enum MetalType implements Concept {
                 throw new IllegalArgumentException("Metal type '" + type + "' is not supported.");
         }
     }
+
+    public static MetalType fromString(String type) {
+        return fromShortString(type.substring(0,1));
+    }
 }

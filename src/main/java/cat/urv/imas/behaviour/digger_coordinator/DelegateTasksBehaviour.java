@@ -2,6 +2,7 @@ package cat.urv.imas.behaviour.digger_coordinator;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.DiggerCoordinatorAgent;
+import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.onthology.DiggerTask;
 import cat.urv.imas.onthology.MetalType;
 import cat.urv.imas.onthology.TaskType;
@@ -14,6 +15,7 @@ import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DelegateTasksBehaviour extends FSMBehaviour {
@@ -37,9 +39,14 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
         OneShotBehaviour planningBehaviour = new OneShotBehaviour() {
             @Override
             public void action() {
-
-                // check if there is metal that nobody is collecting
-                // TODO implement
+                for(FieldCell foundCell: agent.getGameSettings().getFoundMetals()) {
+                    if (!agent.getMetalsBeingCollected().contains(foundCell)) {
+                        agent.addTask(new DiggerTask(foundCell.getX(), foundCell.getY()
+                                , TaskType.COLLECT_METAL.toString(), foundCell.getMetalType().getShortString()
+                                , foundCell.getMetalAmount()));
+                    }
+                }
+                agent.log(agent.getTasks().toString());
             }
 
             @Override

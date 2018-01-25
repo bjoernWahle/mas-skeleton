@@ -244,6 +244,15 @@ public class SystemAgent extends ImasAgent {
         // TODO maybe deep clone gameSettings before
         // check move actions
         for(MobileAgentAction action : requestedActions) {
+            if(action instanceof CollectMetalAction) {
+                CollectMetalAction collectAction = (CollectMetalAction) action;
+                try {
+                    this.game.applyCollectMetal(collectAction);
+                } catch (IllegalStateException | IllegalArgumentException e) {
+                    log(e.getMessage());
+                    // TODO notify agents about their illegal moves
+                }
+            }
             if(action instanceof MoveAction) {
                 MoveAction moveAction = (MoveAction) action;
                 try {
@@ -253,6 +262,7 @@ public class SystemAgent extends ImasAgent {
                     // TODO notify agents about their illegal moves
                 }
             }
+
         }
         //Clear requested actions because they have already been checked
         requestedActions.clear();
