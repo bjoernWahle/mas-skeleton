@@ -2,30 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8c25162-fe6f-4781-b33f-540ef32b2d6d" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/DijkstraAlgorithm.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Edge.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Graph.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Vertex.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/GraphTest.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ImasAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ImasAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/ReceiverBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/ReceiverBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/HandleActionsBehaviour.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/RequestResponseBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/RequestResponseBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Cell.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Cell.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/SettableFieldCell.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/SettableFieldCell.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,7 +17,7 @@
       <file leaf-file-name="GameSettings.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
+            <state relative-caret-position="4788">
               <caret line="352" column="25" lean-forward="false" selection-start-line="352" selection-start-column="25" selection-end-line="352" selection-end-column="25" />
               <folding>
                 <element signature="e#3715#3716#0" expanded="true" />
@@ -109,7 +86,7 @@
       <file leaf-file-name="Graph.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Graph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
+            <state relative-caret-position="3168">
               <caret line="192" column="19" lean-forward="false" selection-start-line="192" selection-start-column="19" selection-end-line="192" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -133,8 +110,8 @@
       <file leaf-file-name="DiggerAgent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="170" column="84" lean-forward="true" selection-start-line="170" selection-start-column="84" selection-end-line="170" selection-end-column="84" />
+            <state relative-caret-position="2430">
+              <caret line="170" column="84" lean-forward="false" selection-start-line="170" selection-start-column="84" selection-end-line="170" selection-end-column="84" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#793#794#0" expanded="true" />
@@ -163,7 +140,7 @@
       <file leaf-file-name="Cell.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Cell.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="2124">
               <caret line="150" column="5" lean-forward="false" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
               <folding />
             </state>
@@ -173,34 +150,32 @@
       <file leaf-file-name="CollectingActionsAndStatsBehaviour.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CollectingActionsAndStatsBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
+            <state relative-caret-position="756">
               <caret line="50" column="64" lean-forward="false" selection-start-line="50" selection-start-column="64" selection-end-line="50" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DijkstraAlgorithm.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DijkstraAlgorithm.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/util/DijkstraAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="18" column="10" lean-forward="false" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+            <state relative-caret-position="1152">
+              <caret line="70" column="45" lean-forward="true" selection-start-line="70" selection-start-column="45" selection-end-line="70" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2249#2257#0" expanded="true" />
                 <element signature="e#2947#2948#0" expanded="true" />
                 <element signature="e#2999#3000#0" expanded="true" />
-                <element signature="e#3453#3461#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GraphTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GraphTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/GraphTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
-              <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+              <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#219#220#0" expanded="true" />
@@ -213,8 +188,8 @@
       <file leaf-file-name="DiggerBehaviour.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="25" column="21" lean-forward="true" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+            <state relative-caret-position="324">
+              <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -225,7 +200,7 @@
       <file leaf-file-name="DiggerCoordinatorAgent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
+            <state relative-caret-position="1818">
               <caret line="131" column="26" lean-forward="false" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="26" />
               <folding />
             </state>
@@ -235,8 +210,8 @@
       <file leaf-file-name="RoundBehaviour.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="39" column="32" lean-forward="true" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+            <state relative-caret-position="360">
+              <caret line="39" column="32" lean-forward="false" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1418#1419#0" expanded="true" />
@@ -379,9 +354,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -393,7 +369,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -588,7 +563,11 @@
       <workItem from="1514390822510" duration="3839000" />
       <workItem from="1514478392676" duration="265000" />
       <workItem from="1514478698947" duration="3441000" />
-      <workItem from="1514539385976" duration="15595000" />
+      <workItem from="1514539385976" duration="16224000" />
+      <workItem from="1514561181617" duration="60000" />
+      <workItem from="1514566385156" duration="27000" />
+      <workItem from="1514972577250" duration="16000" />
+      <workItem from="1516872275579" duration="254000" />
     </task>
     <task id="LOCAL-00001" summary="some updates for the gui and the project">
       <created>1514293661817</created>
@@ -611,11 +590,18 @@
       <option name="project" value="LOCAL" />
       <updated>1514479339305</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="shortest path to cell - improved round behaviour">
+      <created>1514556493058</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1514556493058</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98926000" />
+    <option name="totallyTimeSpent" value="99912000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -642,9 +628,8 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2957435" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3095633" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -656,6 +641,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -733,18 +719,11 @@
     <MESSAGE value="some updates for the gui and the project" />
     <MESSAGE value="a lot of behaviours..." />
     <MESSAGE value="round simulation improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="round simulation improving" />
+    <MESSAGE value="shortest path to cell - improved round behaviour" />
+    <option name="LAST_COMMIT_MESSAGE" value="shortest path to cell - improved round behaviour" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/cat/urv/imas/util/DijkstraAlgorithm.java</url>
-          <line>111</line>
-          <properties />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
@@ -879,7 +858,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
           <caret line="64" column="81" lean-forward="false" selection-start-line="64" selection-start-column="81" selection-end-line="64" selection-end-column="81" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -894,10 +872,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="29" column="54" lean-forward="false" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
-          <folding>
-            <element signature="e#1226#1227#0" expanded="false" />
-            <element signature="e#1306#1307#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -905,7 +879,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="20" column="20" lean-forward="false" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -927,7 +900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="23" column="67" lean-forward="false" selection-start-line="23" selection-start-column="67" selection-end-line="23" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -942,14 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-          <folding>
-            <element signature="e#1355#1356#0" expanded="false" />
-            <element signature="e#1394#1395#0" expanded="false" />
-            <element signature="e#2254#2255#0" expanded="false" />
-            <element signature="e#2297#2298#0" expanded="false" />
-            <element signature="e#2448#2449#0" expanded="false" />
-            <element signature="e#2482#2483#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -957,12 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-          <folding>
-            <element signature="e#579#580#0" expanded="false" />
-            <element signature="e#610#611#0" expanded="false" />
-            <element signature="e#656#657#0" expanded="false" />
-            <element signature="e#696#697#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -971,7 +929,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -979,14 +936,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="48" column="29" lean-forward="true" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
-          <folding>
-            <element signature="e#5168#5169#0" expanded="false" />
-            <element signature="e#5199#5200#0" expanded="false" />
-            <element signature="e#5245#5246#0" expanded="false" />
-            <element signature="e#5285#5286#0" expanded="false" />
-            <element signature="e#5319#5320#0" expanded="false" />
-            <element signature="e#5351#5352#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -994,7 +943,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="257">
           <caret line="53" column="54" lean-forward="true" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1002,10 +950,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="144" column="16" lean-forward="false" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
-          <folding>
-            <element signature="e#3771#3772#0" expanded="true" />
-            <element signature="e#3810#3811#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1013,13 +957,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-61">
           <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#897#898#0" expanded="false" />
-            <element signature="e#931#932#0" expanded="false" />
-            <element signature="e#974#975#0" expanded="false" />
-            <element signature="e#1042#1043#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1027,7 +964,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="109" column="26" lean-forward="true" selection-start-line="109" selection-start-column="26" selection-end-line="109" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1035,10 +971,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="48" column="21" lean-forward="true" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
-          <folding>
-            <element signature="e#3266#3485#0" expanded="false" />
-            <element signature="e#3484#3485#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1046,7 +978,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="9" column="19" lean-forward="false" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1054,14 +985,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="55" column="26" lean-forward="false" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="26" />
-          <folding>
-            <element signature="e#887#888#0" expanded="true" />
-            <element signature="e#910#911#0" expanded="true" />
-            <element signature="e#1848#1849#0" expanded="true" />
-            <element signature="e#1879#1880#0" expanded="true" />
-            <element signature="e#1924#1925#0" expanded="true" />
-            <element signature="e#1964#1965#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1069,22 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="370">
           <caret line="95" column="5" lean-forward="true" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
-          <folding>
-            <element signature="e#315#316#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
-            <element signature="e#732#733#0" expanded="true" />
-            <element signature="e#763#764#0" expanded="true" />
-            <element signature="e#846#847#0" expanded="true" />
-            <element signature="e#877#878#0" expanded="true" />
-            <element signature="e#973#974#0" expanded="true" />
-            <element signature="e#1007#1008#0" expanded="true" />
-            <element signature="e#1120#1121#0" expanded="true" />
-            <element signature="e#1156#1157#0" expanded="true" />
-            <element signature="e#1614#1615#0" expanded="true" />
-            <element signature="e#1663#1664#0" expanded="true" />
-            <element signature="e#1776#1777#0" expanded="true" />
-            <element signature="e#1845#1846#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1092,26 +999,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1440">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding>
-            <element signature="e#873#874#0" expanded="true" />
-            <element signature="e#929#930#0" expanded="true" />
-            <element signature="e#1120#1121#0" expanded="true" />
-            <element signature="e#1171#1172#0" expanded="true" />
-            <element signature="e#1344#1345#0" expanded="true" />
-            <element signature="e#1398#1399#0" expanded="true" />
-            <element signature="e#1520#1521#0" expanded="true" />
-            <element signature="e#1563#1564#0" expanded="true" />
-            <element signature="e#1681#1682#0" expanded="true" />
-            <element signature="e#1728#1729#0" expanded="true" />
-            <element signature="e#1820#1821#0" expanded="true" />
-            <element signature="e#1853#1854#0" expanded="true" />
-            <element signature="e#1969#1970#0" expanded="true" />
-            <element signature="e#2009#2010#0" expanded="true" />
-            <element signature="e#2112#2113#0" expanded="true" />
-            <element signature="e#2156#2157#0" expanded="true" />
-            <element signature="e#2733#2734#0" expanded="true" />
-            <element signature="e#2794#2795#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1119,7 +1006,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="46" column="65" lean-forward="false" selection-start-line="46" selection-start-column="65" selection-end-line="46" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1127,7 +1013,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1225">
           <caret line="37" column="13" lean-forward="false" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1135,77 +1020,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
           <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
-          <folding>
-            <element signature="e#4769#4770#0" expanded="true" />
-            <element signature="e#4817#4818#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="39" column="32" lean-forward="true" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1418#1419#0" expanded="true" />
-            <element signature="e#1465#1466#0" expanded="true" />
-            <element signature="e#1573#1574#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="131" column="26" lean-forward="false" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="25" column="21" lean-forward="true" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CollectingActionsAndStatsBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="50" column="64" lean-forward="false" selection-start-line="50" selection-start-column="64" selection-end-line="50" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/util/DijkstraAlgorithm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="18" column="10" lean-forward="false" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2249#2257#0" expanded="true" />
-            <element signature="e#2947#2948#0" expanded="true" />
-            <element signature="e#2999#3000#0" expanded="true" />
-            <element signature="e#3453#3461#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="150" column="5" lean-forward="false" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
+        <state relative-caret-position="4788">
           <caret line="352" column="25" lean-forward="false" selection-start-line="352" selection-start-column="25" selection-end-line="352" selection-end-column="25" />
           <folding>
             <element signature="e#3715#3716#0" expanded="true" />
@@ -1272,7 +1092,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
+        <state relative-caret-position="3168">
           <caret line="192" column="19" lean-forward="false" selection-start-line="192" selection-start-column="19" selection-end-line="192" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1292,10 +1112,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Cell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2124">
+          <caret line="150" column="5" lean-forward="false" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1818">
+          <caret line="131" column="26" lean-forward="false" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="39" column="32" lean-forward="false" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1418#1419#0" expanded="true" />
+            <element signature="e#1465#1466#0" expanded="true" />
+            <element signature="e#1573#1574#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/GraphTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#246#247#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CollectingActionsAndStatsBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="50" column="64" lean-forward="false" selection-start-line="50" selection-start-column="64" selection-end-line="50" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="170" column="84" lean-forward="true" selection-start-line="170" selection-start-column="84" selection-end-line="170" selection-end-column="84" />
+        <state relative-caret-position="2430">
+          <caret line="170" column="84" lean-forward="false" selection-start-line="170" selection-start-column="84" selection-end-line="170" selection-end-column="84" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#793#794#0" expanded="true" />
@@ -1320,14 +1199,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/GraphTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/util/DijkstraAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        <state relative-caret-position="1152">
+          <caret line="70" column="45" lean-forward="true" selection-start-line="70" selection-start-column="45" selection-end-line="70" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#219#220#0" expanded="true" />
-            <element signature="e#246#247#0" expanded="true" />
+            <element signature="e#2947#2948#0" expanded="true" />
+            <element signature="e#2999#3000#0" expanded="true" />
           </folding>
         </state>
       </provider>
