@@ -89,7 +89,7 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Point start = new Point(INSET, INSET);
-        Point end = new Point(screenSize.width - INSET * 2, screenSize.height - INSET * 2);
+        Point end = new Point(Math.min(screenSize.width, 1280) - INSET * 2, Math.min(screenSize.height, 1024) - INSET * 2);
 
         dx = (end.x - start.x) / ncols;
         dy = ((end.y - start.y) / nrows) - 4;

@@ -27,11 +27,7 @@ public class NegotiatorBehaviour extends SimpleBehaviour {
             sequentialBehaviour = new SequentialBehaviour();
             int i = 0;
             for(DiggerTask task : agent.getNotStartedTasks()) {
-                DiggerTask tempTask = new DiggerTask(task);
-                if(i++ == agent.getNotStartedTasks().size() - 1){
-                    tempTask.setLast(true);
-                }
-                TaskContractNetInitiatorBehaviour tcni = new TaskContractNetInitiatorBehaviour(agent, tempTask);
+                TaskContractNetInitiatorBehaviour tcni = new TaskContractNetInitiatorBehaviour(agent, task);
                 sequentialBehaviour.addSubBehaviour(tcni);
             }
             agent.addBehaviour(sequentialBehaviour);

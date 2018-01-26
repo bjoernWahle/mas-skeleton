@@ -46,7 +46,6 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
                                 , foundCell.getMetalAmount()));
                     }
                 }
-                agent.log(agent.getTasks().toString());
             }
 
             @Override

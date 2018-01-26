@@ -120,11 +120,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                         log("Cell " +fieldCell.toString() + " was not found.");
                     }
                     log(fieldCell.getMetal().toString());
-                    if(fieldCell.getMetal().containsKey(currentMetal)) {
-                        metalCapacity = fieldCell.getMetalAmount();
-                    } else {
-                        throw new IllegalArgumentException("Seems that the cell does not have any metal of the current type.");
-                    }
+                    metalCapacity = fieldCell.getMetalAmount();
                     if(currentCapacity < maxCapacity && metalCapacity > 0) {
                         collectMetal(currentTask.x, currentTask.y);
                     } else {
@@ -165,7 +161,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
             }
             List<Cell> pathNeighbors = new ArrayList<>(game.getPathNeighbors(cell));
             List<Cell> shortestPath = game.getMapGraph().getShortestPath(currentCell, pathNeighbors);
-            double ratio = manufacturingCenter.getPrice() / shortestPath.size();
+            double ratio = ((double) manufacturingCenter.getPrice()) / ((double) shortestPath.size());
             if(ratio > bestRatio) {
                 bestRatio = ratio;
                 bestPath = shortestPath;

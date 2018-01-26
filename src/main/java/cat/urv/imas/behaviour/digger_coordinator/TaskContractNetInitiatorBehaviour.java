@@ -19,6 +19,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
     ContractNetInitiator cni;
     DiggerCoordinatorAgent agent;
     DiggerTask task;
+    boolean last = false;
     int nResponders;
     boolean finished = false;
 
@@ -26,6 +27,14 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
         super(agent);
         this.agent = agent;
         this.task = task;
+        this.last = false;
+    }
+
+    public TaskContractNetInitiatorBehaviour(DiggerCoordinatorAgent agent, DiggerTask task, boolean last) {
+        super(agent);
+        this.agent = agent;
+        this.task = task;
+        this.last = last;
     }
 
     @Override
@@ -51,6 +60,8 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             // We want to receive a reply in 10 secs
             msg.setReplyByDate(new Date(System.currentTimeMillis() + 10000));
             try {
+                DiggerTask tempTask = new DiggerTask(task);
+                tempTask.setLast(last);
                 agent.getContentManager().fillContent(msg, task);
 
                 cni = new ContractNetInitiator(agent, msg) {

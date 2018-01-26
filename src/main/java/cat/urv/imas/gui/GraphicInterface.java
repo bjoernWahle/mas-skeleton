@@ -84,7 +84,7 @@ public class GraphicInterface extends JFrame {
         }
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds(INSET, INSET, screenSize.width - INSET * 2, screenSize.height - INSET * 2);
+        setBounds(INSET, INSET, Math.min(screenSize.width, 1280) - INSET * 2, Math.min(screenSize.height, 1024) - INSET * 2);
 
         //Quit this app when the big window closes.
         addWindowListener(new WindowAdapter() {

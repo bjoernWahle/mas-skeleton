@@ -32,7 +32,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
     @Override
     public void onStart() {
-        timeEnd = agent.getRoundEnd()-agent.getRoundTime()/3;
+        timeEnd = agent.getRoundEnd()-agent.getRoundTime()/6;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                             return propose;
                         } else {
                             // We refuse to provide a proposal
-                            agent.log("Refusing " + cfp);
+                            agent.log("Refusing to collect metal from (" +tempTask.x+","+tempTask.y +")");
                             throw new RefuseException("evaluation-failed");
                         }
                     } else {
