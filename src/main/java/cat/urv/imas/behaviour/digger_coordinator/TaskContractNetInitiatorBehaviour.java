@@ -47,7 +47,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
         if(cni == null) {
             nResponders = agent.getDiggers().size();
 
-            agent.log("Alriiiiight fellas I got some new metal. Who's keen to dig it?");
+            agent.log("Alriiiiight fellas I got some new metal at ("+task.x+","+task.y+"). Who's keen to dig it?");
 
             // Fill the CFP message
             ACLMessage msg = new ACLMessage(ACLMessage.CFP);

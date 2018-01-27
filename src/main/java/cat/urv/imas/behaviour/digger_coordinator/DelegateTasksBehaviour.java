@@ -50,7 +50,7 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
 
             @Override
             public int onEnd() {
-                if(agent.getTasks().isEmpty()) {
+                if(agent.getNotStartedTasks().isEmpty()) {
                     return 1;
                 } else {
                     return 0;

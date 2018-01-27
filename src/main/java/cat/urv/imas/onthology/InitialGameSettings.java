@@ -101,6 +101,11 @@ public class InitialGameSettings extends GameSettings implements Predicate {
      */
     private Random numberGenerator;
 
+    /**
+     * points collected
+     */
+    private int collectedPoints;
+
     @XmlElement(required = true)
     public void setNumberInitialElements(int initial) {
         numberInitialElements = initial;
@@ -416,7 +421,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     }
 
     public void applyCollectMetal(CollectMetalAction collectAction) {
-        InfoAgent agent = collectAction.getAgent();
+        DiggerInfoAgent agent = (DiggerInfoAgent) getInfoAgent(collectAction.getAgent().getType(),collectAction.getAgent().getAID());
         PathCell agentCell = getAgentCell(agent.getType(), agent.getAID());
         if(agentCell.isThereADiggerAgentWorking()) {
             throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is a digger working at this cell");
@@ -436,6 +441,43 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                 throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is no metal left.");
             }
             fieldCell.removeMetal();
+            agent.setCapacity(agent.getCapacity()+1);
         }
+    }
+
+    public void applyReturnMetal(ReturnMetalAction returnAction) {
+        DiggerInfoAgent agent = (DiggerInfoAgent) getInfoAgent(returnAction.getAgent().getType(),returnAction.getAgent().getAID());
+        Cell cell = get(returnAction.getY(), returnAction.getX());
+        PathCell agentCell = getAgentCell(agent.getType(), agent.getAID());
+        if(!agentCell.adjacent(cell)) {
+            throw new IllegalArgumentException("Refusing return metal to "+cell.getX() + ","+cell.getY()+ " because the cell is not adjacent to the agents position.");
+        }
+        if(!(cell instanceof ManufacturingCenterCell)) {
+            throw new IllegalArgumentException("Refusing return metal to "+cell.getX() + ","+cell.getY()+ " because it is not a manufacturing center");
+        }
+        ManufacturingCenterCell mfc = (ManufacturingCenterCell) cell;
+        if(!mfc.getMetal().getShortString().equals(returnAction.getMetal())) {
+            throw new IllegalArgumentException("Refusing return metal to "+cell.getX() + ","+cell.getY()+ " because the manufacturing center accepts a different metal.");
+        }
+        if(returnAction.amount > agent.getCapacity()) {
+            throw new IllegalArgumentException("Refusing return metal to "+cell.getX() + ","+cell.getY()+ " because the agent does not carry the amount that it wants to return.");
+        }
+        // if no exception was thrown, apply action;
+        collectedPoints = collectedPoints+(returnAction.amount * mfc.getPrice());
+        agent.setCapacity(agent.getCapacity()-returnAction.amount);
+    }
+
+    public int getCollectedPoints() {
+        return collectedPoints;
+    }
+
+    public void checkFoundMetals() {
+        List<FieldCell> cellsToRemove = new LinkedList<>();
+        for(FieldCell cell : foundMetals) {
+            if(!cell.wasFound()) {
+                cellsToRemove.add(cell);
+            }
+        }
+        foundMetals.removeAll(cellsToRemove);
     }
 }

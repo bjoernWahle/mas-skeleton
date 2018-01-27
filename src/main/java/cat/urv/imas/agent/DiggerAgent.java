@@ -20,8 +20,9 @@ import java.util.stream.Collectors;
 
 public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
-    public void startRound(int x, int y) {
+    public void startRound(int x, int y, int currentCapacity) {
         setCurrentPosition(x, y);
+        this.currentCapacity = currentCapacity;
         roundEnd = game.getCurrentRoundEnd();
         logPosition();
     }
@@ -75,7 +76,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         currentX = Integer.parseInt(args[0]);
         currentY = Integer.parseInt(args[1]);
         maxCapacity = Integer.parseInt(args[2]);
-
         tasks = new LinkedList<>();
 
         addBehaviour(new DiggerBehaviour(this));
@@ -182,8 +182,17 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void returnMetal(int x, int y) {
-        // TODO set currentTask
+        currentAction = new ReturnMetalAction(x, y, currentCapacity, currentMetal.getShortString());
         log("I will return my metal now");
+        tasks.remove(currentTask);
+        // get next task
+        Optional<DiggerTask> nextTask = getNextTask();
+        if(nextTask.isPresent()) {
+            currentTask = nextTask.get();
+        } else {
+            currentTask = null;
+            currentMetal = null;
+        }
     }
 
     private void notifyDiggerCoordinator(MobileAgentAction currentAction) {
@@ -269,5 +278,13 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     public DiggerTask getCurrentTask() {
         return currentTask;
+    }
+
+    public List<DiggerTask> getTasks() {
+        return tasks;
+    }
+
+    public void setCurrentTask(DiggerTask currentTask) {
+        this.currentTask = currentTask;
     }
 }

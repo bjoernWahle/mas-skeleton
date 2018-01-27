@@ -75,6 +75,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                         } else {
                             // We refuse to provide a proposal
                             agent.log("Refusing to collect metal from (" +tempTask.x+","+tempTask.y +")");
+                            agent.log("Current:"+agent.getCurrentCapacity()+", max: "+agent.maxCapacity);
                             throw new RefuseException("evaluation-failed");
                         }
                     } else {
@@ -84,11 +85,14 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
                 @Override
                 protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) throws FailureException {
-                    agent.log("Proposal accepted: " + accept);
                     if (agent.checkIfTaskCanBeDone()) {
+                        if(agent.getTasks().isEmpty()) {
+                            agent.setCurrentTask(tempTask);
+                        }
                         agent.addTask(tempTask);
                         ACLMessage inform = accept.createReply();
                         inform.setPerformative(ACLMessage.INFORM);
+                        agent.log("Proposal accepted: " + tempTask);
                         return inform;
                     } else {
                         throw new FailureException("unexpected-error");

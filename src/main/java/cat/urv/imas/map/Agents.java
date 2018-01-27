@@ -100,8 +100,8 @@ public class Agents implements java.io.Serializable {
 
     public String toString() {
         StringBuilder string = new StringBuilder("(");
-        for (AgentType type : AgentType.values()) {
-            //string.append("(").append(type.getShortString()).append(":").append(agents.get(type).size()).append(")");
+        for (AgentType type : agents.keySet()) {
+            string.append("(").append(type.getShortString()).append(":").append(agents.get(type).size()).append(")");
         }
         string.append(")");
         return string.toString();

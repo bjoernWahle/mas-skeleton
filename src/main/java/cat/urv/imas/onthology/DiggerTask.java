@@ -3,6 +3,8 @@ package cat.urv.imas.onthology;
 import jade.content.Concept;
 import jade.content.Predicate;
 
+import java.util.Objects;
+
 public class DiggerTask extends Task {
 
     public int x;
@@ -10,6 +12,25 @@ public class DiggerTask extends Task {
     public String taskType;
     public String metalType;
     public int amount;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DiggerTask that = (DiggerTask) o;
+        return x == that.x &&
+                y == that.y &&
+                amount == that.amount &&
+                last == that.last &&
+                Objects.equals(taskType, that.taskType) &&
+                Objects.equals(metalType, that.metalType);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(x, y, taskType, metalType, amount, last);
+    }
 
     @Override
     public String toString() {
