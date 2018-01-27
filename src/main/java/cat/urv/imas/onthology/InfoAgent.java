@@ -16,11 +16,11 @@ public class InfoAgent implements Concept {
     /**
      * Type of this agent.
      */
-    private final AgentType type;
+    protected final AgentType type;
     /**
      * AID for the related agent.
      */
-    private AID aid;
+    protected AID aid;
 
     /**
      * Building new instance with only the type.

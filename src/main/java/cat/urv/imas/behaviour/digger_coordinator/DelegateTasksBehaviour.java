@@ -46,12 +46,11 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
                                 , foundCell.getMetalAmount()));
                     }
                 }
-                agent.log(agent.getTasks().toString());
             }
 
             @Override
             public int onEnd() {
-                if(agent.getTasks().isEmpty()) {
+                if(agent.getNotStartedTasks().isEmpty()) {
                     return 1;
                 } else {
                     return 0;

@@ -58,9 +58,10 @@ public class RoundBehaviour extends FSMBehaviour {
                     try {
                         game = (GameSettings) m.getContentObject();
                         agent.setGame(game);
+                        DiggerInfoAgent infoAgent = (DiggerInfoAgent) game.getInfoAgent(agent.getType(), agent.getAID());
                         Cell cell = game.getAgentCell(agent.getType(), agent.getAID());
                         // get own position
-                        agent.startRound(cell.getX(), cell.getY());
+                        agent.startRound(cell.getX(), cell.getY(), infoAgent.getCapacity());
                     } catch (UnreadableException e) {
                         e.printStackTrace();
                         agent.log("Content was not readable, sending old game status... Content:" + m);
@@ -94,7 +95,8 @@ public class RoundBehaviour extends FSMBehaviour {
 
         registerTransition(WAITING, COMMUNICATING, 0);
         registerTransition(WAITING, END, 1);
-        registerDefaultTransition(COMMUNICATING, PERFORMING);
+        registerTransition(COMMUNICATING, COMMUNICATING, 1);
+        registerTransition(COMMUNICATING, PERFORMING, 0);
         registerDefaultTransition(PERFORMING, WAITING);
 
     }

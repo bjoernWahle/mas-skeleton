@@ -205,7 +205,6 @@ public class Graph<T> {
             }
         }
         List<Vertex> vertices = algo.getPath(bestDest);
-        System.out.println(vertices);
         List<T> vList = vertices.stream().map(Vertex<T>::getLabel).collect(Collectors.toList());
         if (!(vList.get(vList.size() - 1) instanceof PathCell)) {
             vList.remove(vList.size() -1);

@@ -98,7 +98,7 @@ public class FieldCell extends Cell {
         for (Map.Entry<MetalType, Integer> entry: metal.entrySet()) {
             return entry.getValue();
         }
-        throw new IllegalStateException("No metal at this field cell");
+        return 0;
     }
 
 

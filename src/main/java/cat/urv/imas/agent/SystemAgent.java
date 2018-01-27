@@ -184,7 +184,7 @@ public class SystemAgent extends ImasAgent {
                 String[] args = new String[3];
                 args[0] = Integer.toString(cell.getX());
                 args[1] = Integer.toString(cell.getY());
-                args[2] = Integer.toString(((DiggerInfoAgent) agent).getCapacity());
+                args[2] = Integer.toString(((DiggerInfoAgent) agent).getMaxCapacity());
                 if(diggerContainer == null) {
                     diggerContainer = UtilsAgents.createAgentGetContainer(name, agent.getType().getClassName(), args);
                 } else {
@@ -235,7 +235,9 @@ public class SystemAgent extends ImasAgent {
         // TODO add stats for last round
         checkAndApplyActions();
         addElementsForThisSimulationStep();
+        game.checkFoundMetals();
         updateGUI();
+        gui.showStatistics("Round "+this.game.getCurrentSimulationStep()+": Total points: "+game.getCollectedPoints() + "\n");
         this.game.advanceToNextRound();
         log("Starting round "+this.game.getCurrentSimulationStep());
     }
@@ -262,12 +264,19 @@ public class SystemAgent extends ImasAgent {
                     // TODO notify agents about their illegal moves
                 }
             }
+            if(action instanceof ReturnMetalAction) {
+                ReturnMetalAction returnAction = (ReturnMetalAction) action;
+                try {
+                    this.game.applyReturnMetal(returnAction);
+                } catch (IllegalArgumentException e) {
+                    log(e.getMessage());
+                }
+            }
 
         }
         //Clear requested actions because they have already been checked
         requestedActions.clear();
-        
-        // TODO check collect actions
+
         // TODO check return actions (needed)
         // TODO blame agents that wanna be idle
     }

@@ -24,10 +24,15 @@ public class TaskContractNetResponder extends SimpleBehaviour {
     public TaskContractNetResponder(DiggerAgent agent) {
         this.agent = agent;
     }
+    private int exitCode = 0;
+
+    public void setLast() {
+        this.exitCode = 1;
+    }
 
     @Override
     public void onStart() {
-        timeEnd = agent.getRoundEnd()-agent.getRoundTime()/3;
+        timeEnd = agent.getRoundEnd()-agent.getRoundTime()/6;
     }
 
     @Override
@@ -49,15 +54,18 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                         e.printStackTrace();
                         throw new NotUnderstoodException("not-understood");
                     }
-                    agent.log("CFP received from " + cfp.getSender().getLocalName() + ". Action is " + tempTask.taskType);
+                    if(tempTask.isLast()) {
+                        agent.log("Thankfully this was the last one.");
+                        setLast();
+                    }
                     TaskType taskType = TaskType.fromString(tempTask.taskType);
                     MetalType metalType = MetalType.fromShortString(tempTask.metalType);
                     if (taskType == TaskType.COLLECT_METAL) {
-                        if ((agent.getCurrentMetal() == null || metalType == agent.getCurrentMetal()) && agent.getCurrentCapacity() < agent.maxCapacity) {
-                            agent.log("proposal");
+                        if ((agent.getCurrentMetal() == null || metalType == agent.getCurrentMetal())
+                                && agent.getCurrentCapacity() < agent.maxCapacity && agent.getCurrentTask() == null) {
                             // We provide a proposal
                             int time = agent.evaluateAction(tempTask.x, tempTask.y);
-                            double percentage = Math.max((agent.maxCapacity - agent.getCurrentCapacity()) / tempTask.amount, 1.0);
+                            double percentage = Math.min((agent.maxCapacity - agent.getCurrentCapacity()) / tempTask.amount, 1.0);
                             String proposal = time + "," + percentage;
                             agent.log("Proposing " + proposal);
                             ACLMessage propose = cfp.createReply();
@@ -66,7 +74,8 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                             return propose;
                         } else {
                             // We refuse to provide a proposal
-                            agent.log("Refusing " + cfp);
+                            agent.log("Refusing to collect metal from (" +tempTask.x+","+tempTask.y +")");
+                            agent.log("Current:"+agent.getCurrentCapacity()+", max: "+agent.maxCapacity);
                             throw new RefuseException("evaluation-failed");
                         }
                     } else {
@@ -76,12 +85,14 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
                 @Override
                 protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) throws FailureException {
-                    agent.log("Proposal accepted: " + accept);
                     if (agent.checkIfTaskCanBeDone()) {
-                        agent.log("Starting action: CollectMetal");
+                        if(agent.getTasks().isEmpty()) {
+                            agent.setCurrentTask(tempTask);
+                        }
                         agent.addTask(tempTask);
                         ACLMessage inform = accept.createReply();
                         inform.setPerformative(ACLMessage.INFORM);
+                        agent.log("Proposal accepted: " + tempTask);
                         return inform;
                     } else {
                         throw new FailureException("unexpected-error");
@@ -94,7 +105,6 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                 }
             };
             agent.addBehaviour(cnr);
-            timeEnd = System.currentTimeMillis() + 10000;
         } else {
             // if behaviour already there and running, check that agent does not wait longer than 10 seconds
             if(System.currentTimeMillis() > timeEnd) {
@@ -111,12 +121,13 @@ public class TaskContractNetResponder extends SimpleBehaviour {
     @Override
     public int onEnd() {
         reset();
-        return super.onEnd();
+        return exitCode;
     }
 
     @Override
     public void reset() {
         super.reset();
+        exitCode = 0;
         timeEnd = -1;
         cnr = null;
         finished = false;

@@ -25,27 +25,39 @@ import jade.core.AID;
  */
 public class DiggerInfoAgent extends InfoAgent {
 
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
     /**
-     * Maximum units of metal of any type able to bring at a time.
+     * Maximum units of metal
      */
-    protected int capacity;
+    public int maxCapacity;
+    /**
+     * Current units of metal
+     */
+    public int capacity = 0;
 
     public DiggerInfoAgent() {
         super(AgentType.DIGGER);
     }
 
-    public DiggerInfoAgent(AgentType type, int capacity) {
+    public DiggerInfoAgent(AgentType type, int maxCapacity) {
         super(type);
-        this.capacity = capacity;
+        this.maxCapacity = maxCapacity;
     }
 
     public DiggerInfoAgent(AgentType type, AID aid) {
         super(type, aid);
     }
 
-    public DiggerInfoAgent(AgentType type, AID aid, int capacity) {
+    public DiggerInfoAgent(AgentType type, AID aid, int maxCapacity) {
         super(type, aid);
-        this.capacity = capacity;
+        this.maxCapacity =maxCapacity;
     }
 
     /**
@@ -58,6 +70,7 @@ public class DiggerInfoAgent extends InfoAgent {
         return "(info-agent (agent-type " + this.getType() + ")"
                 + ((null != this.getAID()) ? (" (aid " + this.getAID() + ")") : "")
                 + " (capacity " + capacity + ")"
+                + " (maxCapacity "+ maxCapacity + ")"
                 + ")";
     }
 
@@ -67,5 +80,10 @@ public class DiggerInfoAgent extends InfoAgent {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    @Override
+    public String getMapMessage() {
+        return type.getShortString()+ this.aid.getLocalName().substring(this.aid.getLocalName().length()-1)+"("+capacity+"/"+maxCapacity+")";
     }
 }

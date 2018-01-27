@@ -19,6 +19,7 @@ package cat.urv.imas.map;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.gui.CellVisualizer;
+import cat.urv.imas.onthology.DiggerInfoAgent;
 import cat.urv.imas.onthology.InfoAgent;
 
 /**
@@ -138,6 +139,9 @@ public class PathCell extends Cell {
             InfoAgent first;
             try {
                 first = agents.getFirst();
+                if(first instanceof DiggerInfoAgent) {
+                    return ((DiggerInfoAgent) first).getMapMessage();
+                }
                 return first.getMapMessage();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -145,7 +149,6 @@ public class PathCell extends Cell {
                 // do nothing: we already checked that an agent exists.
             }
         }
-        System.out.println(agents.get(AgentType.DIGGER));
         return agents.getMapMessage();
     }
 
