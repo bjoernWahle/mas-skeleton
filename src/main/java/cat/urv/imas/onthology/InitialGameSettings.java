@@ -19,6 +19,7 @@ package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.*;
+import cat.urv.imas.util.StatisticsTracker;
 import jade.content.Predicate;
 
 import javax.xml.bind.JAXBContext;
@@ -104,7 +105,8 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     /**
      * points collected
      */
-    private int collectedPoints;
+    private int collectedPoints = 0;
+    private int totalMetal = 0;
 
     @XmlElement(required = true)
     public void setNumberInitialElements(int initial) {
@@ -318,10 +320,16 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     private void setElements(MetalType type, int amount, boolean visible, int ncell) {
         SettableFieldCell cell = (SettableFieldCell)cellsOfType.get(CellType.FIELD).get(ncell);
         cell.setElements(type, amount);
+        statisticsTracker.trackCellAppearance(cell, currentSimulationStep, visible);
+        increaseTotalMetal(amount);
         if (visible) {
             cell.detectMetal();
             foundMetals.add(cell);
         }
+    }
+
+    private void increaseTotalMetal(int amount) {
+        totalMetal = totalMetal + amount;
     }
 
     /**
@@ -439,6 +447,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                 throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is no metal left.");
             }
             fieldCell.removeMetal();
+            statisticsTracker.trackCellCollection(fieldCell, currentSimulationStep);
             agent.setCapacity(agent.getCapacity()+1);
         }
     }
@@ -461,12 +470,17 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             throw new IllegalArgumentException("Refusing return metal to "+cell.getX() + ","+cell.getY()+ " because the agent does not carry the amount that it wants to return.");
         }
         // if no exception was thrown, apply action;
+        mfc.addManufacturedMetal(returnAction.amount);
         collectedPoints = collectedPoints+(returnAction.amount * mfc.getPrice());
         agent.setCapacity(agent.getCapacity()-returnAction.amount);
     }
 
     public int getCollectedPoints() {
         return collectedPoints;
+    }
+
+    public int getTotalMetal() {
+        return totalMetal;
     }
 
     public void checkFoundMetals() {
@@ -477,5 +491,35 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             }
         }
         foundMetals.removeAll(cellsToRemove);
+    }
+
+    public int getManufacturedMetal(MetalType metalType) {
+        int manufacturedMetal = 0;
+        for(Cell cell: getCellsOfType().get(CellType.MANUFACTURING_CENTER)) {
+            ManufacturingCenterCell mfc = (ManufacturingCenterCell) cell;
+            if(mfc.getMetal() == metalType) {
+                manufacturedMetal = manufacturedMetal+ mfc.getManufacturedMetal();
+            }
+        }
+        return manufacturedMetal;
+    }
+
+    public double getAverageDiscoveryTime() {
+        return statisticsTracker.getAverageDiscoveryTime();
+    }
+
+    public double getAverageCollectionTime() {
+        return statisticsTracker.getAverageCollectionTime();
+    }
+
+    public double getRatioOfDiscoveredMetal() {
+        int discoveredButNotCollected = 0;
+        for(Cell cell : cellsOfType.get(CellType.FIELD)) {
+            FieldCell fc = (FieldCell) cell;
+            if(fc.wasFound()) {
+                discoveredButNotCollected = discoveredButNotCollected + fc.getMetalAmount();
+            }
+        }
+        return (discoveredButNotCollected + getManufacturedMetal(MetalType.SILVER) + getManufacturedMetal(MetalType.GOLD)) / ((double) getTotalMetal());
     }
 }

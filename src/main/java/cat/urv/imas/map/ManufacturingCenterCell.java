@@ -25,6 +25,8 @@ import cat.urv.imas.onthology.MetalType;
  */
 public class ManufacturingCenterCell extends Cell {
 
+    private int manufacturedMetal = 0;
+
     /**
      * Price of manufacturing silver or gold.
      */
@@ -57,6 +59,10 @@ public class ManufacturingCenterCell extends Cell {
         this.metal = type;
     }
 
+    public void addManufacturedMetal(int newMetal) {
+        manufacturedMetal = manufacturedMetal+newMetal;
+    }
+
     @Override
     public boolean isEmpty() {
         return false;
@@ -73,4 +79,7 @@ public class ManufacturingCenterCell extends Cell {
         return price + ":" + metal.getShortString();
     }
 
+    public int getManufacturedMetal() {
+        return manufacturedMetal;
+    }
 }

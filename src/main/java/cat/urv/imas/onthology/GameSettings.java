@@ -20,6 +20,7 @@ package cat.urv.imas.onthology;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.*;
 import cat.urv.imas.util.Graph;
+import cat.urv.imas.util.StatisticsTracker;
 import cat.urv.imas.util.Vertex;
 import jade.core.AID;
 
@@ -39,6 +40,8 @@ import java.util.stream.Collectors;
  */
 @XmlRootElement(name = "GameSettings")
 public class GameSettings implements java.io.Serializable {
+
+    protected StatisticsTracker statisticsTracker = new StatisticsTracker();
 
     /* Default values set to all attributes, just in case. */
     /**
@@ -233,6 +236,7 @@ public class GameSettings implements java.io.Serializable {
 	    				FieldCell tempCell = (FieldCell) map[row+i][col+j];
 	    				if(!tempCell.detectMetal().isEmpty()) {
 	    					detectedMetals.add(tempCell);
+	    					statisticsTracker.trackCellDiscovery(tempCell, currentSimulationStep);
 	    				}
 	    			}
 	    		}
@@ -312,14 +316,6 @@ public class GameSettings implements java.io.Serializable {
 
     public long getCurrentRoundEnd() {
         return currentRoundEnd;
-    }
-
-    public int getStepTime() {
-        return stepTime;
-    }
-
-    public void setStepTime(int stepTime) {
-        this.stepTime = stepTime;
     }
 
     public Graph<Cell> getMapGraph() {

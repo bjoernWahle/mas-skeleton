@@ -27,6 +27,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -235,11 +236,60 @@ public class SystemAgent extends ImasAgent {
         // TODO add stats for last round
         checkAndApplyActions();
         addElementsForThisSimulationStep();
+        updateStats();
         game.checkFoundMetals();
         updateGUI();
-        gui.showStatistics("Round "+this.game.getCurrentSimulationStep()+": Total points: "+game.getCollectedPoints() + "\n");
         this.game.advanceToNextRound();
         log("Starting round "+this.game.getCurrentSimulationStep());
+    }
+
+    private void updateStats() {
+        DecimalFormat f = new DecimalFormat("##.00");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Round ");
+        sb.append(this.game.getCurrentSimulationStep());
+        sb.append(": Total benefits: ");
+        sb.append(game.getCollectedPoints());
+        int totalManufacturedMetal = 0;
+        for(MetalType metalType: MetalType.values()) {
+            sb.append(", Total ");
+            sb.append(metalType.toString());
+            sb.append(" manufactured: ");
+            int amount = game.getManufacturedMetal(metalType);
+            totalManufacturedMetal = totalManufacturedMetal +amount;
+            sb.append(amount);
+        }
+        sb.append(", Total manufactured metal: ");
+        sb.append(totalManufacturedMetal);
+        sb.append("\n\t");
+        sb.append(", Average benefit per unit: ");
+        if(totalManufacturedMetal == 0) {
+            sb.append("NaN");
+        } else {
+            sb.append(game.getCollectedPoints() / ((double) totalManufacturedMetal));
+        }
+        sb.append(", Average time for discovery: ");
+        double avgDiscoveryTime = game.getAverageDiscoveryTime();
+        if(avgDiscoveryTime == -1.0) {
+            sb.append("NaN");
+        } else {
+            sb.append(f.format(avgDiscoveryTime));
+        }
+        sb.append(", Average time for collection: ");
+        double avgCollectionTime = game.getAverageCollectionTime();
+        if(avgCollectionTime == -1.0) {
+            sb.append("NaN");
+        } else {
+            sb.append(f.format(avgCollectionTime));
+        }
+        sb.append(", Total metal on map: ");
+        sb.append(game.getTotalMetal());
+        sb.append(", Ratio of discovered metal: ");
+        sb.append(f.format(game.getRatioOfDiscoveredMetal()));
+        sb.append(", Ratio of collected metal:");
+        sb.append(f.format(totalManufacturedMetal / ((double) game.getTotalMetal())));
+        sb.append("\n");
+        gui.showStatistics(sb.toString());
     }
 
     private void checkAndApplyActions() {
