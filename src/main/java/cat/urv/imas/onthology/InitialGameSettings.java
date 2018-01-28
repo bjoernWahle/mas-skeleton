@@ -386,7 +386,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             PathCell newPathCell = (PathCell) newCell;
             Cell oldCell = findAgentsCell(agent);
             PathCell oldPathCell = (PathCell) oldCell;
-            if(!oldCell.adjacent(newCell)) {
+            if(!oldCell.adjacent(newCell, false)) {
                 throw new IllegalArgumentException("Refusing move request to "+moveAction.x +"," + moveAction.y +" because the cell is not adjacent to the current cell" );
             }
             if(((PathCell) newCell).isThereADiggerAgentWorking()) {
@@ -425,7 +425,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is a digger working at this cell");
         }
         Cell destCell = get(collectAction.y, collectAction.x);
-        if(!destCell.adjacent(agentCell)) {
+        if(!destCell.adjacent(agentCell, true)) {
             throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because it is not adjacent to the diggers position.");
         }
         if(!(destCell instanceof FieldCell)) {
@@ -447,7 +447,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         DiggerInfoAgent agent = (DiggerInfoAgent) getInfoAgent(returnAction.getAgent().getType(),returnAction.getAgent().getAID());
         Cell cell = get(returnAction.getY(), returnAction.getX());
         PathCell agentCell = getAgentCell(agent.getType(), agent.getAID());
-        if(!agentCell.adjacent(cell)) {
+        if(!agentCell.adjacent(cell, true)) {
             throw new IllegalArgumentException("Refusing return metal to "+cell.getX() + ","+cell.getY()+ " because the cell is not adjacent to the agents position.");
         }
         if(!(cell instanceof ManufacturingCenterCell)) {

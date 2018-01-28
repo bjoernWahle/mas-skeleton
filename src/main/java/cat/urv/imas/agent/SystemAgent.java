@@ -122,7 +122,7 @@ public class SystemAgent extends ImasAgent {
         super.setup();
 
         // 2. Load game settings.
-        this.game = InitialGameSettings.load("game.settings");
+        this.game = InitialGameSettings.load("game2.settings");
         log("Initial configuration settings loaded");
 
         // 3. Start other agents

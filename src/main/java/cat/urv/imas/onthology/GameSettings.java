@@ -342,7 +342,7 @@ public class GameSettings implements java.io.Serializable {
         for(Vertex<Cell> vc : mapGraph.getVertices().values()) {
             // get neighbour cells
             Cell c = vc.getLabel();
-            for(PathCell pc : getPathNeighbors(c)) {
+            for(PathCell pc : getPathNeighbors(c, false)) {
                 Vertex<Cell> nvc = mapGraph.getVertex(pc);
                 mapGraph.addEdge(vc, nvc);
             }
@@ -350,18 +350,24 @@ public class GameSettings implements java.io.Serializable {
 
     }
 
-    public List<PathCell> getPathNeighbors(Cell destCell) {
-        return getNeighbors(destCell).stream().filter(c -> c instanceof PathCell).map(c -> (PathCell) c).collect(Collectors.toList());
+    public List<PathCell> getPathNeighbors(Cell destCell, boolean diagonally) {
+        return getNeighbors(destCell, diagonally).stream().filter(c -> c instanceof PathCell).map(c -> (PathCell) c).collect(Collectors.toList());
     }
 
-    private List<Cell> getNeighbors(Cell destCell) {
+    private List<Cell> getNeighbors(Cell destCell, boolean diagonally) {
         List<Cell> neighbors = new LinkedList<>();
         int x = destCell.getX();
         int y = destCell.getY();
         int [] adj = {-1,0,1};
         for(int dx : adj) {
             for(int dy : adj) {
-                if(Math.abs(dx)+Math.abs(dy)==1) {
+                boolean condition;
+                if(diagonally) {
+                    condition = Math.abs(dx)+Math.abs(dy)>=1;
+                } else {
+                    condition = Math.abs(dx)+Math.abs(dy)==1;
+                }
+                if(condition) {
                     int nx = x + dx;
                     int ny = y + dy;
                     if(nx >= 0 && ny >= 0 && ny < map.length && nx < map[0].length) {

@@ -48,9 +48,6 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             nResponders = agent.getDiggers().size();
 
             agent.log("Alriiiiight fellas I got some new metal at ("+task.x+","+task.y+"). Who's keen to dig it?");
-            if(last) {
-                agent.log("It's the last one.");
-            }
 
             // Fill the CFP message
             ACLMessage msg = new ACLMessage(ACLMessage.CFP);
@@ -112,7 +109,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                                 double capacity = Double.parseDouble(proposal.split(",")[1]);
                                 CollectMetalBid collectMetalBid = new CollectMetalBid(msg.getSender(), time, capacity);
                                 proposals.add(collectMetalBid);
-                                if (collectMetalBid.getRemainingCapacity() == 1.0 && time < bestTime) {
+                                if (collectMetalBid.getRemainingCapacity() == 1.0 && time > -1 && time < bestTime) {
                                     bestTime = time;
                                     bestProposal = collectMetalBid;
                                     accept = reply;

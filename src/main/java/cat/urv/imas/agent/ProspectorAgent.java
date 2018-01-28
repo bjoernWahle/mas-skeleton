@@ -93,7 +93,7 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     
     public void moveNextCell() {
     	//Make a random move.
-    	List<PathCell> possibleMovements = game.getPathNeighbors(game.get(currentY,currentX));
+    	List<PathCell> possibleMovements = game.getPathNeighbors(game.get(currentY,currentX), false);
     	Random rand = new Random();
     	PathCell nextCell = possibleMovements.get(rand.nextInt(possibleMovements.size()));
     	if(nextCell == null) {
