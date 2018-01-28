@@ -39,7 +39,7 @@ public class CoordinatorBehaviour extends FSMBehaviour {
         RequesterBehaviour init = new RequesterBehaviour(agent, initialRequest);
         registerFirstState(init, INIT);
 
-        CollectingActionsAndStatsBehaviour collect = new CollectingActionsAndStatsBehaviour(agent);
+        CollectingActionsBehaviour collect = new CollectingActionsBehaviour(agent);
         registerState(collect, COLLECTING);
 
         OneShotBehaviour send = new OneShotBehaviour() {

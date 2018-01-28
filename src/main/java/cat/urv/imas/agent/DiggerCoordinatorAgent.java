@@ -115,6 +115,16 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         }
     }
 
+    public void broadcastSimpleMessageToDiggers(int performative, String content) {
+        ACLMessage message = new ACLMessage(performative);
+        message.setSender(getAID());
+        for(AID digger : getDiggers()) {
+            message.addReceiver(digger);
+        }
+        message.setContent(content);
+        send(message);
+    }
+
     public List<FieldCell> getMetalsBeingCollected() {
         return tasks.stream().map(t -> (FieldCell) gameSettings.get(t.y, t.x)).collect(Collectors.toList());
     }

@@ -3,10 +3,7 @@ package cat.urv.imas.behaviour.digger_coordinator;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.agent.ImasAgent;
-import cat.urv.imas.onthology.ActionType;
-import cat.urv.imas.onthology.InformAgentAction;
-import cat.urv.imas.onthology.MobileAgentAction;
-import cat.urv.imas.onthology.MoveAction;
+import cat.urv.imas.onthology.*;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
@@ -29,7 +26,7 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
         this.agent = agent;
         this.millis = millis;
 
-        messageTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+        messageTemplate = MessageTemplate.MatchPerformative(Performatives.INFORM_AGENT_ACTION);
 
 
     }

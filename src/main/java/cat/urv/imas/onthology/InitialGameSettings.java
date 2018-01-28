@@ -402,9 +402,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             }
             // check old cell
             if(oldPathCell.getAgents().get(AgentType.DIGGER).isEmpty()) {
-                System.out.println("I want to remove the old cell;");
                 this.agentList.get(agent.getType()).remove(oldCell);
-                System.out.println("Should be removed now: "+this.agentList.get(agent.getType()));
             }
         } else {
             throw new IllegalArgumentException("Refusing move request to " +moveAction.x +"," + moveAction.y + " because the Cell is not a PathCell.");

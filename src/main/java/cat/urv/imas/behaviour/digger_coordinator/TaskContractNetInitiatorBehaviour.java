@@ -48,6 +48,9 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             nResponders = agent.getDiggers().size();
 
             agent.log("Alriiiiight fellas I got some new metal at ("+task.x+","+task.y+"). Who's keen to dig it?");
+            if(last) {
+                agent.log("It's the last one.");
+            }
 
             // Fill the CFP message
             ACLMessage msg = new ACLMessage(ACLMessage.CFP);
@@ -62,7 +65,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             try {
                 DiggerTask tempTask = new DiggerTask(task);
                 tempTask.setLast(last);
-                agent.getContentManager().fillContent(msg, task);
+                agent.getContentManager().fillContent(msg, tempTask);
 
                 cni = new ContractNetInitiator(agent, msg) {
 

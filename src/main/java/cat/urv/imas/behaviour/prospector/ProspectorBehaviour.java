@@ -26,7 +26,6 @@ public class ProspectorBehaviour extends FSMBehaviour {
             @Override
             public void handle(ACLMessage m) {
                 super.handle(m);
-                agent.log("message: " + m);
                 Object contentObject = null;
                 try {
                     contentObject = m.getContentObject();

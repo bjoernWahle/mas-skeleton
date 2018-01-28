@@ -26,13 +26,12 @@ public class DiggerBehaviour extends FSMBehaviour {
             @Override
             public void handle(ACLMessage m) {
                 super.handle(m);
-                agent.log("message: " + m);
                 Object contentObject = null;
                 try {
                     contentObject = m.getContentObject();
                     if(contentObject instanceof GameSettings) {
                         // set game
-                        agent.log("I received the initial game settings");
+                        agent.log("I received the initial game settings. Let's go!");
                         agent.setGame((GameSettings) contentObject);
                     }
                 } catch (UnreadableException e) {

@@ -22,6 +22,11 @@ public class AdvanceToNextRoundBehavior extends OneShotBehaviour {
         // check and apply actions
         agent.advanceToNextRound();
         // send game settings to the agents
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         agent.notifyCoordinator();
     }
 

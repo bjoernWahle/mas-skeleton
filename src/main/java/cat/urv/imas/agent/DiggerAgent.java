@@ -182,6 +182,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void returnMetal(int x, int y) {
+        currentMovementPlan = null;
         currentAction = new ReturnMetalAction(x, y, currentCapacity, currentMetal.getShortString());
         log("I will return my metal now");
         tasks.remove(currentTask);
@@ -196,7 +197,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void notifyDiggerCoordinator(MobileAgentAction currentAction) {
-        ACLMessage message = prepareMessage(ACLMessage.INFORM);
+        ACLMessage message = prepareMessage(Performatives.INFORM_AGENT_ACTION);
         message.addReceiver(diggerCoordinator);
         try {
             getContentManager().fillContent(message, new InformAgentAction(currentAction));
@@ -236,6 +237,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void collectMetal(int x, int y) {
+        this.currentMovementPlan = null;
         this.currentAction = new CollectMetalAction(x, y);
         log("I gonna collect that metal now.");
     }
@@ -286,5 +288,9 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     public void setCurrentTask(DiggerTask currentTask) {
         this.currentTask = currentTask;
+    }
+
+    public void setCurrentMetal(MetalType currentMetal) {
+        this.currentMetal = currentMetal;
     }
 }

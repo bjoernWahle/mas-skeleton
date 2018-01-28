@@ -19,7 +19,6 @@ import jade.proto.ContractNetResponder;
 public class TaskContractNetResponder extends SimpleBehaviour {
     ContractNetResponder cnr;
     DiggerAgent agent;
-    long timeEnd;
     boolean finished = false;
     public TaskContractNetResponder(DiggerAgent agent) {
         this.agent = agent;
@@ -28,11 +27,6 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
     public void setLast() {
         this.exitCode = 1;
-    }
-
-    @Override
-    public void onStart() {
-        timeEnd = agent.getRoundEnd()-agent.getRoundTime()/6;
     }
 
     @Override
@@ -75,7 +69,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                         } else {
                             // We refuse to provide a proposal
                             agent.log("Refusing to collect metal from (" +tempTask.x+","+tempTask.y +")");
-                            agent.log("Current:"+agent.getCurrentCapacity()+", max: "+agent.maxCapacity);
+                            finished = true;
                             throw new RefuseException("evaluation-failed");
                         }
                     } else {
@@ -88,11 +82,13 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                     if (agent.checkIfTaskCanBeDone()) {
                         if(agent.getTasks().isEmpty()) {
                             agent.setCurrentTask(tempTask);
+                            agent.setCurrentMetal(MetalType.fromString(tempTask.metalType));
                         }
                         agent.addTask(tempTask);
                         ACLMessage inform = accept.createReply();
                         inform.setPerformative(ACLMessage.INFORM);
                         agent.log("Proposal accepted: " + tempTask);
+                        finished = true;
                         return inform;
                     } else {
                         throw new FailureException("unexpected-error");
@@ -105,11 +101,6 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                 }
             };
             agent.addBehaviour(cnr);
-        } else {
-            // if behaviour already there and running, check that agent does not wait longer than 10 seconds
-            if(System.currentTimeMillis() > timeEnd) {
-                finished = true;
-            }
         }
     }
 
@@ -120,15 +111,16 @@ public class TaskContractNetResponder extends SimpleBehaviour {
 
     @Override
     public int onEnd() {
+        agent.log("Communication ended with exit code "+exitCode);
+        int tempExitCode = exitCode;
         reset();
-        return exitCode;
+        return tempExitCode;
     }
 
     @Override
     public void reset() {
         super.reset();
         exitCode = 0;
-        timeEnd = -1;
         cnr = null;
         finished = false;
     }

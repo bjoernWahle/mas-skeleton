@@ -27,5 +27,14 @@ public class MessageContent {
      * city information.
      */
     public static final String GET_MAP = "Get map";
-    
+
+    /**
+     * Message sent from Digger- or Prospector coordinator to inform the diggers / prospectors that there is nothing to negotiate this round.
+     */
+    public static final String INFORM_NO_NEGOTIATION = "No reason to negotiate this round lads.";
+
+    /**
+     * Message sent from Digger- or Prospector coordinator to inform the diggers / prospectors that there are topics to negotiate this round.
+     */
+    public static final String INFORM_NEGOTIATION = "Prepare for some juicy negotiations fellas!";
 }
