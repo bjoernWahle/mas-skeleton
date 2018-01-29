@@ -224,25 +224,24 @@ public class GameSettings implements java.io.Serializable {
         return map;
     }
 
-    public List<FieldCell> detectFieldsWithMetal(int row, int col) {
+    public void detectFieldsWithMetal(int row, int col) {
         //Find all surrounding cells to (row,col) that are
         //buildings and have garbage on it.
         //Use: FieldCell.detectMetal() to do so.
-    	List<FieldCell> detectedMetals = new ArrayList<FieldCell>();
+    	
     	for (int i=-1; i<2; i++) {
     		for (int j=-1;j<2;j++) {
 	    		if((row+i) < map.length && (col+j) < map[0].length && (row+i)>=0 && (col+j) >= 0) {
 	    			if (map[row+i][col+j].getCellType() == CellType.FIELD) {
 	    				FieldCell tempCell = (FieldCell) map[row+i][col+j];
 	    				if(!tempCell.detectMetal().isEmpty()) {
-	    					detectedMetals.add(tempCell);
+	    					foundMetals.add(tempCell);
 	    					statisticsTracker.trackCellDiscovery(tempCell, currentSimulationStep);
 	    				}
 	    			}
 	    		}
     		}
     	}
-        return detectedMetals;
     }
 
     /**
@@ -375,33 +374,7 @@ public class GameSettings implements java.io.Serializable {
         return neighbors;
     }
     
-    /**
-     * Method for adding metals found by the prospectors
-     */
-    public void addFoundMetals(List<FieldCell> newMetals) {
-    	if(foundMetals == null) {
-    		foundMetals = new ArrayList<FieldCell>();
-    	}
-    	//We first remove them to avoid repetition
-    	foundMetals.removeAll(newMetals);
-    	//Then we add them to have them all
-    	foundMetals.addAll(newMetals);
-    	//updateFoundedMetals();
-    }
     
-    private void updateFoundedMetals() {
-    	List<Cell> fields = cellsOfType.get(CellType.FIELD);
-    	for (Cell field : fields) {
-    		FieldCell temp = (FieldCell) field;
-    		if (foundMetals.contains(temp)){
-    			temp.detectMetal();
-    		}else {
-    			temp.removeDetected();
-    		}
-    		
-    	}
-    }
-
     public PathCell getAgentCell(AgentType agentType, AID aid) {
         return (PathCell) getAgentList().get(agentType).stream().filter(c -> ((PathCell) c).getAgents().get(agentType).contains(new InfoAgent(agentType, aid)) ).findFirst().get();
     }

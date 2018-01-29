@@ -74,10 +74,6 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
         return roundActions;
     }
     
-    public void addFoundMetals(List<FieldCell> newMetals) {
-    	gameSettings.addFoundMetals(newMetals);
-    }
-    
     public void initProspectors() {
         ACLMessage message = new ACLMessage(ACLMessage.INFORM);
         message.setSender(getAID());

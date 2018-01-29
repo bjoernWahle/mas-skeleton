@@ -294,7 +294,7 @@ public class SystemAgent extends ImasAgent {
 
     private void checkAndApplyActions() {
         // TODO maybe deep clone gameSettings before
-        // check move actions
+        // check actions
         for(MobileAgentAction action : requestedActions) {
             if(action instanceof CollectMetalAction) {
                 CollectMetalAction collectAction = (CollectMetalAction) action;
