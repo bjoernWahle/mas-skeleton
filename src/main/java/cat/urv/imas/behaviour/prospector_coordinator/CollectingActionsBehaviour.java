@@ -6,7 +6,6 @@ import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
 import cat.urv.imas.onthology.ActionType;
 import cat.urv.imas.onthology.InformAgentAction;
-import cat.urv.imas.onthology.InformProspector;
 import cat.urv.imas.onthology.MobileAgentAction;
 import cat.urv.imas.onthology.MoveAction;
 import jade.content.ContentElement;
@@ -25,7 +24,8 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
     long millis;
     long endTime;
     boolean finished = false;
-    List<AID> prospectors;
+    List<AID> prospectorsMoving;
+    List<AID> prospectorsDetecting;
     MessageTemplate messageTemplate;
     
     public CollectingActionsBehaviour(ProspectorCoordinatorAgent agent, long millis) {
@@ -37,7 +37,8 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
     @Override
     public void onStart() {
         super.onStart();
-        prospectors = new LinkedList<>(agent.getProspectors());
+        prospectorsMoving = new LinkedList<>(agent.getProspectors());
+        prospectorsDetecting = new LinkedList<>(agent.getProspectors());
         endTime = System.currentTimeMillis() + millis;
         agent.log("Waiting for action informations");
     }
@@ -50,28 +51,29 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
         if(msg != null) {
             try {
                 AID sender = msg.getSender();
-                if(prospectors.contains(sender)) {
+                if(prospectorsMoving.contains(sender) || prospectorsDetecting.contains(sender)) {
                     ContentElement ce = agent.getContentManager().extractContent(msg);
-                    if(ce instanceof InformProspector) {
-                    	MobileAgentAction action = ((InformProspector) ce).getAction();
-                    	
-                        if (((InformProspector) ce).anyElements()) {
-                    		agent.log("Received discovered metals from "+ sender.getLocalName());
-                    		agent.addFoundMetals(((InformProspector) ce).getFoundMetalsList());
-                    	}
+                    if(ce instanceof InformAgentAction) {
+                    	MobileAgentAction action = ((InformAgentAction) ce).getAction();
                         ActionType actionType = ActionType.fromString(action.getActionType());
                         switch (actionType) {
                             case MOVE:
-                            case IDLE:
-                            case COLLECT:
-                            case RETURN:
-                                // add agent info
-                            	agent.log("Received action from "+ sender.getLocalName());
+                            	// add agent info
+                            	agent.log("Received movement action from "+ sender.getLocalName());
                                 action.setAgent(agent.getGameSettings().getInfoAgent(AgentType.PROSPECTOR, sender));
                                 agent.addRoundAction(action);
-                                prospectors.remove(msg.getSender());
+                                prospectorsMoving.remove(msg.getSender());
                                 break;
+                            case IDLE:
+                            case COLLECT:
                             case DETECT:
+                            	// add agent info
+                            	agent.log("Received detection action from "+ sender.getLocalName());
+                                action.setAgent(agent.getGameSettings().getInfoAgent(AgentType.PROSPECTOR, sender));
+                                agent.addRoundAction(action);
+                                prospectorsDetecting.remove(msg.getSender());
+                                break;
+                            case RETURN:
                             default:
                                 throw new IllegalArgumentException("Illegal action type for a prospector: " + actionType);
                         }
@@ -86,7 +88,7 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
             }
         }
 
-        if((prospectors.isEmpty()) /*|| System.currentTimeMillis() >= endTime*/) {
+        if((prospectorsMoving.isEmpty() && prospectorsMoving.isEmpty()) || (System.currentTimeMillis() >= endTime && msg == null)) {
             agent.informCoordinator();
             finished = true;
         }

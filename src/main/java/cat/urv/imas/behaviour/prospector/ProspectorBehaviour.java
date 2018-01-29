@@ -11,7 +11,12 @@ import jade.lang.acl.UnreadableException;
 
 public class ProspectorBehaviour extends FSMBehaviour {
 
-    private ProspectorAgent agent;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private ProspectorAgent agent;
 
     private String INIT = "init";
     private String ROUND = "ROUND";
@@ -23,7 +28,7 @@ public class ProspectorBehaviour extends FSMBehaviour {
 
         ReceiverBehaviour init = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
 
-            @Override
+			@Override
             public void handle(ACLMessage m) {
                 super.handle(m);
                 agent.log("message: " + m);
@@ -35,6 +40,8 @@ public class ProspectorBehaviour extends FSMBehaviour {
                         agent.log("I received the initial game settings");
                         agent.setGame((GameSettings) contentObject);
                         agent.setCellsToExplore();
+                        agent.examine();
+                        agent.moveNextCell();
                     }
                 } catch (UnreadableException e) {
                     e.printStackTrace();
@@ -46,7 +53,8 @@ public class ProspectorBehaviour extends FSMBehaviour {
         RoundBehaviour round = new RoundBehaviour(agent);
 
         OneShotBehaviour end = new OneShotBehaviour() {
-            @Override
+
+			@Override
             public void action() {
                 agent.log("Prospector behaviour has ended.");
             }

@@ -466,6 +466,10 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         collectedPoints = collectedPoints+(returnAction.amount * mfc.getPrice());
         agent.setCapacity(agent.getCapacity()-returnAction.amount);
     }
+    
+    public void applyDetection(DetectAction detectAction) {
+    	detectFieldsWithMetal(detectAction.getY(), detectAction.getX());
+    }
 
     public int getCollectedPoints() {
         return collectedPoints;

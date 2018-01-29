@@ -34,9 +34,9 @@ public class StepBehaviour extends FSMBehaviour {
                 try {
                     ContentElement ce = agent.getContentManager().extractContent(m);
                     if(ce instanceof ActionList) {
-                        ActionList diggerActions = (ActionList) ce;
+                        ActionList agentActions = (ActionList) ce;
                         // TODO later we should have one message with actions and stats
-                        agent.storeActions(diggerActions);
+                        agent.storeActions(agentActions);
                     }
                 } catch (Codec.CodecException | OntologyException e) {
                     e.printStackTrace();

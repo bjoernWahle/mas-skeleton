@@ -58,7 +58,7 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
     }
 
     public void setGameSettings(GameSettings gameSettings) {
-        log(" "+ gameSettings.getAgentList());
+        //log(" "+ gameSettings.getAgentList());
         this.gameSettings = gameSettings;
     }
     
@@ -93,6 +93,7 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
     }
     
     public void informProspectors() {
+    	/*
         for (Cell cell: (gameSettings.getAgentList().get(AgentType.PROSPECTOR))) {
             PathCell pathCell = (PathCell) cell;
             for(InfoAgent prospector: ((PathCell) cell).getAgents().get(AgentType.PROSPECTOR)) {
@@ -107,6 +108,19 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
                     e.printStackTrace();
                 }
             }
+        }*/
+        
+    	ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        for(AID prospector : getProspectors()) {
+            message.addReceiver(prospector);
+        }
+        try {
+            message.setContentObject(gameSettings);
+            send(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log("Something went wrong sending the message.");
         }
     }
     

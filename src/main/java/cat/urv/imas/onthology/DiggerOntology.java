@@ -36,7 +36,7 @@ public class DiggerOntology extends BeanOntology {
         add(IdleAction.class);
         add(ActionList.class);
         add(InformAgentAction.class);
-        add(InformProspector.class);
+        add(DetectAction.class);
     }
 
 }

@@ -272,6 +272,15 @@ public class SystemAgent extends ImasAgent {
                     log(e.getMessage());
                 }
             }
+            if(action instanceof DetectAction) {
+            	DetectAction detectAction = (DetectAction) action;
+                try {
+                    this.game.applyDetection(detectAction);
+                } catch (IllegalStateException | IllegalArgumentException e) {
+                    log(e.getMessage());
+                    // TODO notify agents about their illegal moves
+                }
+            }
 
         }
         //Clear requested actions because they have already been checked
@@ -281,12 +290,12 @@ public class SystemAgent extends ImasAgent {
         // TODO blame agents that wanna be idle
     }
 
-    public void storeActions(ActionList diggerActions) {
+    public void storeActions(ActionList agentActions) {
         log("Storing actions");
         // remove last rounds actions (just in case - they should be deleted after being applied)
         requestedActions = new LinkedList<>();
         // store actions
-        requestedActions.addAll(diggerActions.getAgentActions());
+        requestedActions.addAll(agentActions.getAgentActions());
     }
 
     public void notifyCoordinator() {
