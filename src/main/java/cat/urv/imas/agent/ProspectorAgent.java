@@ -5,11 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
-import cat.urv.imas.onthology.GameSettings;
-import cat.urv.imas.onthology.InformAgentAction;
-import cat.urv.imas.onthology.MobileAgentAction;
-import cat.urv.imas.onthology.MoveAction;
-import cat.urv.imas.onthology.DetectAction;
+import cat.urv.imas.onthology.*;;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
@@ -135,7 +131,7 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     	ACLMessage message = prepareMessage(ACLMessage.INFORM);
         message.addReceiver(prospectorCoordinator);
         try {
-        	getContentManager().fillContent(message, new InformAgentAction(currentAction));
+        	getContentManager().fillContent(message, new InformAgentRound(currentAction));
             log("Sending msg with my next action " + message.getContent());
             send(message);
             this.currentAction = null;

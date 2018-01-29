@@ -3,7 +3,7 @@ package cat.urv.imas.behaviour.prospector_coordinator;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
 import cat.urv.imas.onthology.ActionType;
-import cat.urv.imas.onthology.InformProspector;
+import cat.urv.imas.onthology.InformAgentRound;;
 import cat.urv.imas.onthology.MobileAgentAction;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
@@ -50,8 +50,8 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
                 AID sender = msg.getSender();
                 if(prospectorsMoving.contains(sender) || prospectorsDetecting.contains(sender)) {
                     ContentElement ce = agent.getContentManager().extractContent(msg);
-                    if(ce instanceof InformAgentAction) {
-                    	MobileAgentAction action = ((InformAgentAction) ce).getAction();
+                    if(ce instanceof InformAgentRound) {
+                    	MobileAgentAction action = ((InformAgentRound) ce).getAction();
                         ActionType actionType = ActionType.fromString(action.getActionType());
                         switch (actionType) {
                             case MOVE:
