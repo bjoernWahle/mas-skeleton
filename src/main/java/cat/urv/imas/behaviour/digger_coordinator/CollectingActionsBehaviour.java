@@ -2,7 +2,6 @@ package cat.urv.imas.behaviour.digger_coordinator;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.DiggerCoordinatorAgent;
-import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.onthology.*;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
@@ -50,8 +49,11 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
                 if(diggers.contains(sender)) {
                     agent.log("Received action from "+ sender.getLocalName());
                     ContentElement ce = agent.getContentManager().extractContent(msg);
-                    if(ce instanceof InformAgentAction) {
-                        MobileAgentAction action = ((InformAgentAction) ce).getAction();
+                    if(ce instanceof InformAgentRound) {
+                        if(((InformAgentRound) ce).getFinishedTask() != null) {
+                            agent.handleFinishedTask((DiggerTask) ((InformAgentRound) ce).getFinishedTask());
+                        }
+                        MobileAgentAction action = ((InformAgentRound) ce).getAction();
                         ActionType actionType = ActionType.fromString(action.getActionType());
                         switch (actionType) {
                             case MOVE:

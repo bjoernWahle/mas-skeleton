@@ -28,6 +28,7 @@ public class DiggerOntology extends BeanOntology {
         add(ProspectorInfoAgent.class);
         add(RoundStart.class);
         add(DiggerTask.class);
+        add(ProposeTask.class);
         add(MetalType.class);
         add(MobileAgentAction.class);
         add(MoveAction.class);
@@ -35,8 +36,10 @@ public class DiggerOntology extends BeanOntology {
         add(ReturnMetalAction.class);
         add(IdleAction.class);
         add(ActionList.class);
-        add(InformAgentAction.class);
+        add(InformAgentRound.class);
         add(InformProspector.class);
+
+
     }
 
 }

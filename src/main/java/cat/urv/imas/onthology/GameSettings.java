@@ -406,4 +406,18 @@ public class GameSettings implements java.io.Serializable {
     public List<Cell> getManufacturingCenters() {
         return cellsOfType.get(CellType.MANUFACTURING_CENTER);
     }
+
+    public Plan getShortestPlan(Cell currentCell, Cell destCell) {
+        List<Cell> pathNeighbors = new ArrayList<>(getPathNeighbors(destCell, true));
+        if(pathNeighbors.isEmpty()) {
+            return null;
+        }
+        if(pathNeighbors.contains(currentCell)) {
+            return new Plan(new LinkedList<>());
+        }
+
+        List<Cell> vList = getMapGraph().getShortestPath(currentCell, pathNeighbors);
+        List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
+        return new Plan(pc);
+    }
 }

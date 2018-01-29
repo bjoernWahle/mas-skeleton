@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 
 public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
+    private DiggerTask finishedTask;
+
     public void startRound(int x, int y, int currentCapacity) {
         setCurrentPosition(x, y);
         this.currentCapacity = currentCapacity;
@@ -82,7 +84,31 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     public int evaluateAction(int x, int y) {
-        return stepsToPosition(x, y);
+        int currentPlanSteps = 0;
+        int tempX = currentX;
+        int tempY = currentY;
+        for(DiggerTask task : tasks) {
+            if(!task.getCurrentState().equals(TaskState.DONE.toString())) {
+                Cell currentCell = game.get(tempY, tempX);
+                Cell destCell = game.get(task.getY(),task.getX());
+                Plan plan = game.getShortestPlan(currentCell, destCell);
+                currentPlanSteps = currentPlanSteps + plan.getPathCellList().size();
+                if(task.getTaskType().equals(TaskType.COLLECT_METAL.toString())) {
+                    // add rounds needing for collecting the metal
+                    currentPlanSteps = currentPlanSteps + task.getAmount();
+                } else {
+                    // for returning metal, we only need one round
+                    currentPlanSteps = currentPlanSteps + 1;
+                }
+                if(!plan.getPathCellList().isEmpty()) {
+                    tempX = plan.getPathCellList().get(plan.getPathCellList().size()-1).getX();
+                    tempY = plan.getPathCellList().get(plan.getPathCellList().size()-1).getY();
+                }
+            }
+        }
+        Cell destCell = game.get(y, x);
+        Cell cellAfterCurrentTasks = game.get(tempY, tempX);
+        return currentPlanSteps + game.getShortestPlan(cellAfterCurrentTasks, destCell).getPathCellList().size();
     }
 
     public boolean checkIfTaskCanBeDone() {
@@ -91,7 +117,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     public void performAction() {
-        if(currentTask == null) {
+        if(currentTask == null || currentTask.isDone()) {
             Optional<DiggerTask> nextTask = getNextTask();
             if(!nextTask.isPresent()) {
                 doNothing();
@@ -116,16 +142,29 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                         throw new IllegalArgumentException("Collect metal cells have to be always field cells.");
                     }
                     int metalCapacity;
-                    if(!fieldCell.wasFound()) {
-                        log("Cell " +fieldCell.toString() + " was not found.");
-                    }
                     log(fieldCell.getMetal().toString());
                     metalCapacity = fieldCell.getMetalAmount();
                     if(currentCapacity < maxCapacity && metalCapacity > 0) {
                         collectMetal(currentTask.x, currentTask.y);
                     } else {
-                        startReturnMetal();
-                        log("I gonna go return that metal.");
+                        if(currentCapacity < maxCapacity) {
+                            // we are done with the task
+                            // remove current task from the list
+                            finishCurrentTask();
+                            // see if another is available
+                            Optional<DiggerTask> nextTask = getNextTask();
+                            if(nextTask.isPresent()) {
+                                currentTask = nextTask.get();
+                                currentTask.startTask();
+                                moveTowards(currentTask.getX(), currentTask.getY());
+                            } else {
+                                startReturnMetal();
+                            }
+                        } else {
+                            // we are not done but we can't carry more
+                            finishCurrentTask();
+                            startReturnMetal();
+                        }
                     }
                 } else {
                     moveTowards(currentTask.x, currentTask.y);
@@ -142,12 +181,15 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                 throw new IllegalArgumentException("Unknown task type: "+currentTask.getTaskType());
         }
         // tell digger coordinator about plan
-        notifyDiggerCoordinator(currentAction);
+        notifyDiggerCoordinator();
+    }
+
+    private void finishCurrentTask() {
+        currentTask.finishTask();
+        finishedTask = currentTask;
     }
 
     private void startReturnMetal() {
-        // remove current task from the list
-        tasks.remove(currentTask);
         // find closest manufacturing center
         List<Cell> mfcs = game.getManufacturingCenters();
         ManufacturingCenterCell bestManufacturingCenter = null;
@@ -171,6 +213,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
 
         currentTask = new DiggerTask(bestManufacturingCenter.getX(), bestManufacturingCenter.getY(), TaskType.RETURN_METAL.toString(), currentMetal.toString(), currentCapacity);
+        currentTask.startTask();
         List<PathCell> pc = bestPath.stream().map(c -> (PathCell) c).collect(Collectors.toList());
         currentMovementPlan = new Plan(pc);
         moveTowards(bestManufacturingCenter.getX(), bestManufacturingCenter.getY());
@@ -178,14 +221,15 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private void doNothing() {
         log("I won't do anything this round. No tasks for me bro.");
-        notifyDiggerCoordinator(new IdleAction(getAID()));
+        currentAction= new IdleAction();
+        notifyDiggerCoordinator();
     }
 
     private void returnMetal(int x, int y) {
         currentMovementPlan = null;
         currentAction = new ReturnMetalAction(x, y, currentCapacity, currentMetal.getShortString());
         log("I will return my metal now");
-        tasks.remove(currentTask);
+        finishCurrentTask();
         // get next task
         Optional<DiggerTask> nextTask = getNextTask();
         if(nextTask.isPresent()) {
@@ -196,14 +240,15 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         }
     }
 
-    private void notifyDiggerCoordinator(MobileAgentAction currentAction) {
+    private void notifyDiggerCoordinator() {
         ACLMessage message = prepareMessage(Performatives.INFORM_AGENT_ACTION);
         message.addReceiver(diggerCoordinator);
         try {
-            getContentManager().fillContent(message, new InformAgentAction(currentAction));
+            getContentManager().fillContent(message, new InformAgentRound(currentAction, finishedTask));
             log("Sending msg with my current action: " + message.getContent());
             send(message);
             this.currentAction = null;
+            this.finishedTask = null;
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
             log("Some error while sending?");
@@ -229,17 +274,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         Cell currentCell = game.get(currentY, currentX);
         Cell destCell = game.get(y, x);
 
-        List<Cell> pathNeighbors = new ArrayList<>(game.getPathNeighbors(destCell, true));
-        if(pathNeighbors.isEmpty()) {
-            return null;
-        }
-        if(pathNeighbors.contains(currentCell)) {
-            return new Plan(new LinkedList<>());
-        }
-
-        List<Cell> vList = game.getMapGraph().getShortestPath(currentCell, pathNeighbors);
-        List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
-        return new Plan(pc);
+        return game.getShortestPlan(currentCell, destCell);
     }
 
     private void collectMetal(int x, int y) {
@@ -307,5 +342,18 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     public void setCurrentMetal(MetalType currentMetal) {
         this.currentMetal = currentMetal;
+    }
+
+    public int evaluateCapacityAfterCurrentTasks() {
+        int tempCapacity = currentCapacity;
+        for(DiggerTask task : tasks) {
+            if(task.getTaskType().equals(TaskType.COLLECT_METAL.toString())) {
+                tempCapacity = Math.min(tempCapacity + task.getAmount(), maxCapacity);
+            } else {
+                // if its return metal, capacity is set to 0
+                tempCapacity = 0;
+            }
+        }
+        return tempCapacity;
     }
 }

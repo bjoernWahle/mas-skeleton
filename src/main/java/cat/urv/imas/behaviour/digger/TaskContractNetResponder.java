@@ -3,6 +3,7 @@ package cat.urv.imas.behaviour.digger;
 import cat.urv.imas.agent.DiggerAgent;
 import cat.urv.imas.onthology.DiggerTask;
 import cat.urv.imas.onthology.MetalType;
+import cat.urv.imas.onthology.ProposeTask;
 import cat.urv.imas.onthology.TaskType;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
@@ -41,8 +42,8 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                 protected ACLMessage handleCfp(ACLMessage cfp) throws NotUnderstoodException, RefuseException { ;
                     try {
                         ContentElement ce = agent.getContentManager().extractContent(cfp);
-                        if(ce instanceof DiggerTask) {
-                            tempTask = (DiggerTask) ce;
+                        if(ce instanceof ProposeTask) {
+                            tempTask = ((ProposeTask) ce).getTask();
                         }
                     } catch (Codec.CodecException | OntologyException e) {
                         e.printStackTrace();
@@ -53,13 +54,14 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                         setLast();
                     }
                     TaskType taskType = TaskType.fromString(tempTask.taskType);
-                    MetalType metalType = MetalType.fromShortString(tempTask.metalType);
+                    MetalType metalType = MetalType.fromString(tempTask.metalType);
+                    int capacityAfterCurrentTasks = agent.evaluateCapacityAfterCurrentTasks();
                     if (taskType == TaskType.COLLECT_METAL) {
                         if ((agent.getCurrentMetal() == null || metalType == agent.getCurrentMetal())
-                                && agent.getCurrentCapacity() < agent.maxCapacity && agent.getCurrentTask() == null) {
+                                && capacityAfterCurrentTasks < agent.maxCapacity) {
                             // We provide a proposal
                             int time = agent.evaluateAction(tempTask.x, tempTask.y);
-                            double percentage = Math.min((agent.maxCapacity - agent.getCurrentCapacity()) / tempTask.amount, 1.0);
+                            double percentage = Math.min((agent.maxCapacity - capacityAfterCurrentTasks) / ((double) tempTask.amount), 1.0);
                             String proposal = time + "," + percentage;
                             agent.log("Proposing " + proposal);
                             ACLMessage propose = cfp.createReply();
@@ -82,6 +84,7 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                     if (agent.checkIfTaskCanBeDone()) {
                         if(agent.getTasks().isEmpty()) {
                             agent.setCurrentTask(tempTask);
+                            agent.getCurrentTask().startTask();
                             agent.setCurrentMetal(MetalType.fromString(tempTask.metalType));
                         }
                         agent.addTask(tempTask);

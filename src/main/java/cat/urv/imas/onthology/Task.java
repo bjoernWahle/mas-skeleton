@@ -1,14 +1,15 @@
 package cat.urv.imas.onthology;
 
+import jade.content.Concept;
 import jade.content.Predicate;
 
-public abstract class Task implements Predicate {
+public abstract class Task implements Concept {
 
     public void setCurrentState(String currentState) {
         this.currentState = currentState;
     }
 
-    private String currentState;
+    protected String currentState;
 
     public Task() {
         this.currentState = "not_started";

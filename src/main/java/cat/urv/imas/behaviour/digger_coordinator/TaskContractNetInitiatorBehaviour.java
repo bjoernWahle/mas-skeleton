@@ -4,6 +4,7 @@ import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.onthology.CollectMetalBid;
 import cat.urv.imas.onthology.DiggerTask;
+import cat.urv.imas.onthology.ProposeTask;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
@@ -62,7 +63,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             try {
                 DiggerTask tempTask = new DiggerTask(task);
                 tempTask.setLast(last);
-                agent.getContentManager().fillContent(msg, tempTask);
+                agent.getContentManager().fillContent(msg, new ProposeTask(tempTask));
 
                 cni = new ContractNetInitiator(agent, msg) {
 

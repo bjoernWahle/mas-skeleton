@@ -1,7 +1,6 @@
 package cat.urv.imas.agent;
 
 import cat.urv.imas.behaviour.digger_coordinator.RoundBehaviour;
-import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.PathCell;
 import cat.urv.imas.onthology.*;
@@ -126,10 +125,24 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     public List<FieldCell> getMetalsBeingCollected() {
-        return tasks.stream().map(t -> (FieldCell) gameSettings.get(t.y, t.x)).collect(Collectors.toList());
+        return tasks.stream().filter(t -> !t.getCurrentState().equals(TaskState.DONE.toString()))
+                .map(t -> (FieldCell) gameSettings.get(t.y, t.x)).collect(Collectors.toList());
     }
 
     public List<DiggerTask> getNotStartedTasks() {
         return getTasks().stream().filter(t -> t.getCurrentState().equals(TaskState.NOT_STARTED.toString())).collect(Collectors.toList());
+    }
+
+    public void handleFinishedTask(DiggerTask finishedTask) {
+        // digger informed about that a task was finished;
+        if(finishedTask.getTaskType().equals(TaskType.COLLECT_METAL.toString())) {
+            finishedTask.setCurrentState(TaskState.IN_PROGRESS.toString());
+            Optional<DiggerTask> task = tasks.stream().filter(t -> t.equals(finishedTask)).findFirst();
+            if(task.isPresent()) {
+                task.get().finishTask();
+            } else {
+                log("Task was not found in list: "+finishedTask);
+            }
+        }
     }
 }

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.urv.imas.map.FieldCell;
-import jade.content.Predicate;
 
-public class InformProspector extends InformAgentAction {
+public class InformProspector extends InformAgentRound {
 	private List<FieldCell> foundMetalsList;
 
     public InformProspector() {

@@ -1,18 +1,13 @@
 package cat.urv.imas.agent;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
-import cat.urv.imas.behaviour.digger.DiggerBehaviour;
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
-import cat.urv.imas.onthology.DiggerInfoAgent;
 import cat.urv.imas.onthology.GameSettings;
-import cat.urv.imas.onthology.InformAgentAction;
 import cat.urv.imas.onthology.InformProspector;
 import cat.urv.imas.onthology.MobileAgentAction;
 import cat.urv.imas.onthology.MoveAction;
@@ -22,7 +17,6 @@ import jade.content.onto.OntologyException;
 import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.PathCell;
 

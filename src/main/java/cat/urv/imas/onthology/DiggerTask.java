@@ -5,7 +5,7 @@ import jade.content.Predicate;
 
 import java.util.Objects;
 
-public class DiggerTask extends Task {
+public class DiggerTask extends Task implements Concept {
 
     public int x;
     public int y;
@@ -21,7 +21,7 @@ public class DiggerTask extends Task {
         return x == that.x &&
                 y == that.y &&
                 amount == that.amount &&
-                last == that.last &&
+                Objects.equals(currentState, that.currentState) &&
                 Objects.equals(taskType, that.taskType) &&
                 Objects.equals(metalType, that.metalType);
     }
@@ -122,5 +122,9 @@ public class DiggerTask extends Task {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public boolean isDone() {
+        return currentState.equals(TaskState.DONE.toString());
     }
 }

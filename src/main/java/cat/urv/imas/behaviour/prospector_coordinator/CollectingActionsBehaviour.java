@@ -1,14 +1,10 @@
 package cat.urv.imas.behaviour.prospector_coordinator;
 
 import cat.urv.imas.agent.AgentType;
-import cat.urv.imas.agent.DiggerCoordinatorAgent;
-import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
 import cat.urv.imas.onthology.ActionType;
-import cat.urv.imas.onthology.InformAgentAction;
 import cat.urv.imas.onthology.InformProspector;
 import cat.urv.imas.onthology.MobileAgentAction;
-import cat.urv.imas.onthology.MoveAction;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
