@@ -1,22 +1,22 @@
 package cat.urv.imas.behaviour.prospector;
 
-import java.io.IOException;
-
 import cat.urv.imas.agent.ProspectorAgent;
 import cat.urv.imas.behaviour.ReceiverBehaviour;
+import cat.urv.imas.map.Cell;
 import cat.urv.imas.onthology.GameHasEnded;
-import cat.urv.imas.onthology.RoundStart;
+import cat.urv.imas.onthology.GameSettings;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.behaviours.FSMBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
-import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 
 public class RoundBehaviour extends FSMBehaviour {
-    ProspectorAgent agent;
+
+	ProspectorAgent agent;
     
     private final String START = "start_round";
     private final String EXAMINE = "examine";
@@ -27,8 +27,9 @@ public class RoundBehaviour extends FSMBehaviour {
     public RoundBehaviour(ProspectorAgent prospectorAgent) {
         agent = prospectorAgent;
         
-        ReceiverBehaviour start = new ReceiverBehaviour(agent, MessageTemplate.and(MessageTemplate.MatchOntology("digger-ontology"), MessageTemplate.MatchPerformative(ACLMessage.INFORM)), false) {
-            @Override
+        ReceiverBehaviour start = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
+
+			@Override
             public void onStart() {
                 super.onStart();
             }
@@ -41,46 +42,52 @@ public class RoundBehaviour extends FSMBehaviour {
             @Override
             public void handle(ACLMessage m) {
                 super.handle(m);
-                try {
-                    ContentElement ce = agent.getContentManager().extractContent(m);
-                    if(ce instanceof RoundStart) {
-                        RoundStart rs = (RoundStart) ce;
-                        agent.startRound(rs);
-                        setExitCode(0);
-
-                    } else if (ce instanceof GameHasEnded) {
-                        setExitCode(1);
+                if(m.getOntology() != null && m.getOntology().equals("digger-ontology")) {
+                    try {
+                        ContentElement ce = agent.getContentManager().extractContent(m);
+                        if(ce instanceof GameHasEnded) {
+                            setExitCode(1);
+                        }
+                    } catch (Codec.CodecException | OntologyException e) {
+                        e.printStackTrace();
                     }
-                } catch (Codec.CodecException | OntologyException e) {
-                    e.printStackTrace();
+                } else {
+                    GameSettings game = null;
+                    try {
+                        game = (GameSettings) m.getContentObject();
+                        agent.setGame(game);
+                        Cell cell = game.getAgentCell(agent.getType(), agent.getAID());
+                        // get own position
+                        agent.startRound(cell.getX(), cell.getY());
+                    } catch (UnreadableException e) {
+                        e.printStackTrace();
+                        agent.log("Content was not readable, sending old game status... Content:" + m);
+                    }
+                    setExitCode(0);
                 }
             }
         };
         
         
         OneShotBehaviour examineBehaviour = new OneShotBehaviour() {
-            @Override
+
+			@Override
             public void action() {
                 agent.examine();
             }
         };
         
         OneShotBehaviour moveBehaviour = new OneShotBehaviour() {
-            @Override
+
+			@Override
             public void action() {
                 agent.moveNextCell();
             }
         };
         
-        OneShotBehaviour communicateBehaviour = new OneShotBehaviour() {
-            @Override
-            public void action() {
-                agent.informCoordinator();
-            }
-        };
-        
         OneShotBehaviour end = new OneShotBehaviour() {
-        	@Override
+        	
+			@Override
             public void action() {
                 agent.log("I'm fed up of exploring fellas!");
             }
@@ -89,14 +96,12 @@ public class RoundBehaviour extends FSMBehaviour {
         registerFirstState(start, START);
         registerState(examineBehaviour, EXAMINE);
         registerState(moveBehaviour,MOVING);
-        registerState(communicateBehaviour, COMMUNICATE);
         registerLastState(end, END);
         
         registerTransition(START, EXAMINE, 0);
         registerTransition(START, END, 1);
         registerDefaultTransition(EXAMINE, MOVING);
-        registerDefaultTransition(MOVING, COMMUNICATE);
-        registerDefaultTransition(COMMUNICATE, START);
+        registerDefaultTransition(MOVING, START);
     }
 
 }

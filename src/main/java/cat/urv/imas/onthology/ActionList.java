@@ -2,6 +2,7 @@ package cat.urv.imas.onthology;
 
 import jade.content.Predicate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionList implements Predicate {
@@ -12,7 +13,11 @@ public class ActionList implements Predicate {
     }
 
     public ActionList(List<MobileAgentAction> agentActions) {
-        this.agentActions = agentActions;
+    	if(agentActions == null) {
+    		this.agentActions = new ArrayList<MobileAgentAction>();
+    	}else {
+    		this.agentActions = agentActions;
+    	}
     }
 
     public List<MobileAgentAction> getAgentActions() {
@@ -24,6 +29,9 @@ public class ActionList implements Predicate {
     }
     
     public void addAgentActions(List<MobileAgentAction> agentActions) {
-        this.agentActions.addAll(agentActions);
+    	if(agentActions != null) {
+    		if(!agentActions.isEmpty())
+    		this.agentActions.addAll(agentActions);
+    	}
     }
 }

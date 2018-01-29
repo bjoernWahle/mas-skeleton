@@ -48,13 +48,6 @@ public class RoundBehaviour extends FSMBehaviour {
                             // set game
                             agent.log("I received the game settings for this round.");
                             agent.setGameSettings((GameSettings) contentObject);
-
-                            if(agent.getGameSettings().getCurrentSimulationStep() == 1) {
-                                agent.log("Game starts. Sending GameSettings once to the prospectors");
-                                agent.initProspectors();
-                            }
-
-                            // inform diggers about their new position and the start of the new round
                             agent.informProspectors();
                             agent.resetRoundActions();
                             setExitCode(0);
@@ -67,7 +60,7 @@ public class RoundBehaviour extends FSMBehaviour {
         };
 
 
-        CollectingActionsBehaviour ca = new CollectingActionsBehaviour(agent, 20000);
+        CollectingActionsBehaviour ca = new CollectingActionsBehaviour(agent, 10000);
 
 
         OneShotBehaviour endBehaviour = new OneShotBehaviour() {

@@ -409,7 +409,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                 this.agentList.get(agent.getType()).add(newCell);
             }
             // check old cell
-            if(oldPathCell.getAgents().get(AgentType.DIGGER).isEmpty()) {
+            if(oldPathCell.getAgents().get(AgentType.DIGGER).isEmpty() && oldPathCell.getAgents().get(AgentType.PROSPECTOR).isEmpty()) {
                 this.agentList.get(agent.getType()).remove(oldCell);
             }
         } else {
@@ -473,6 +473,10 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         mfc.addManufacturedMetal(returnAction.amount);
         collectedPoints = collectedPoints+(returnAction.amount * mfc.getPrice());
         agent.setCapacity(agent.getCapacity()-returnAction.amount);
+    }
+    
+    public void applyDetection(DetectAction detectAction) {
+    	detectFieldsWithMetal(detectAction.getY(), detectAction.getX());
     }
 
     public int getCollectedPoints() {

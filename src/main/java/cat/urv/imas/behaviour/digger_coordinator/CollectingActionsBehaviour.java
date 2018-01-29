@@ -80,7 +80,7 @@ public class CollectingActionsBehaviour extends SimpleBehaviour {
             }
         }
 
-        if(diggers.isEmpty() || System.currentTimeMillis() >= endTime) {
+        if(diggers.isEmpty() || (System.currentTimeMillis() >= endTime && msg == null)) {
             agent.informCoordinator();
             finished = true;
         }
