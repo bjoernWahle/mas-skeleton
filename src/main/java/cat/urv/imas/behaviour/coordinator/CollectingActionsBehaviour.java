@@ -11,15 +11,13 @@ import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
+public class CollectingActionsBehaviour extends SimpleBehaviour {
     private CoordinatorAgent agent;
     private MessageTemplate mt;
     private boolean diggerActionsReceived;
-    private boolean diggerStatsReceived;
     private boolean prospectorActionsReceived;
-    private boolean prospectorStatsReceived;
 
-    CollectingActionsAndStatsBehaviour(CoordinatorAgent agent) {
+    CollectingActionsBehaviour(CoordinatorAgent agent) {
         this.agent = agent;
         // TODO better message template
         this.mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
@@ -39,9 +37,7 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
     public void action() {
         ACLMessage msg = agent.receive(mt);
         if(msg != null) {
-            agent.log("Received some actions broo: "+msg);
             AID sender = msg.getSender();
-            agent.log("AID: "+sender);
 	        if(!sender.equals(agent.systemAgent)) {
             	ContentElement ce = null;
 	            try {
@@ -52,16 +48,12 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
 	                    if(ce instanceof ActionList) {
 	                        agent.setDiggerActions((ActionList) ce);
 	                        diggerActionsReceived = true;
-	                    } else {
-	                        // TODO stats
 	                    }
 	                } else if (sender.equals(agent.prospectorCoordinatorAgent)) {
 	                    // check if actions or stats
 	                    if(ce instanceof ActionList) {
 	                        agent.setProspectorActions((ActionList) ce);
 	                        prospectorActionsReceived = true;
-	                    } else {
-	                        // TODO stats
 	                    }
 	                } else {
 	                    agent.log("Message from unknown sender: " + msg);
@@ -72,7 +64,6 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
 	            }
 	        }
         }
-        // TODO time and actions (prospector) + stats
         if(diggerActionsReceived && prospectorActionsReceived) {
             finished = true;
         }
@@ -82,7 +73,7 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
     @Override
     public int onEnd() {
         this.reset();
-        agent.log("Collecting actions and stats ended.");
+        agent.log("Collecting actions ended.");
         return super.onEnd();
     }
 
@@ -95,9 +86,7 @@ public class CollectingActionsAndStatsBehaviour extends SimpleBehaviour {
     public void reset() {
         super.reset();
         diggerActionsReceived = false;
-        diggerStatsReceived = false;
         prospectorActionsReceived = false;
-        prospectorStatsReceived = false;
         finished = false;
     }
 }

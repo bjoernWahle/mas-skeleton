@@ -62,7 +62,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             try {
                 DiggerTask tempTask = new DiggerTask(task);
                 tempTask.setLast(last);
-                agent.getContentManager().fillContent(msg, task);
+                agent.getContentManager().fillContent(msg, tempTask);
 
                 cni = new ContractNetInitiator(agent, msg) {
 
@@ -109,7 +109,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                                 double capacity = Double.parseDouble(proposal.split(",")[1]);
                                 CollectMetalBid collectMetalBid = new CollectMetalBid(msg.getSender(), time, capacity);
                                 proposals.add(collectMetalBid);
-                                if (collectMetalBid.getRemainingCapacity() == 1.0 && time < bestTime) {
+                                if (collectMetalBid.getRemainingCapacity() == 1.0 && time > -1 && time < bestTime) {
                                     bestTime = time;
                                     bestProposal = collectMetalBid;
                                     accept = reply;

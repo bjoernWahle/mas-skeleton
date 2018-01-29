@@ -3,16 +3,16 @@ package cat.urv.imas.behaviour.digger_coordinator;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.DiggerCoordinatorAgent;
 import cat.urv.imas.map.FieldCell;
-import cat.urv.imas.onthology.DiggerTask;
-import cat.urv.imas.onthology.MetalType;
-import cat.urv.imas.onthology.TaskType;
+import cat.urv.imas.onthology.*;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.FSMBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SequentialBehaviour;
+import jade.core.behaviours.SimpleBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -36,9 +36,12 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
         super(agent);
         this.agent = agent;
 
-        OneShotBehaviour planningBehaviour = new OneShotBehaviour() {
-            @Override
-            public void action() {
+        SimpleBehaviour planningBehaviour = new SimpleBehaviour() {
+            boolean finished= false;
+            boolean negotiation = false;
+            List<AID> receivers;
+
+            public void onStart() {
                 for(FieldCell foundCell: agent.getGameSettings().getFoundMetals()) {
                     if (!agent.getMetalsBeingCollected().contains(foundCell)) {
                         agent.addTask(new DiggerTask(foundCell.getX(), foundCell.getY()
@@ -46,15 +49,59 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
                                 , foundCell.getMetalAmount()));
                     }
                 }
+                finished = false;
+                receivers = new LinkedList<>();
+                receivers.addAll(agent.getDiggers());
+                if(agent.getNotStartedTasks().isEmpty()) {
+                    agent.broadcastSimpleMessageToDiggers(Performatives.INFORM_ROUND_START, MessageContent.INFORM_NO_NEGOTIATION);
+                    negotiation = false;
+                } else {
+                    agent.broadcastSimpleMessageToDiggers(Performatives.INFORM_ROUND_START, MessageContent.INFORM_NEGOTIATION);
+                    negotiation = true;
+                }
+            }
+
+            @Override
+            public void action() {
+                ACLMessage message = agent.receive(MessageTemplate.MatchPerformative(ACLMessage.AGREE));
+                if(message != null) {
+                    handleMessage(message);
+                }
+            }
+
+            public void handleMessage(ACLMessage message) {
+                agent.log("Received message from "+ message.getSender());
+                AID sender = message.getSender();
+                receivers.remove(sender);
+                if(receivers.isEmpty()) {
+                    finished = true;
+                }
+
+            }
+
+            @Override
+            public boolean done() {
+                return finished;
+            }
+
+            @Override
+            public void reset() {
+                super.reset();
+                finished = false;
+                negotiation = false;
+                receivers = null;
             }
 
             @Override
             public int onEnd() {
-                if(agent.getNotStartedTasks().isEmpty()) {
-                    return 1;
-                } else {
+                if(negotiation) {
+                    this.reset();
                     return 0;
+                } else {
+                    this.reset();
+                    return 1;
                 }
+
             }
         };
 

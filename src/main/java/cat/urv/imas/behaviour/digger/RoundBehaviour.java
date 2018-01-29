@@ -25,6 +25,7 @@ public class RoundBehaviour extends FSMBehaviour {
     private final String COMMUNICATING = "communicating";
     private final String PERFORMING = "performing";
     private final String WAITING = "waiting";
+    private final String ROUND_START = "round_start";
 
     public RoundBehaviour(DiggerAgent diggerAgent) {
         agent = diggerAgent;
@@ -87,16 +88,40 @@ public class RoundBehaviour extends FSMBehaviour {
             }
         };
 
+        ReceiverBehaviour roundStartBehaviour = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(Performatives.INFORM_ROUND_START)) {
+            @Override
+            public void handle(ACLMessage m) {
+                super.handle(m);
+                String content = m.getContent();
+                if(content.equals(MessageContent.INFORM_NO_NEGOTIATION)) {
+                    agent.log("I was informed that there is nothing to negotiate about this round.");
+                    ACLMessage response = m.createReply();
+                    response.setPerformative(ACLMessage.AGREE);
+                    agent.send(response);
+                    setExitCode(1);
+                } else if(content.equals(MessageContent.INFORM_NEGOTIATION)) {
+                    agent.log("Alright let's get ready for some serious business!");
+                    ACLMessage response = m.createReply();
+                    response.setPerformative(ACLMessage.AGREE);
+                    agent.send(response);
+                    setExitCode(0);
+                }
+            }
+        };
 
-        registerFirstState(communicationBehaviour, COMMUNICATING);
+
+        registerFirstState(roundStartBehaviour, ROUND_START);
+        registerState(communicationBehaviour, COMMUNICATING);
         registerState(rs, WAITING);
         registerState(performBehaviour, PERFORMING);
         registerLastState(endBehaviour, END);
 
-        registerTransition(WAITING, COMMUNICATING, 0);
+        registerTransition(WAITING, ROUND_START, 0);
         registerTransition(WAITING, END, 1);
-        registerTransition(COMMUNICATING, COMMUNICATING, 1);
-        registerTransition(COMMUNICATING, PERFORMING, 0);
+        registerTransition(ROUND_START, COMMUNICATING, 0);
+        registerTransition(ROUND_START, PERFORMING, 1);
+        registerTransition(COMMUNICATING, COMMUNICATING, 0);
+        registerTransition(COMMUNICATING, PERFORMING, 1);
         registerDefaultTransition(PERFORMING, WAITING);
 
     }

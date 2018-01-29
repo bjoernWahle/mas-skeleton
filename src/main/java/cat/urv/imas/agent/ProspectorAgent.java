@@ -104,9 +104,11 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     }
     
     public void moveNextCell() {
+
     	//Implementation of not efficient movement to explore the map.
-    	List<PathCell> possibleMovements = game.getPathNeighbors(game.get(currentY,currentX));
+    	List<PathCell> possibleMovements = game.getPathNeighbors(game.get(currentY,currentX),false);
     	PathCell nextCell = getNextCellToExplore(possibleMovements);
+
     	if(nextCell == null) {
     		nextCell = (PathCell) game.get(currentY, currentX);
     	}

@@ -130,8 +130,14 @@ public abstract class Cell implements java.io.Serializable {
         return "";
     }
 
-    public boolean adjacent(Cell cell) {
-        return Math.abs(row - cell.getY())+Math.abs(col - cell.getX()) == 1;
+    public boolean adjacent(Cell cell, boolean diagonally) {
+        int dx = Math.abs(col - cell.getX());
+        int dy = Math.abs(row - cell.getY());
+        if(diagonally) {
+            return (dx<=1 && dy<=1 && dx + dy >=1);
+        } else {
+            return dx + dy == 1;
+        }
     }
 
     @Override
