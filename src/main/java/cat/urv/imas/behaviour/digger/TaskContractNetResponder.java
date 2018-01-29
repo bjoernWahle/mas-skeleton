@@ -83,8 +83,6 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                 protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) throws FailureException {
                     if (agent.checkIfTaskCanBeDone()) {
                         if(agent.getTasks().isEmpty()) {
-                            agent.setCurrentTask(tempTask);
-                            agent.getCurrentTask().startTask();
                             agent.setCurrentMetal(MetalType.fromString(tempTask.metalType));
                         }
                         agent.addTask(tempTask);

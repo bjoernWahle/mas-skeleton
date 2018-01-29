@@ -2,7 +2,7 @@ package cat.urv.imas.util;
 
 import java.util.Objects;
 
-public class Edge implements Comparable<Edge> {
+public class Edge implements Comparable<Edge>, java.io.Serializable {
 
     private Vertex one, two;
     private int weight;

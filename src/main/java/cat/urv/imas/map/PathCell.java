@@ -31,6 +31,8 @@ public class PathCell extends Cell {
      * Information about the agent the cell contains.
      */
     private Agents agents = new Agents();
+    private boolean diggerWorking;
+    private boolean resetDiggerWorkingScheduled;
 
     /**
      * Builds a cell with a given type.
@@ -55,10 +57,7 @@ public class PathCell extends Cell {
      * @return boolean
      */
     public boolean isThereADiggerAgentWorking() {
-        // TODO: update condition to fit the restriction of
-        //       allowing just a single digger working or
-        //       any amount of agents moving through.
-        return false;
+        return diggerWorking;
     }
 
     /**
@@ -152,4 +151,23 @@ public class PathCell extends Cell {
         return agents.getMapMessage();
     }
 
+    public boolean collectingAllowed() {
+        return agents.get(AgentType.PROSPECTOR).size() + agents.get(AgentType.DIGGER).size() == 1;
+    }
+
+    public void setDiggerWorking(boolean diggerWorking) {
+        this.diggerWorking = diggerWorking;
+    }
+
+    public void scheduleReset() {
+        resetDiggerWorkingScheduled = true;
+    }
+
+    public boolean isResetDiggerWorkingScheduled() {
+        return resetDiggerWorkingScheduled;
+    }
+
+    public void setResetDiggerWorkingScheduled(boolean resetDiggerWorkingScheduled) {
+        this.resetDiggerWorkingScheduled = resetDiggerWorkingScheduled;
+    }
 }

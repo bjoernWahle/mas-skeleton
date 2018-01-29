@@ -81,7 +81,7 @@ public class GameSettings implements java.io.Serializable {
     /**
      * how long a round is
      */
-    int stepTime = 20000;
+    int stepTime = 2000000;
 
     /**
      * City map.
@@ -318,31 +318,7 @@ public class GameSettings implements java.io.Serializable {
     }
 
     public Graph<Cell> getMapGraph() {
-        if(mapGraph == null) {
-            buildGraphFromMap();
-        }
         return mapGraph;
-    }
-
-    private void buildGraphFromMap() {
-        ArrayList<Vertex<Cell>> vertices = new ArrayList<>();
-        for(Cell[] cellRow: map) {
-            for(Cell cell : cellRow) {
-                vertices.add(new Vertex<>(cell));
-            }
-        }
-        this.mapGraph = new Graph<Cell>(vertices);
-        // add edges
-        int[] adj = {-1, 0, 1};
-        for(Vertex<Cell> vc : mapGraph.getVertices().values()) {
-            // get neighbour cells
-            Cell c = vc.getLabel();
-            for(PathCell pc : getPathNeighbors(c, false)) {
-                Vertex<Cell> nvc = mapGraph.getVertex(pc);
-                mapGraph.addEdge(vc, nvc);
-            }
-        }
-
     }
 
     public List<PathCell> getPathNeighbors(Cell destCell, boolean diagonally) {
@@ -395,5 +371,26 @@ public class GameSettings implements java.io.Serializable {
         List<Cell> vList = getMapGraph().getShortestPath(currentCell, pathNeighbors);
         List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
         return new Plan(pc);
+    }
+
+    public ManufacturingCenterCell getClosestManufacturingCenter(Cell currentCell, MetalType currentMetal) {
+        List<Cell> mfcs = getManufacturingCenters();
+        ManufacturingCenterCell bestManufacturingCenter = null;
+        double bestRatio = 0;
+
+        for(Cell cell: mfcs) {
+            ManufacturingCenterCell manufacturingCenter = (ManufacturingCenterCell) cell;
+            if(manufacturingCenter.getMetal() != currentMetal) {
+                continue;
+            }
+            List<Cell> pathNeighbors = new ArrayList<>(getPathNeighbors(cell, true));
+            List<Cell> shortestPath = getMapGraph().getShortestPath(currentCell, pathNeighbors);
+            double ratio = ((double) manufacturingCenter.getPrice()) / ((double) shortestPath.size());
+            if(ratio > bestRatio) {
+                bestRatio = ratio;
+                bestManufacturingCenter = manufacturingCenter;
+            }
+        }
+        return bestManufacturingCenter;
     }
 }

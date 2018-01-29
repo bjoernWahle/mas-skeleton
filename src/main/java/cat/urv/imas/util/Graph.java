@@ -6,7 +6,7 @@ import cat.urv.imas.map.PathCell;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Graph<T> {
+public class Graph<T> implements java.io.Serializable {
 
     public HashMap<T, Vertex<T>> getVertices() {
         return vertices;

@@ -127,4 +127,12 @@ public class DiggerTask extends Task implements Concept {
     public boolean isDone() {
         return currentState.equals(TaskState.DONE.toString());
     }
+
+    public boolean isCollectTask() {
+        return taskType.equals(TaskType.COLLECT_METAL.toString());
+    }
+
+    public MetalType getMetal() {
+        return MetalType.fromString(metalType);
+    }
 }

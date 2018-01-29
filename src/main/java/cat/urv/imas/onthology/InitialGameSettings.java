@@ -19,7 +19,9 @@ package cat.urv.imas.onthology;
 
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.map.*;
+import cat.urv.imas.util.Graph;
 import cat.urv.imas.util.StatisticsTracker;
+import cat.urv.imas.util.Vertex;
 import jade.content.Predicate;
 
 import javax.xml.bind.JAXBContext;
@@ -244,6 +246,28 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         int maxVisible = this.getNumberVisibleInitialElements();
 
         addElements(maxInitial, maxVisible);
+        buildGraphFromMap();
+    }
+
+    private void buildGraphFromMap() {
+        ArrayList<Vertex<Cell>> vertices = new ArrayList<>();
+        for(Cell[] cellRow: map) {
+            for(Cell cell : cellRow) {
+                vertices.add(new Vertex<>(cell));
+            }
+        }
+        this.mapGraph = new Graph<Cell>(vertices);
+        // add edges
+        int[] adj = {-1, 0, 1};
+        for(Vertex<Cell> vc : mapGraph.getVertices().values()) {
+            // get neighbour cells
+            Cell c = vc.getLabel();
+            for(PathCell pc : getPathNeighbors(c, false)) {
+                Vertex<Cell> nvc = mapGraph.getVertex(pc);
+                mapGraph.addEdge(vc, nvc);
+            }
+        }
+
     }
 
 
@@ -429,8 +453,8 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     public void applyCollectMetal(CollectMetalAction collectAction) {
         DiggerInfoAgent agent = (DiggerInfoAgent) getInfoAgent(collectAction.getAgent().getType(),collectAction.getAgent().getAID());
         PathCell agentCell = getAgentCell(agent.getType(), agent.getAID());
-        if(agentCell.isThereADiggerAgentWorking()) {
-            throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is a digger working at this cell");
+        if(!agentCell.collectingAllowed()) {
+            throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there are too many agents on the cell");
         }
         Cell destCell = get(collectAction.y, collectAction.x);
         if(!destCell.adjacent(agentCell, true)) {
@@ -447,6 +471,10 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                 throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is no metal left.");
             }
             fieldCell.removeMetal();
+            if(fieldCell.getMetalAmount() == 0) {
+                agentCell.scheduleReset();
+            }
+            agentCell.setDiggerWorking(true);
             statisticsTracker.trackCellCollection(fieldCell, currentSimulationStep);
             agent.setCapacity(agent.getCapacity()+1);
         }
@@ -525,5 +553,15 @@ public class InitialGameSettings extends GameSettings implements Predicate {
             }
         }
         return (discoveredButNotCollected + getManufacturedMetal(MetalType.SILVER) + getManufacturedMetal(MetalType.GOLD)) / ((double) getTotalMetal());
+    }
+
+    public void resetPathCells() {
+        for(Cell cell : cellsOfType.get(CellType.PATH)) {
+            PathCell pc = (PathCell) cell;
+            if(pc.isResetDiggerWorkingScheduled()) {
+                pc.setDiggerWorking(false);
+                pc.setResetDiggerWorkingScheduled(false);
+            }
+        }
     }
 }

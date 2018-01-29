@@ -60,7 +60,7 @@ public class RoundBehaviour extends FSMBehaviour {
         };
 
         DelegateTasksBehaviour communicationBehaviour = new DelegateTasksBehaviour(agent);
-        CollectingActionsBehaviour ca = new CollectingActionsBehaviour(agent, 5000);
+        CollectingActionsBehaviour ca = new CollectingActionsBehaviour(agent, 2000000);
 
 
         OneShotBehaviour endBehaviour = new OneShotBehaviour() {
