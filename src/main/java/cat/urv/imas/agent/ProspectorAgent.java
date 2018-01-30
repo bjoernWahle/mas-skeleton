@@ -1,14 +1,11 @@
 package cat.urv.imas.agent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
 import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
@@ -17,15 +14,10 @@ import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import cat.urv.imas.map.Cell;
-import cat.urv.imas.map.CellType;
-import cat.urv.imas.map.FieldCell;
 import cat.urv.imas.map.PathCell;
 
 public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
 
-    /**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private int currentX;
     private int currentY;
@@ -63,7 +55,10 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
         // add behaviours
         addBehaviour(new ProspectorBehaviour(this));
     }
-
+    
+    /**
+     * This function is never used
+     */
     @Override
     public int stepsToPosition(int row, int col) {
         // easy approach: euclidean distance
@@ -73,30 +68,51 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
         return (int) Math.ceil(distance);
     }
     
+    /**
+     * this method updates the current position with the new position of the prospector
+     * @param x
+     * @param y
+     */
     public void startRound(int x, int y) {
         setCurrentPosition(x, y);
         roundEnd = game.getCurrentRoundEnd();
     }
     
+    /**
+     * getter for the game settings
+     * @return
+     */
     public GameSettings getGame() {
         return game;
     }
-
+    
+    /**
+     * Setter for the game settings
+     * @param game
+     */
     public void setGame(GameSettings game) {
         this.game = game;
     }
     
+    /**
+     * This method checks if the position has changed. If so, it also updated the map to keep track of the explored cells.
+     * @param x
+     * @param y
+     */
     public void setCurrentPosition(int x, int y) {
     	if ((currentX != x) || (currentY != y)) {
             //Prospector moved to a new position
     		currentX = x;
             currentY = y;
-            if(subMapToExplore.containsKey(game.get(currentY,currentX))) {
-            	subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
-            }
+            updateExploredMap();
     	}
     }
-
+    
+    /**
+     * This sets the subarea to explore. This will use a Map linking each cell with the value of the last time the cell was explored (so wew can keep track
+     * of it). The area to explore is the subarea of the map the prospector will go and explore.
+     * @param area
+     */
     public void setCellsToExplore(List<Cell> area) {
     	if(currentExplorationArea == null || !currentExplorationArea.equals(area)) {
 	        for (Cell el: area){
@@ -105,11 +121,25 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
 	        currentExplorationArea = area;
     	}
     	
-        if(subMapToExplore.containsKey(game.get(currentY,currentX))) {
-        	subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
+    	updateExploredMap();
+    }
+    
+    /**
+     * This private method updates the Map of cells to explore and last time it was explored. Every time is called, it assigns for the current cell (key)
+     * a new value (corresponding to the simulation step).
+     */
+    private void updateExploredMap() {
+    	if(subMapToExplore.containsKey(game.get(currentY,currentX))) {
+        	//subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
+        	subMapToExplore.put(game.get(currentY,currentX),game.getCurrentSimulationStep());
         }
     }
     
+    /**
+     * This method search for the best cell to move to. 
+     * In case the prospector is not in the assigned subarea, it will follow the steps to get there. 
+     * If the prospector is already into the assigned subarea, it will try to explore the area as efficiently as possible.
+     */
     public void moveNextCell() {
 
     	//Implementation of not efficient movement to explore the map.
@@ -127,13 +157,20 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
 
     }
     
+    /**
+     * This will send a DetectAction to explore the current cell
+     */
     public void examine() {
     	currentAction = new DetectAction(currentX,currentY);
 
     	//Send new movement to SystemAgent
     	informCoordinator(currentAction);
     }
-
+    
+    /**
+     * This method is used to send the different kind of actions to the prospector coordinator.
+     * @param currentAction
+     */
     public void informCoordinator(MobileAgentAction currentAction) {
     	//Send new position of the prospector and metals found (if any)
     	ACLMessage message = prepareMessage(ACLMessage.INFORM);
@@ -189,12 +226,20 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     	return (PathCell) nextCell;
     }
     
+    /**
+     * This creates a plan to get to the assigned subarea as fast as possible
+     * @return
+     */
     public Plan getNewPlan() {
     	List<Cell> vList = game.getMapGraph().getShortestPath(game.get(currentY, currentX), new ArrayList<Cell>(subMapToExplore.keySet()));
         List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
 		return new Plan(pc);    	
     }
     
+    /**
+     * this method sorts the possible ares to explore by order of preference (in this case this order is the number of steps to get there).
+     * After the preference has been obtained, it sends it to the coordinator.
+     */
 	public void chooseAreas() {
 		//Order the areas by preference. We will try to get the closest
 		Map<Integer,List<Cell>> assignement = game.getCellAssignement();
