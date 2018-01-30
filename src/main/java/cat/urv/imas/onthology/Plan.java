@@ -25,6 +25,10 @@ public class Plan {
         return pathCellList.get(0);
     }
 
+    public int getSteps() {
+        return pathCellList.size();
+    }
+
     public void dropFirst() {
         pathCellList.remove(0);
     }

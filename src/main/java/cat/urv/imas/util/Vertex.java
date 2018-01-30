@@ -2,7 +2,7 @@ package cat.urv.imas.util;
 
 import java.util.ArrayList;
 
-public class Vertex<T> {
+public class Vertex<T> implements java.io.Serializable {
 
     private ArrayList<Edge> neighborhood;
     private T label;

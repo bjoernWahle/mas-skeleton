@@ -242,6 +242,7 @@ public class SystemAgent extends ImasAgent {
         updateStats();
         game.checkFoundMetals();
         updateGUI();
+        game.resetPathCells();
         this.game.advanceToNextRound();
         log("Starting round "+this.game.getCurrentSimulationStep());
     }
@@ -339,7 +340,6 @@ public class SystemAgent extends ImasAgent {
         //Clear requested actions because they have already been checked
         requestedActions.clear();
 
-        // TODO check return actions (needed)
         // TODO blame agents that wanna be idle
     }
 
