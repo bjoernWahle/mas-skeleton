@@ -129,6 +129,21 @@ public class GameSettings implements java.io.Serializable {
      * List of metals already discovered by the prospectors
      */
     List<FieldCell> foundMetals;
+    
+    /**
+     * This map classifies the different areas of the map
+     */
+    private Map<Integer,List<Cell>> cellAssignement;
+    
+    /**
+     * This map links an area with a prospectors (is set by the prospector coordinator each round)
+     */
+    private Map<AID,Integer> areaAssignament;
+    
+    
+    public void setAreaAssignament(Map<AID,Integer> areaAssignament){
+    	this.areaAssignament=areaAssignament;
+    }
 
     public List<FieldCell> getFoundMetals() {
         return foundMetals;
@@ -395,5 +410,98 @@ public class GameSettings implements java.io.Serializable {
         List<Cell> vList = getMapGraph().getShortestPath(currentCell, pathNeighbors);
         List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
         return new Plan(pc);
+    }
+    
+    /**
+     * This methods aims to divide the map into different subareas so the prospectors explore different parts of the map.
+     */
+    public void dividePathCellsInto(int numOfProspectors) {
+    	LinkedList<Cell> unAssignedCells = new LinkedList(this.getCellsOfType().get(CellType.PATH));
+    	LinkedList<Cell> temporalCells = new LinkedList<Cell>();
+    	cellAssignement = new HashMap<Integer,List<Cell>>();
+    	final int paramExpansion = 2;
+    	int totalPathCells = unAssignedCells.size();
+        int cellsPerAgent = totalPathCells/numOfProspectors;
+        Cell tempCell = null;
+        temporalCells.add(unAssignedCells.get(0));
+        
+        for (int i = 0; i < numOfProspectors; i++) {
+			for (int j = 0; j < cellsPerAgent; j++) {
+				if(temporalCells.isEmpty()) {
+					break;
+				}
+				if(!cellAssignement.containsKey(i)) {
+					cellAssignement.put(i,new ArrayList<Cell>());
+				}
+				tempCell = temporalCells.pop();
+				//Assing the Cell to the current prospector
+				cellAssignement.get(i).add(tempCell);
+				unAssignedCells.remove(tempCell);
+				
+				//add neighbors to the temporal list
+				temporalCells.addAll(getPathNeighbors(tempCell, true));		
+				//remove from temporal list all elements already assigned.
+				temporalCells.removeIf(s -> !unAssignedCells.contains(s));
+				//We will try to force the expansion in only one direction
+				int currentX = tempCell.getX();
+				int currentY = tempCell.getY();
+				temporalCells.removeIf(s -> (Math.abs(currentX-s.getX()) + Math.abs(currentY-s.getY())> paramExpansion));
+			}
+			if(unAssignedCells.isEmpty()) {
+				break;
+			}else if(temporalCells.isEmpty()) {
+				temporalCells.add(unAssignedCells.get(0));
+			}else {
+				tempCell = temporalCells.pop();
+				temporalCells.clear();
+				temporalCells.add(tempCell);
+			}
+		}
+        
+        //deep copy of map
+        Map<Integer,List<Cell>> copyCellAssignement = new HashMap<Integer,List<Cell>>();
+        for(int i = 0; i < numOfProspectors; i++) {
+        	copyCellAssignement.put(i, new LinkedList<Cell>(cellAssignement.get(i)));
+        }
+        
+        getMapGraph();
+        for(Cell cell : unAssignedCells) {
+        	int assignedProspector = Integer.MAX_VALUE;
+        	int minDistance = Integer.MAX_VALUE;
+        	for(int i = 0; i < numOfProspectors; i++) {
+        		int temp = mapGraph.getShortestDistance(cell, copyCellAssignement.get(i));
+        		if(temp<minDistance) {
+        			minDistance = temp;
+        			assignedProspector = i;
+        		}
+        	}
+        	if(cellAssignement.containsKey(assignedProspector)) {
+        		cellAssignement.get(assignedProspector).add(cell);
+        		
+        	}
+        }
+        
+        
+        //this part is just used for testing, it will set a different color for the cells depending on the prospector assigned with a maximum of 9
+        for(int prospector : cellAssignement.keySet()) {
+        	for(Cell cell : cellAssignement.get(prospector)) {
+        		cell.prospectorDivision = prospector;
+        	}
+        }
+        
+        mapGraph = null;
+    }
+
+	public Map<Integer, List<Cell>> getCellAssignement() {
+		return cellAssignement;
+	}
+    
+    public List<Cell> getExplorationArea(AID prospector){
+    	if(!areaAssignament.containsKey(prospector)) {
+    		Map<CellType, List<Cell>> temp = getCellsOfType();
+            return temp.get(CellType.PATH);
+    	}else {
+    		return cellAssignement.get(areaAssignament.get(prospector));
+    	}
     }
 }

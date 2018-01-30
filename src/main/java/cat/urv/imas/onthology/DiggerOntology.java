@@ -1,5 +1,7 @@
 package cat.urv.imas.onthology;
 
+import java.util.HashMap;
+
 import jade.content.onto.BeanOntology;
 import jade.content.onto.BeanOntologyException;
 import jade.content.onto.Ontology;
@@ -38,6 +40,7 @@ public class DiggerOntology extends BeanOntology {
         add(ActionList.class);
         add(InformAgentRound.class);
         add(DetectAction.class);
+        add(InformProspectorInitialization.class);
     }
 
 }

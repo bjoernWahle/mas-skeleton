@@ -57,6 +57,8 @@ public class RoundBehaviour extends FSMBehaviour {
                         game = (GameSettings) m.getContentObject();
                         agent.setGame(game);
                         Cell cell = game.getAgentCell(agent.getType(), agent.getAID());
+                        // get area of exploration
+                        agent.setCellsToExplore(game.getExplorationArea(agent.getAID()));
                         // get own position
                         agent.startRound(cell.getX(), cell.getY());
                     } catch (UnreadableException e) {

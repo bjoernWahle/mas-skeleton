@@ -1,8 +1,10 @@
 package cat.urv.imas.agent;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import cat.urv.imas.behaviour.prospector_coordinator.RoundBehaviour;
@@ -30,8 +32,12 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
     List<MobileAgentAction> roundActions;
 
     private GameSettings gameSettings;
+    
+    private boolean prospectorsInicialized = false;
 
     private AID coordinatorAgent;
+    
+    public Map<AID,Integer> areaAssignament;
 
     public ProspectorCoordinatorAgent() {
         super(AgentType.PROSPECTOR_COORDINATOR);
@@ -47,6 +53,8 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
         this.coordinatorAgent = UtilsAgents.searchAgent(this, searchCriterion);
 
         addBehaviour(new RoundBehaviour(this));
+        
+        areaAssignament = new HashMap<AID,Integer>();
     }
     
     public List<AID> getProspectors() {
@@ -131,4 +139,11 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
             e.printStackTrace();
         }
     }
+
+	public boolean isInitialized() {
+		return prospectorsInicialized;
+	}
+	public void setInitialized(boolean inicialized) {
+		this.prospectorsInicialized = inicialized;
+	}
 }

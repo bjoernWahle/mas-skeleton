@@ -16,7 +16,7 @@ import jade.lang.acl.UnreadableException;
 public class RoundBehaviour extends FSMBehaviour {
     private ProspectorCoordinatorAgent agent;
 
-    private final String COMMUNICATING = "communicating";
+    private final String INITIALIZING = "initializing";
     private final String COLLECTING = "collecting";
     private final String WAITING = "waiting";
     private final String END = "end";
@@ -35,7 +35,7 @@ public class RoundBehaviour extends FSMBehaviour {
                     try {
                         ContentElement ce = agent.getContentManager().extractContent(m);
                         if(ce instanceof GameHasEnded) {
-                            setExitCode(1);
+                            setExitCode(2);
                         }
                     } catch (Codec.CodecException | OntologyException e) {
                         e.printStackTrace();
@@ -45,12 +45,23 @@ public class RoundBehaviour extends FSMBehaviour {
                     try {
                         Object contentObject = m.getContentObject();
                         if(contentObject instanceof GameSettings) {
-                            // set game
-                            agent.log("I received the game settings for this round.");
-                            agent.setGameSettings((GameSettings) contentObject);
-                            agent.informProspectors();
-                            agent.resetRoundActions();
-                            setExitCode(0);
+                        	if(agent.isInitialized()){
+	                            // set game
+	                            agent.log("I received the game settings for this round.");
+	                            GameSettings game = (GameSettings) contentObject;
+	                            game.setAreaAssignament(agent.areaAssignament);
+	                            agent.setGameSettings(game);
+	                            agent.informProspectors();
+	                            agent.resetRoundActions();
+	                            setExitCode(0);
+                            }else {
+                            	// set game
+	                            agent.log("I received the game settings for this round.");
+	                            agent.setGameSettings((GameSettings) contentObject);
+	                            agent.informProspectors();
+	                            agent.resetRoundActions();
+                            	setExitCode(1);
+                            }
                         }
                     } catch (UnreadableException e) {
                         e.printStackTrace();
@@ -59,9 +70,8 @@ public class RoundBehaviour extends FSMBehaviour {
             }
         };
 
-
         CollectingActionsBehaviour ca = new CollectingActionsBehaviour(agent, 10000);
-
+        CollectingInitializationBehaviour initialization = new CollectingInitializationBehaviour(agent, 20000);
 
         OneShotBehaviour endBehaviour = new OneShotBehaviour() {
             @Override
@@ -72,10 +82,13 @@ public class RoundBehaviour extends FSMBehaviour {
 
         registerFirstState(waiting, WAITING);
         registerState(ca, COLLECTING);
+        registerState(initialization, INITIALIZING);
         registerLastState(endBehaviour, END);
 
         registerTransition(WAITING, COLLECTING, 0);
-        registerTransition(WAITING, END, 1);
+        registerTransition(WAITING, INITIALIZING, 1);
+        registerTransition(WAITING, END, 2);
+        registerDefaultTransition(INITIALIZING, WAITING);
         registerDefaultTransition(COLLECTING, WAITING);
     }
 }

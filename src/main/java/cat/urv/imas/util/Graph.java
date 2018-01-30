@@ -212,5 +212,24 @@ public class Graph<T> {
         vList.remove(0);
         return vList;
     }
-
+    
+    public int getShortestDistance(T startLabel, List<T> destLabels) {
+        Vertex<T> startVertex =  this.getVertex(startLabel);
+        DijkstraAlgorithm algo = new DijkstraAlgorithm(this);
+        algo.execute(startVertex);
+        int minDistance = Integer.MAX_VALUE;
+        if(destLabels == null) {
+        	return minDistance;
+        }
+        Vertex<T> bestDest = null;
+        for(T dc : destLabels)  {
+            Vertex<T> destVertex = this.getVertex(dc);
+            int distance = algo.distance.get(destVertex);
+            if(distance < minDistance) {
+                minDistance = distance;
+                bestDest = destVertex;
+            }
+        }
+        return minDistance;
+        }
 }

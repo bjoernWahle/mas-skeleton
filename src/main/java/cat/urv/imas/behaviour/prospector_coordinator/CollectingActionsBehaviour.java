@@ -3,7 +3,7 @@ package cat.urv.imas.behaviour.prospector_coordinator;
 import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
 import cat.urv.imas.onthology.ActionType;
-import cat.urv.imas.onthology.InformAgentRound;;
+import cat.urv.imas.onthology.InformAgentRound;
 import cat.urv.imas.onthology.MobileAgentAction;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;

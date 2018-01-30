@@ -116,6 +116,7 @@ public class RequestResponseBehaviour extends AchieveREResponder {
             e.printStackTrace();
         }
         agent.log("Game settings sent");
+        
         return reply;
 
     }

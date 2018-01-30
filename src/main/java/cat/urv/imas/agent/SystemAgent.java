@@ -148,6 +148,9 @@ public class SystemAgent extends ImasAgent {
         // Setup finished. When the last inform is received, the agent itself will add
         // a behaviour to send/receive actions
         addBehaviour(new StepBehaviour(this));
+        
+        //This statement is just for testing the division of the map
+        game.dividePathCellsInto(4);
     }
 
     public void startSimulation() {

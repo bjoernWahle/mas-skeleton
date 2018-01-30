@@ -19,6 +19,7 @@ public class ProspectorBehaviour extends FSMBehaviour {
 	private ProspectorAgent agent;
 
     private String INIT = "init";
+    private String INITIALIZATION = "initialization";
     private String ROUND = "ROUND";
     private String END = "end";
 
@@ -38,9 +39,6 @@ public class ProspectorBehaviour extends FSMBehaviour {
                         // set game settings
                         agent.log("I received the initial game settings");
                         agent.setGame((GameSettings) contentObject);
-                        agent.setCellsToExplore();
-                        agent.examine();
-                        agent.moveNextCell();
                     }
                 } catch (UnreadableException e) {
                     e.printStackTrace();
@@ -49,6 +47,14 @@ public class ProspectorBehaviour extends FSMBehaviour {
             }
         };
 
+        OneShotBehaviour initialization = new OneShotBehaviour() {
+
+			@Override
+            public void action() {
+                agent.chooseAreas();
+            }
+        };
+        
         RoundBehaviour round = new RoundBehaviour(agent);
 
         OneShotBehaviour end = new OneShotBehaviour() {
@@ -60,11 +66,12 @@ public class ProspectorBehaviour extends FSMBehaviour {
         };
 
         registerFirstState(init, INIT);
-        //TODO: Add another state for exploring a subarea of the global map.
+        registerState(initialization, INITIALIZATION);
         registerState(round, ROUND);
         registerLastState(end, END);
 
-        registerDefaultTransition(INIT, ROUND);
+        registerDefaultTransition(INIT, INITIALIZATION);
+        registerDefaultTransition(INITIALIZATION, ROUND);
         registerDefaultTransition(ROUND, END);
     }
 }

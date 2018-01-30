@@ -53,6 +53,11 @@ public abstract class Cell implements java.io.Serializable {
         this.row = row;
         this.col = col;
     }
+    
+    /**
+     * Variable just used for testing the map division
+     */
+    public int prospectorDivision = 99;
 
     /* ********************************************************************** */
     /**

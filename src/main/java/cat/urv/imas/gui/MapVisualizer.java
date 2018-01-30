@@ -22,7 +22,9 @@ import java.awt.geom.Rectangle2D;
  * href="http://www.urv.cat">URV</a>)
  */
 public class MapVisualizer extends JPanel implements CellVisualizer {
-
+	
+	private final static boolean TEST_DIVISION_PROSPECTORS = true;
+	
     /**
      * Margin area surrouding the city map.
      */
@@ -220,7 +222,57 @@ public class MapVisualizer extends JPanel implements CellVisualizer {
 
     @Override
     public void drawEmptyPath(PathCell cell) {
-        drawCell(Color.LIGHT_GRAY.brighter(), Color.DARK_GRAY);
+    	if(!TEST_DIVISION_PROSPECTORS) {
+    		drawCell(Color.LIGHT_GRAY.brighter(), Color.DARK_GRAY);
+    	}else {
+        	switch (cell.prospectorDivision) {
+			case 0:
+				//drawCell(Color.getHSBColor(175, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.LIGHT_GRAY.brighter(), Color.DARK_GRAY);
+				break;
+			case 1:
+				//drawCell(Color.getHSBColor(255, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.GREEN, Color.DARK_GRAY);
+				break;
+			case 2:
+				//drawCell(Color.getHSBColor(45, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.YELLOW, Color.DARK_GRAY);
+				break;
+			case 3:
+				//drawCell(Color.getHSBColor(88, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.PINK, Color.DARK_GRAY);
+				break;
+			case 4:
+				//drawCell(Color.getHSBColor(127, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.CYAN, Color.DARK_GRAY);
+				break;
+			case 5:
+				//drawCell(Color.getHSBColor(26, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.BLUE, Color.DARK_GRAY);
+				break;
+			case 6:
+				//drawCell(Color.getHSBColor(169, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.RED, Color.DARK_GRAY);
+				break;
+			case 7:
+				//drawCell(Color.getHSBColor(217, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.MAGENTA, Color.DARK_GRAY);
+				break;
+			case 8:
+				//drawCell(Color.getHSBColor(58, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.ORANGE, Color.DARK_GRAY);
+				break;
+			case 9:
+				//drawCell(Color.getHSBColor(15, 255, 245), Color.DARK_GRAY);
+				drawCell(Color.WHITE, Color.DARK_GRAY);
+				break;
+			default:
+				drawCell(Color.GRAY.brighter(), Color.DARK_GRAY);
+				break;
+			}
+        	
+        }
+        
     }
 
     @Override

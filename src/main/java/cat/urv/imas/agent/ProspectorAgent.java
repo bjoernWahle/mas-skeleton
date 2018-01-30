@@ -1,11 +1,16 @@
 package cat.urv.imas.agent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
-import cat.urv.imas.onthology.*;;
+import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
@@ -29,6 +34,8 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private long roundEnd;
     private MobileAgentAction currentAction;
     private Map<Cell,Integer> subMapToExplore = new HashMap<Cell,Integer>();
+    private Plan currentMovementPlan;
+    private List<Cell> currentExplorationArea;
     
     public ProspectorAgent() {
         super(AgentType.PROSPECTOR);
@@ -84,19 +91,23 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
             //Prospector moved to a new position
     		currentX = x;
             currentY = y;
-            subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
+            if(subMapToExplore.containsKey(game.get(currentY,currentX))) {
+            	subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
+            }
     	}
     }
 
-    public void setCellsToExplore() {
-    	/* Create Map with path cell. This is temporarily, it will use the whole map as a map to explore.
-         * In the future it will only have to take some part of the map
-         */
-        Map<CellType, List<Cell>> temp = game.getCellsOfType();
-        for (Cell el:temp.get(CellType.PATH)){
-        	subMapToExplore.put(el, 0);
+    public void setCellsToExplore(List<Cell> area) {
+    	if(currentExplorationArea == null || !currentExplorationArea.equals(area)) {
+	        for (Cell el: area){
+	        	subMapToExplore.put(el, 0);
+	        }
+	        currentExplorationArea = area;
+    	}
+    	
+        if(subMapToExplore.containsKey(game.get(currentY,currentX))) {
+        	subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
         }
-        subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
     }
     
     public void moveNextCell() {
@@ -111,9 +122,6 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     	currentAction = new MoveAction(nextCell.getX(), nextCell.getY());
     	log("I want to move to ("+ nextCell.getY() + "," + nextCell.getX() +")!");
     	
-    	//TODO: Implementation of an intelligent movement to efficiently explore the map.
-
-
     	//Send new movement to SystemAgent
     	informCoordinator(currentAction);
 
@@ -145,20 +153,77 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
      * Get next cell to explore
      */
     private PathCell getNextCellToExplore(List<PathCell> possibleMovements) {
-
-    	PathCell nextCell = null;
-    	int minimum = 0;
-    	for(PathCell cell : possibleMovements) {
-    		if(nextCell == null) {
-    			nextCell = cell;
-    			minimum = subMapToExplore.get(cell);
+    	Cell nextCell = null;
+    	List<Cell> keysSubMap = new ArrayList<Cell>(subMapToExplore.keySet());
+    	keysSubMap.retainAll(possibleMovements);
+    	if(!keysSubMap.isEmpty()) {
+        	int minimum = 0;
+        	for(Cell cell : keysSubMap) {
+        		if(nextCell == null) {
+        			nextCell = cell;
+        			minimum = subMapToExplore.get(cell);
+        		}else {
+        			if (subMapToExplore.get(cell) < minimum) {
+        				nextCell = cell;
+        				minimum = subMapToExplore.get(cell);
+        			}
+        		}
+        	}
+    	}else {
+    		if(currentMovementPlan == null) {
+    			currentMovementPlan = getNewPlan();
+    		}
+    		
+    		// check if I have moved
+            PathCell pc = currentMovementPlan.getFirst();
+            if(pc.getX() == currentX && pc.getY() == currentY) {
+                currentMovementPlan.dropFirst();
+            }
+    		if(!possibleMovements.contains(currentMovementPlan.getFirst())){
+    			currentMovementPlan = getNewPlan();
+    			nextCell = currentMovementPlan.getFirst();
     		}else {
-    			if (subMapToExplore.get(cell) < minimum) {
-    				nextCell = cell;
-    				minimum = subMapToExplore.get(cell);
-    			}
+    			nextCell = currentMovementPlan.getFirst();
     		}
     	}
-    	return nextCell;
+    	return (PathCell) nextCell;
     }
+    
+    public Plan getNewPlan() {
+    	List<Cell> vList = game.getMapGraph().getShortestPath(game.get(currentY, currentX), new ArrayList<Cell>(subMapToExplore.keySet()));
+        List<PathCell> pc = vList.stream().map(c -> (PathCell) c).collect(Collectors.toList());
+		return new Plan(pc);    	
+    }
+    
+	public void chooseAreas() {
+		//Order the areas by preference. We will try to get the closest
+		Map<Integer,List<Cell>> assignement = game.getCellAssignement();
+		Map<Long,Long> distances = new HashMap<Long,Long>();
+		List<Long> preferenceOrder = new ArrayList<Long>();
+		for(Integer key: assignement.keySet()) {
+			distances.put(key.longValue(), (long) game.getMapGraph().getShortestDistance(game.get(currentX, currentY), assignement.get(key)));
+		}
+		
+		distances = distances.entrySet().stream().sorted(Map.Entry.comparingByValue())
+    	.collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+    	
+		for(Long key: distances.keySet()) {
+			preferenceOrder.add(key);
+		}
+		
+		//Send order to prospector
+    	ACLMessage message = prepareMessage(ACLMessage.INFORM);
+        message.addReceiver(prospectorCoordinator);
+        try {
+        	getContentManager().fillContent(message, new InformProspectorInitialization(preferenceOrder));
+            log("Sending msg with my preference to the coordinator");
+            send(message);
+            
+        } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+            log("Some error while sending?");
+        }     
+		
+		
+	}
 }
