@@ -133,7 +133,7 @@ public class GameSettings implements java.io.Serializable {
     /**
      * This map classifies the different areas of the map
      */
-    private Map<Integer,List<Cell>> cellAssignement;
+    private Map<Integer,List<Cell>> areaDivision;
     
     /**
      * This map links an area with a prospectors (is set by the prospector coordinator each round)
@@ -391,10 +391,10 @@ public class GameSettings implements java.io.Serializable {
     /**
      * This methods aims to divide the map into different subareas so the prospectors explore different parts of the map.
      */
-    public void dividePathCellsInto(int numOfProspectors) {
+    public Map<Integer, List<Cell>> dividePathCellsInto(int numOfProspectors) {
     	LinkedList<Cell> unAssignedCells = new LinkedList(this.getCellsOfType().get(CellType.PATH));
     	LinkedList<Cell> temporalCells = new LinkedList<Cell>();
-    	cellAssignement = new HashMap<Integer,List<Cell>>();
+    	areaDivision = new HashMap<Integer,List<Cell>>();
     	final int paramExpansion = 2;
     	int totalPathCells = unAssignedCells.size();
         int cellsPerAgent = totalPathCells/numOfProspectors;
@@ -406,12 +406,12 @@ public class GameSettings implements java.io.Serializable {
 				if(temporalCells.isEmpty()) {
 					break;
 				}
-				if(!cellAssignement.containsKey(i)) {
-					cellAssignement.put(i,new ArrayList<Cell>());
+				if(!areaDivision.containsKey(i)) {
+					areaDivision.put(i,new ArrayList<Cell>());
 				}
 				tempCell = temporalCells.pop();
 				//Assing the Cell to the current prospector
-				cellAssignement.get(i).add(tempCell);
+				areaDivision.get(i).add(tempCell);
 				unAssignedCells.remove(tempCell);
 				
 				//add neighbors to the temporal list
@@ -437,7 +437,7 @@ public class GameSettings implements java.io.Serializable {
         //deep copy of map
         Map<Integer,List<Cell>> copyCellAssignement = new HashMap<Integer,List<Cell>>();
         for(int i = 0; i < numOfProspectors; i++) {
-        	copyCellAssignement.put(i, new LinkedList<Cell>(cellAssignement.get(i)));
+        	copyCellAssignement.put(i, new LinkedList<Cell>(areaDivision.get(i)));
         }
         
         getMapGraph();
@@ -451,32 +451,38 @@ public class GameSettings implements java.io.Serializable {
         			assignedProspector = i;
         		}
         	}
-        	if(cellAssignement.containsKey(assignedProspector)) {
-        		cellAssignement.get(assignedProspector).add(cell);
+        	if(areaDivision.containsKey(assignedProspector)) {
+        		areaDivision.get(assignedProspector).add(cell);
         		
         	}
         }
         
         
         //this part is just used for testing, it will set a different color for the cells depending on the prospector assigned with a maximum of 9
-        for(int prospector : cellAssignement.keySet()) {
-        	for(Cell cell : cellAssignement.get(prospector)) {
+        for(int prospector : areaDivision.keySet()) {
+        	for(Cell cell : areaDivision.get(prospector)) {
         		cell.prospectorDivision = prospector;
         	}
         }
         
+        return areaDivision;
+        
     }
 
 	public Map<Integer, List<Cell>> getCellAssignement() {
-		return cellAssignement;
+		return areaDivision;
 	}
     
-    public List<Cell> getExplorationArea(AID prospector){
+    public void setAreaDivision(Map<Integer, List<Cell>> areaDivision) {
+		this.areaDivision = areaDivision;
+	}
+
+	public List<Cell> getExplorationArea(AID prospector){
     	if(!areaAssignament.containsKey(prospector)) {
     		Map<CellType, List<Cell>> temp = getCellsOfType();
             return temp.get(CellType.PATH);
     	}else {
-    		return cellAssignement.get(areaAssignament.get(prospector));
+    		return areaDivision.get(areaAssignament.get(prospector));
     	}
     }
     
