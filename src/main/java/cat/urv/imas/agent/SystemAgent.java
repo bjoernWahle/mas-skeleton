@@ -244,7 +244,6 @@ public class SystemAgent extends ImasAgent {
         updateGUI();
         game.resetPathCells();
         this.game.advanceToNextRound();
-        log("Starting round "+this.game.getCurrentSimulationStep());
     }
 
     private void updateStats() {

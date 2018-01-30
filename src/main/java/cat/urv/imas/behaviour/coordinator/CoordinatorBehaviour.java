@@ -91,7 +91,7 @@ public class CoordinatorBehaviour extends FSMBehaviour {
             }
         };
 
-        registerState(end, END);
+        registerLastState(end, END);
 
         registerDefaultTransition(INIT, COLLECTING);
         registerDefaultTransition(COLLECTING, SENDING);

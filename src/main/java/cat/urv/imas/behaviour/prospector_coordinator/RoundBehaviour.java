@@ -80,6 +80,7 @@ public class RoundBehaviour extends FSMBehaviour {
             @Override
             public void action() {
                 agent.log("I have been told that the simulation has ended. Was great to work with y'all mates.");
+                agent.broadCastGameHasEnded();
             }
         };
 

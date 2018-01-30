@@ -7,6 +7,8 @@ import jade.core.behaviours.SequentialBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
 
 public class NegotiatorBehaviour extends SimpleBehaviour {
+    private static final int MAX_CN = 20;
+
     private DiggerCoordinatorAgent agent;
     private SequentialBehaviour sequentialBehaviour;
 
@@ -28,11 +30,12 @@ public class NegotiatorBehaviour extends SimpleBehaviour {
             int i = 0;
             for(DiggerTask task : agent.getNotStartedTasks()) {
                 boolean last = false;
-                if(i++ == agent.getNotStartedTasks().size()-1) {
+                if(i == agent.getNotStartedTasks().size()-1 || i == MAX_CN) {
                     last = true;
                 }
                 TaskContractNetInitiatorBehaviour tcni = new TaskContractNetInitiatorBehaviour(agent, task,last);
                 sequentialBehaviour.addSubBehaviour(tcni);
+                i++;
             }
             agent.addBehaviour(sequentialBehaviour);
         }

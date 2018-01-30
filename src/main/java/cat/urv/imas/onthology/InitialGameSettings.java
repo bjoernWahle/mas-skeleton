@@ -275,6 +275,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
         CellType ctype = CellType.FIELD;
         int maxCells = getNumberOfCellsOfType(ctype);
         int freeCells = this.getNumberOfCellsOfType(ctype, true);
+        maxElements = Math.min(maxElements, freeCells);
 
         if (maxElements < 0) {
             throw new Error(getClass().getCanonicalName() + " : Not allowed negative number of elements.");

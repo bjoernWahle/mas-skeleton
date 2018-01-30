@@ -27,7 +27,7 @@ public class StepBehaviour extends FSMBehaviour {
             @Override
             public void onStart() {
                 super.onStart();
-                agent.log("Waiting for actions and stats.");
+                agent.log("Starting round "+agent.getGame().getCurrentSimulationStep());
             }
 
             @Override
@@ -70,7 +70,6 @@ public class StepBehaviour extends FSMBehaviour {
     }
 
     public int onEnd() {
-        agent.log("FSM behaviour completed.");
         agent.doDelete();
         return super.onEnd();
     }

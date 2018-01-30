@@ -85,6 +85,16 @@ public class TaskContractNetResponder extends SimpleBehaviour {
                         if(agent.getTasks().isEmpty()) {
                             agent.setCurrentMetal(MetalType.fromString(tempTask.metalType));
                         }
+                        // get task from accept to see if it maybe changed
+                        ContentElement ce;
+                        try {
+                            ce = agent.getContentManager().extractContent(accept);
+                        } catch (Codec.CodecException| OntologyException e) {
+                            throw new FailureException("Couldn't read what you sent me bro...");
+                        }
+                        if(ce instanceof ProposeTask) {
+                            tempTask = ((ProposeTask) ce).getTask();
+                        }
                         agent.addTask(tempTask);
                         ACLMessage inform = accept.createReply();
                         inform.setPerformative(ACLMessage.INFORM);

@@ -240,15 +240,34 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         }
         PathCell currentCell = (PathCell) game.get(currentY, currentX);
         int metalCapacity;
-        log(fieldCell.getMetal().toString());
         metalCapacity = fieldCell.getMetalAmount();
         if(currentCapacity < maxCapacity && metalCapacity > 0) {
             if(currentCell.collectingAllowed()) {
                 this.currentAction = new CollectMetalAction(x, y);
                 log("I gonna collect that metal now.");
             } else {
-                this.currentAction = new IdleAction();
-                log("I can't collect metal because there is someone at my cell. Go away dude.");
+                // only move if it is a digger, prospectors will move anyways next round
+                List<InfoAgent> otherAgents = currentCell.getAgents().get(AgentType.DIGGER).stream()
+                        .filter(a -> !a.getAID().equals(getAID())).collect(Collectors.toList());
+                if(otherAgents.isEmpty()) {
+                    this.currentAction = new IdleAction();
+                    log("I can't collect metal because there is some a prospector at my cell. Go away dude.");
+                } else {
+                    // check if I might need to move or not
+                    // I will not move, if I have the highest hashcode (implicit coordination yay)
+                    int myHashCode = getAID().hashCode();
+                    if(otherAgents.stream().allMatch(ia -> ia.getAID().hashCode() < myHashCode)) {
+                        this.currentAction = new CollectMetalAction(x, y);
+                    } else {
+                        List<PathCell> pathNeighbors = game.getPathNeighbors(fieldCell, true);
+                        List<PathCell> possibleNeighborCells = pathNeighbors.stream()
+                                .filter(pn -> (pn.collectingAllowed() && pn.adjacent(currentCell, false))).collect(Collectors.toList());
+                        if(!possibleNeighborCells.isEmpty()) {
+                            PathCell newTargetCell = possibleNeighborCells.get(0);
+                            currentAction = new MoveAction(newTargetCell.getX(), newTargetCell.getY());
+                        }
+                    }
+                }
             }
         } else {
             if(currentCapacity < maxCapacity) {
