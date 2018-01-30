@@ -149,4 +149,18 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     public void removeTask(DiggerTask task) {
         tasks.remove(task);
     }
+
+    public void broadCastGameHasEnded() {
+        ACLMessage message = prepareMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        for(AID digger : getDiggers()) {
+            message.addReceiver(digger);
+        }
+        try {
+            getContentManager().fillContent(message, new GameHasEnded());
+        } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+        }
+        send(message);
+    }
 }

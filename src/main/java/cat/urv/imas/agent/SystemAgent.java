@@ -123,7 +123,7 @@ public class SystemAgent extends ImasAgent {
         super.setup();
 
         // 2. Load game settings.
-        this.game = InitialGameSettings.load("game.settings_first_call_2017_18");
+        this.game = InitialGameSettings.load("game2.settings");
         log("Initial configuration settings loaded");
 
         // 3. Start other agents
@@ -244,7 +244,6 @@ public class SystemAgent extends ImasAgent {
         updateGUI();
         game.resetPathCells();
         this.game.advanceToNextRound();
-        log("Starting round "+this.game.getCurrentSimulationStep());
     }
 
     private void updateStats() {

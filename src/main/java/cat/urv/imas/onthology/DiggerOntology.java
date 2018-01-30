@@ -41,6 +41,7 @@ public class DiggerOntology extends BeanOntology {
         add(InformAgentRound.class);
         add(DetectAction.class);
         add(InformProspectorInitialization.class);
+        add(GameHasEnded.class);
     }
 
 }

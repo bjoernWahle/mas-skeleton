@@ -325,7 +325,7 @@ public class GameSettings implements java.io.Serializable {
     }
 
     public boolean hasEnded() {
-        return currentSimulationStep >= simulationSteps;
+        return currentSimulationStep > simulationSteps;
     }
 
     public long getCurrentRoundEnd() {

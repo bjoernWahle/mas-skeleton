@@ -10,10 +10,7 @@ import java.util.stream.Collectors;
 import cat.urv.imas.behaviour.prospector_coordinator.RoundBehaviour;
 import cat.urv.imas.map.Cell;
 import cat.urv.imas.map.PathCell;
-import cat.urv.imas.onthology.ActionList;
-import cat.urv.imas.onthology.GameSettings;
-import cat.urv.imas.onthology.InfoAgent;
-import cat.urv.imas.onthology.MobileAgentAction;
+import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
@@ -191,4 +188,18 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
 	public void setInitialized(boolean inicialized) {
 		this.prospectorsInicialized = inicialized;
 	}
+
+    public void broadCastGameHasEnded() {
+        ACLMessage message = prepareMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        for(AID digger : getProspectors()) {
+            message.addReceiver(digger);
+        }
+        try {
+            getContentManager().fillContent(message, new GameHasEnded());
+        } catch (Codec.CodecException | OntologyException e) {
+            e.printStackTrace();
+        }
+        send(message);
+    }
 }

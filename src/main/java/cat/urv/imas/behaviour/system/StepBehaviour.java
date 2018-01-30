@@ -25,7 +25,7 @@ public class StepBehaviour extends FSMBehaviour {
             @Override
             public void onStart() {
                 super.onStart();
-                agent.log("Waiting for actions and stats.");
+                agent.log("Starting round "+agent.getGame().getCurrentSimulationStep());
             }
 
             @Override
@@ -35,7 +35,6 @@ public class StepBehaviour extends FSMBehaviour {
                     ContentElement ce = agent.getContentManager().extractContent(m);
                     if(ce instanceof ActionList) {
                         ActionList agentActions = (ActionList) ce;
-                        // TODO later we should have one message with actions and stats
                         agent.storeActions(agentActions);
                     }
                 } catch (Codec.CodecException | OntologyException e) {
@@ -58,7 +57,6 @@ public class StepBehaviour extends FSMBehaviour {
     }
 
     public int onEnd() {
-        agent.log("FSM behaviour completed.");
         agent.doDelete();
         return super.onEnd();
     }

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f8c25162-fe6f-4781-b33f-540ef32b2d6d" name="Default" comment="">
+    <list default="true" id="f8c25162-fe6f-4781-b33f-540ef32b2d6d" name="Default" comment="coalition formation and conflict resolutions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" />
+      <change beforePath="$PROJECT_DIR$/game2.settings" afterPath="$PROJECT_DIR$/game2.settings" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ProspectorCoordinatorAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ProspectorCoordinatorAgent.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/PathCell.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/PathCell.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector_coordinator/RoundBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector_coordinator/RoundBehaviour.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,75 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DiggerAgent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="319" column="13" lean-forward="true" selection-start-line="319" selection-start-column="13" selection-end-line="319" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#13244#13245#0" expanded="true" />
-                <element signature="e#13306#13307#0" expanded="true" />
-                <element signature="e#13339#13340#0" expanded="true" />
-                <element signature="e#13370#13371#0" expanded="true" />
-                <element signature="e#13407#13408#0" expanded="true" />
-                <element signature="e#13434#13435#0" expanded="true" />
-                <element signature="e#13480#13481#0" expanded="true" />
-                <element signature="e#13512#13513#0" expanded="true" />
-                <element signature="e#13554#13555#0" expanded="true" />
-                <element signature="e#13588#13589#0" expanded="true" />
-                <element signature="e#13630#13631#0" expanded="true" />
-                <element signature="e#13658#13659#0" expanded="true" />
-                <element signature="e#13716#13717#0" expanded="true" />
-                <element signature="e#13762#13763#0" expanded="true" />
-                <element signature="e#13821#13822#0" expanded="true" />
-                <element signature="e#13869#13870#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TaskContractNetResponder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="86" column="25" lean-forward="false" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
-              <folding>
-                <element signature="e#5677#5678#0" expanded="true" />
-                <element signature="e#5739#5740#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PathCell.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/map/PathCell.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="153" column="95" lean-forward="false" selection-start-line="153" selection-start-column="95" selection-end-line="153" selection-end-column="95" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TaskContractNetInitiatorBehaviour.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="135" column="40" lean-forward="false" selection-start-line="135" selection-start-column="40" selection-end-line="135" selection-end-column="40" />
-              <folding>
-                <element signature="e#11605#11606#0" expanded="true" />
-                <element signature="e#11667#11668#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SystemAgent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
+            <state relative-caret-position="261">
+              <caret line="245" column="31" lean-forward="false" selection-start-line="245" selection-start-column="31" selection-end-line="245" selection-end-column="31" />
               <folding>
                 <element signature="e#3243#3244#0" expanded="true" />
                 <element signature="e#3303#3304#0" expanded="true" />
@@ -99,21 +38,54 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InitialGameSettings.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InitialGameSettings.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="277" column="55" lean-forward="false" selection-start-line="277" selection-start-column="55" selection-end-line="277" selection-end-column="55" />
+            <state relative-caret-position="261">
+              <caret line="448" column="16" lean-forward="false" selection-start-line="448" selection-start-column="16" selection-end-line="448" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CollectingActionsBehaviour.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java">
+      <file leaf-file-name="AdvanceToNextRoundBehavior.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+            <state relative-caret-position="252">
+              <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+              <folding>
+                <element signature="e#411#412#0" expanded="true" />
+                <element signature="e#442#443#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StepBehaviour.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="882">
+              <caret line="58" column="24" lean-forward="false" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CoordinatorBehaviour.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="172">
+              <caret line="89" column="32" lean-forward="true" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoundBehaviour.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="69" column="39" lean-forward="true" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -122,31 +94,46 @@
       <file leaf-file-name="GameSettings.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="299" column="15" lean-forward="false" selection-start-line="299" selection-start-column="15" selection-end-line="299" selection-end-column="15" />
+            <state relative-caret-position="71">
+              <caret line="319" column="9" lean-forward="true" selection-start-line="319" selection-start-column="9" selection-end-line="319" selection-end-column="9" />
               <folding>
                 <element signature="e#8342#8343#0" expanded="true" />
                 <element signature="e#8393#8394#0" expanded="true" />
+                <element signature="e#9248#9249#0" expanded="true" />
+                <element signature="e#9310#9311#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NegotiatorBehaviour.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java">
+      <file leaf-file-name="RoundBehaviour.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector_coordinator/RoundBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            <state relative-caret-position="147">
+              <caret line="81" column="36" lean-forward="false" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CollectMetalBid.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/CollectMetalBid.java">
+      <file leaf-file-name="DiggerCoordinatorAgent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="139">
+              <caret line="152" column="16" lean-forward="false" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="16" />
+              <folding>
+                <element signature="e#4643#4644#0" expanded="true" />
+                <element signature="e#4677#4678#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProspectorCoordinatorAgent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ProspectorCoordinatorAgent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="192" column="63" lean-forward="false" selection-start-line="192" selection-start-column="63" selection-end-line="192" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -210,11 +197,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/gui/MapVisualizer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Agents.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InfoAgent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerInfoAgent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/ReturnMetalAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/gui/GraphicInterface.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/MessageContent.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CollectingActionsAndStatsBehaviour.java" />
@@ -224,7 +206,6 @@
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/Performatives.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector/ProspectorBehaviour.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/Cell.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/FieldCell.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/SettableFieldCell.java" />
@@ -242,7 +223,6 @@
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/ProposeTask.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ProspectorAgent.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector_coordinator/CollectingActionsBehaviour.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/Plan.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/DijkstraAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerTask.java" />
@@ -250,17 +230,24 @@
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Edge.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Vertex.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java" />
-        <option value="$PROJECT_DIR$/game2.settings" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/PathCell.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java" />
+        <option value="$PROJECT_DIR$/game2.settings" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector_coordinator/RoundBehaviour.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/CoordinatorAgent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ProspectorCoordinatorAgent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java" />
       </list>
     </option>
   </component>
@@ -312,7 +299,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/JADE-examples-4.5.0/jade" />
-    <property name="SearchEverywhereHistoryKey" value="Syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;contractnet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;collectMetal&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#collectMetal&#10;dig&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;Dele&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;sys&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;agen&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;init&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;cont&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;system&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;coord&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;coll&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;ini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;resp&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;startTas&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startTask&#10;syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;movet&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#moveTowards&#10;grap&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/util/Graph.java&#10;pro&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/ProspectorAgent.java&#10;startReturn&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startReturnMetal&#10;fini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tas&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tasknet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;colle&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;digger&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java&#10;setElements&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell#setElements&#10;settab&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell&#10;field&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/map/FieldCell.java&#10;manu&#9;PSI&#9;JAVA://cat.urv.imas.map.ManufacturingCenterCell&#10;adjacent&#9;PSI&#9;JAVA://cat.urv.imas.map.Cell#adjacent&#10;d&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;step&#9;PSI&#9;JAVA://cat.urv.imas.behaviour.system.StepBehaviour&#10;delegate&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;taskneti&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;diggerbe&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java&#10;Coordi&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;round&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java&#10;taskcon&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;task&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;neg&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java&#10;delet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;ontolo&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/DiggerOntology.java&#10;sy&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;digg&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;startround&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startRound&#10;games&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/GameSettings.java&#10;taskc&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;nego&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java&#10;de&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;getShor&#9;PSI&#9;JAVA://cat.urv.imas.util.DijkstraAlgorithm#getShortestDistance" />
+    <property name="SearchEverywhereHistoryKey" value="step&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java&#10;syste&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;round&#9;PSI&#9;JAVA://cat.urv.imas.behaviour.prospector_coordinator.RoundBehaviour&#10;pro&#9;PSI&#9;JAVA://cat.urv.imas.agent.ProspectorCoordinatorAgent&#10;diggerco&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java&#10;coor&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;sys&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;onto&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/DiggerOntology.java&#10;Syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;contractnet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;collectMetal&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#collectMetal&#10;dig&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;Dele&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;agen&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;init&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;cont&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;system&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;coord&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;coll&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;ini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;resp&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;startTas&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startTask&#10;syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;movet&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#moveTowards&#10;grap&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/util/Graph.java&#10;startReturn&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startReturnMetal&#10;fini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tas&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tasknet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;colle&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;digger&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java&#10;setElements&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell#setElements&#10;settab&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell&#10;field&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/map/FieldCell.java&#10;manu&#9;PSI&#9;JAVA://cat.urv.imas.map.ManufacturingCenterCell&#10;adjacent&#9;PSI&#9;JAVA://cat.urv.imas.map.Cell#adjacent&#10;d&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;delegate&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;taskneti&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;diggerbe&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java&#10;Coordi&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;taskcon&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;task&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;neg&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java&#10;delet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;ontolo&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/DiggerOntology.java&#10;sy&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;digg&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;startround&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startRound&#10;games&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -515,7 +502,7 @@
       <workItem from="1517143518681" duration="13981000" />
       <workItem from="1517167038975" duration="5920000" />
       <workItem from="1517220563240" duration="26260000" />
-      <workItem from="1517310062769" duration="14362000" />
+      <workItem from="1517310062769" duration="15760000" />
     </task>
     <task id="LOCAL-00001" summary="some updates for the gui and the project">
       <created>1514293661817</created>
@@ -671,11 +658,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517317497853</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="coalition formation and conflict resolutions">
+      <created>1517327562763</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1517327562763</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192700000" />
+    <option name="totallyTimeSpent" value="194098000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -698,7 +692,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44816753" sideWeight="0.50193477" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5183246" sideWeight="0.49806523" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5183246" sideWeight="0.49806523" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -710,7 +704,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5057592" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5057592" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -811,7 +805,8 @@
     <MESSAGE value="merge!!!" />
     <MESSAGE value="some performance improvements, implemented the check if there is more than one agent while trying to collect and if there is an agent working while trying to move" />
     <MESSAGE value="implemented coalition formation (coalitions aren't yet working as a coalition)" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented coalition formation (coalitions aren't yet working as a coalition)" />
+    <MESSAGE value="coalition formation and conflict resolutions" />
+    <option name="LAST_COMMIT_MESSAGE" value="coalition formation and conflict resolutions" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -884,45 +879,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector/RoundBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-576">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector/ProspectorBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
-          <caret line="27" column="32" lean-forward="false" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-207">
-          <caret line="28" column="44" lean-forward="true" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="49" column="47" lean-forward="false" selection-start-line="49" selection-start-column="47" selection-end-line="49" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game.settings">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1050,13 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/RoundBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="129">
@@ -1145,14 +1094,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="41" column="62" lean-forward="false" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CollectingActionsBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -1184,22 +1125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game2.settings">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="65" column="14" lean-forward="false" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="62" column="82" lean-forward="false" selection-start-line="62" selection-start-column="82" selection-end-line="62" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game.settings_first_call_2017_18">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -1214,17 +1139,6 @@
           <caret line="25" column="16" lean-forward="false" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="149" column="27" lean-forward="false" selection-start-line="149" selection-start-column="27" selection-end-line="149" selection-end-column="27" />
-          <folding>
-            <element signature="e#4643#4644#0" expanded="true" />
-            <element signature="e#4677#4678#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1268,28 +1182,6 @@
           <folding>
             <element signature="e#11605#11606#0" expanded="true" />
             <element signature="e#11667#11668#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="112" column="42" lean-forward="false" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
-          <folding>
-            <element signature="e#3243#3244#0" expanded="true" />
-            <element signature="e#3303#3304#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="299" column="15" lean-forward="false" selection-start-line="299" selection-start-column="15" selection-end-line="299" selection-end-column="15" />
-          <folding>
-            <element signature="e#8342#8343#0" expanded="true" />
-            <element signature="e#8393#8394#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1347,10 +1239,120 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="43" column="32" lean-forward="true" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game2.settings">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" column="23" lean-forward="false" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/CoordinatorAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="158" column="29" lean-forward="false" selection-start-line="158" selection-start-column="29" selection-end-line="158" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/RoundBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="69" column="39" lean-forward="true" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="152" column="16" lean-forward="false" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="16" />
+          <folding>
+            <element signature="e#4643#4644#0" expanded="true" />
+            <element signature="e#4677#4678#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/prospector_coordinator/RoundBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="81" column="36" lean-forward="false" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ProspectorCoordinatorAgent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
-          <caret line="277" column="55" lean-forward="false" selection-start-line="277" selection-start-column="55" selection-end-line="277" selection-end-column="55" />
+          <caret line="192" column="63" lean-forward="false" selection-start-line="192" selection-start-column="63" selection-end-line="192" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="245" column="31" lean-forward="false" selection-start-line="245" selection-start-column="31" selection-end-line="245" selection-end-column="31" />
+          <folding>
+            <element signature="e#3243#3244#0" expanded="true" />
+            <element signature="e#3303#3304#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="448" column="16" lean-forward="false" selection-start-line="448" selection-start-column="16" selection-end-line="448" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="319" column="9" lean-forward="true" selection-start-line="319" selection-start-column="9" selection-end-line="319" selection-end-column="9" />
+          <folding>
+            <element signature="e#8342#8343#0" expanded="true" />
+            <element signature="e#8393#8394#0" expanded="true" />
+            <element signature="e#9248#9249#0" expanded="true" />
+            <element signature="e#9310#9311#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding>
+            <element signature="e#411#412#0" expanded="true" />
+            <element signature="e#442#443#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="89" column="32" lean-forward="true" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="58" column="24" lean-forward="false" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
           <folding />
         </state>
       </provider>

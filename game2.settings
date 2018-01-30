@@ -13,7 +13,7 @@
     <maxNumberFieldsWithNewMetal>3</maxNumberFieldsWithNewMetal>
     <newMetalProbability>20</newMetalProbability>
     <seed>123456789</seed>
-    <simulationSteps>600</simulationSteps>
+    <simulationSteps>10</simulationSteps>
     <title>Practical IMAS</title>
     <initialMap>
         <item>-4</item>

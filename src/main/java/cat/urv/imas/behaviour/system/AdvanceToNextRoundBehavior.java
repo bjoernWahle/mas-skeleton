@@ -14,7 +14,6 @@ public class AdvanceToNextRoundBehavior extends OneShotBehaviour {
     @Override
     public void onStart() {
         super.onStart();
-        agent.log("AdvanceToNextRound behaviour started.");
     }
 
     @Override
