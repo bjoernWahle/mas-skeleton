@@ -5,6 +5,7 @@ import cat.urv.imas.agent.ImasAgent;
 import cat.urv.imas.onthology.CollectMetalBid;
 import cat.urv.imas.onthology.DiggerTask;
 import cat.urv.imas.onthology.ProposeTask;
+import com.sun.xml.internal.ws.api.message.Message;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
@@ -15,11 +16,13 @@ import jade.lang.acl.ACLMessage;
 import jade.proto.ContractNetInitiator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
     ContractNetInitiator cni;
     DiggerCoordinatorAgent agent;
     DiggerTask task;
+    Map<AID, DiggerTask> diggerTasks = new HashMap<>();
     boolean last = false;
     int nResponders;
     boolean finished = false;
@@ -97,11 +100,14 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                         int bestTime = Integer.MAX_VALUE;
                         CollectMetalBid bestProposal = null;
                         ACLMessage accept = null;
+                        List<ACLMessage> messages = new LinkedList<>();
                         Enumeration e = responses.elements();
                         List<CollectMetalBid> proposals = new LinkedList<>();
+                        List<CollectMetalBid> partialProposals = new LinkedList<>();
                         while (e.hasMoreElements()) {
                             ACLMessage msg = (ACLMessage) e.nextElement();
                             if (msg.getPerformative() == ACLMessage.PROPOSE) {
+                                messages.add(msg);
                                 ACLMessage reply = msg.createReply();
                                 reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
                                 acceptances.addElement(reply);
@@ -110,24 +116,30 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                                 double capacity = Double.parseDouble(proposal.split(",")[1]);
                                 CollectMetalBid collectMetalBid = new CollectMetalBid(msg.getSender(), time, capacity);
                                 proposals.add(collectMetalBid);
-                                if (collectMetalBid.getRemainingCapacity() == 1.0 && time > -1 && time < bestTime) {
-                                    bestTime = time;
-                                    bestProposal = collectMetalBid;
-                                    accept = reply;
+                                if (collectMetalBid.getRemainingCapacity() == 1.0) {
+                                    if(time > -1 && time < bestTime) {
+                                        bestTime = time;
+                                        bestProposal = collectMetalBid;
+                                        accept = reply;
+                                    }
+                                } else {
+                                    partialProposals.add(collectMetalBid);
                                 }
                             }
                         }
                         // Accept the proposal of the best proposer
                         if (accept != null) {
+                            diggerTasks.put(bestProposal.getAgent(), task);
                             agent.log("I am gonna accept proposal "+bestProposal+" from good ol' gold mining fella "+bestProposal.getAgent().getLocalName());
                             accept.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-                            // otherwise start coalition formation process
+                        } else {
+                            formCoalition(acceptances, messages, partialProposals);
                         }
                     }
 
                     protected void handleInform(ACLMessage inform) {
                         agent.log("Brave "+inform.getSender().getLocalName()+" gonna collect that metal. Big up fella!");
-                        task.startTask();
+                        diggerTasks.get(inform.getSender()).startTask();
                     }
                 };
 
@@ -136,6 +148,56 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                 finished = true;
             }
             agent.addBehaviour(cni);
+        }
+    }
+
+    private void formCoalition(Vector acceptances, List<ACLMessage> messages, List<CollectMetalBid> partialProposals) {
+        Set<Set<CollectMetalBid>> possibleCoalitions = new HashSet<>();
+        // create all permutations of 2 that can collect all the metal
+        for(CollectMetalBid c1 : partialProposals) {
+            double remainingMetal = 1.0 - c1.getRemainingCapacity();
+            for(CollectMetalBid c2 : partialProposals) {
+                if(c2 != c1 && c2.getRemainingCapacity() == remainingMetal) {
+                    Set<CollectMetalBid> coalition = new HashSet<>();
+                    coalition.add(c1);
+                    coalition.add(c2);
+                    possibleCoalitions.add(coalition);
+                }
+            }
+        }
+        // find fastest permutation (minimum of the maximum of a coalition)
+        Set<CollectMetalBid> bestCoalition = null;
+        int bestCoalitionTime = Integer.MAX_VALUE;
+        for(Set<CollectMetalBid> possibleCoalition : possibleCoalitions) {
+            int maxTime = possibleCoalition.stream()
+                    .max(Comparator.comparingInt(CollectMetalBid::getTime)).get().getTime();
+            if(maxTime < bestCoalitionTime) {
+                bestCoalition = possibleCoalition;
+                bestCoalitionTime = maxTime;
+            }
+        }
+
+        if(bestCoalition != null) {
+            acceptances.clear();
+            agent.log("Guys, my home boys "+bestCoalition.stream().map(c -> c.getAgent().getLocalName()).collect( Collectors.joining( ", " ) ) + " will dig that metal.");
+            agent.removeTask(task);
+            for(CollectMetalBid cmb : bestCoalition) {
+                DiggerTask partTask = new DiggerTask(task);
+                partTask.setAmount((int) Math.ceil(cmb.getRemainingCapacity()*task.getAmount()));
+                diggerTasks.put(cmb.getAgent(), partTask);
+            }
+            Set<AID> aids = diggerTasks.keySet();
+            for(ACLMessage msg : messages) {
+                if(aids.contains(msg.getSender())) {
+                    ACLMessage reply = msg.createReply();
+                    reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+                    acceptances.addElement(reply);
+                } else {
+                    ACLMessage reply = msg.createReply();
+                    reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
+                    acceptances.addElement(reply);
+                }
+            }
         }
     }
 

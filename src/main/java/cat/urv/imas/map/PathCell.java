@@ -32,7 +32,6 @@ public class PathCell extends Cell {
      */
     private Agents agents = new Agents();
     private boolean diggerWorking;
-    private boolean resetDiggerWorkingScheduled;
 
     /**
      * Builds a cell with a given type.
@@ -157,17 +156,5 @@ public class PathCell extends Cell {
 
     public void setDiggerWorking(boolean diggerWorking) {
         this.diggerWorking = diggerWorking;
-    }
-
-    public void scheduleReset() {
-        resetDiggerWorkingScheduled = true;
-    }
-
-    public boolean isResetDiggerWorkingScheduled() {
-        return resetDiggerWorkingScheduled;
-    }
-
-    public void setResetDiggerWorkingScheduled(boolean resetDiggerWorkingScheduled) {
-        this.resetDiggerWorkingScheduled = resetDiggerWorkingScheduled;
     }
 }

@@ -471,9 +471,6 @@ public class InitialGameSettings extends GameSettings implements Predicate {
                 throw new IllegalArgumentException("Refusing collect request from "+agentCell.getX() +"," + agentCell.getY() +" because there is no metal left.");
             }
             fieldCell.removeMetal();
-            if(fieldCell.getMetalAmount() == 0) {
-                agentCell.scheduleReset();
-            }
             agentCell.setDiggerWorking(true);
             statisticsTracker.trackCellCollection(fieldCell, currentSimulationStep);
             agent.setCapacity(agent.getCapacity()+1);
@@ -558,10 +555,7 @@ public class InitialGameSettings extends GameSettings implements Predicate {
     public void resetPathCells() {
         for(Cell cell : cellsOfType.get(CellType.PATH)) {
             PathCell pc = (PathCell) cell;
-            if(pc.isResetDiggerWorkingScheduled()) {
-                pc.setDiggerWorking(false);
-                pc.setResetDiggerWorkingScheduled(false);
-            }
+            pc.setDiggerWorking(false);
         }
     }
 }

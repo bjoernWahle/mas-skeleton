@@ -145,4 +145,8 @@ public class DiggerCoordinatorAgent extends ImasAgent {
             }
         }
     }
+
+    public void removeTask(DiggerTask task) {
+        tasks.remove(task);
+    }
 }

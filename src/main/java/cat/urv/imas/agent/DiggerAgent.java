@@ -238,13 +238,18 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         } else {
             throw new IllegalArgumentException("Collect metal cells have to be always field cells.");
         }
+        PathCell currentCell = (PathCell) game.get(currentY, currentX);
         int metalCapacity;
         log(fieldCell.getMetal().toString());
         metalCapacity = fieldCell.getMetalAmount();
         if(currentCapacity < maxCapacity && metalCapacity > 0) {
-            this.currentMovementPlan = null;
-            this.currentAction = new CollectMetalAction(x, y);
-            log("I gonna collect that metal now.");
+            if(currentCell.collectingAllowed()) {
+                this.currentAction = new CollectMetalAction(x, y);
+                log("I gonna collect that metal now.");
+            } else {
+                this.currentAction = new IdleAction();
+                log("I can't collect metal because there is someone at my cell. Go away dude.");
+            }
         } else {
             if(currentCapacity < maxCapacity) {
                 // we are done with the task
@@ -288,6 +293,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     public void performCurrentTask() {
         // check if we might be already there
         if(isAdjacentTo(currentTask.getX(), currentTask.getY(), true)) {
+            currentMovementPlan = null;
             if(currentTask.getTaskType().equals(TaskType.COLLECT_METAL.toString())) {
                 collectMetal(currentTask.getX(), currentTask.getY());
             } else {
