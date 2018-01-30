@@ -54,7 +54,6 @@ public class CollectingInitializationBehaviour extends SimpleBehaviour {
                     			break;
                     		}	
                     	}
-                    	
                     	prospectors.remove(msg.getSender());
                     }
                 } else {

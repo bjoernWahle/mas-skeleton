@@ -62,6 +62,7 @@ public class RoundBehaviour extends FSMBehaviour {
 	                            agent.calculateAreaDivision(agent.getProspectors().size());
 	                            agent.informProspectors();
 	                            agent.resetRoundActions();
+	                            agent.informAboutMapDivision();
                             	setExitCode(1);
                             }
                         }

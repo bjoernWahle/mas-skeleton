@@ -191,4 +191,17 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
 	public void setInitialized(boolean inicialized) {
 		this.prospectorsInicialized = inicialized;
 	}
+	
+	public void informAboutMapDivision() {
+        log("Sending gameSettings with map division to the CoordinatiorAgent");
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        message.addReceiver(coordinatorAgent);
+        try {
+            message.setContentObject(gameSettings);
+            send(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 }

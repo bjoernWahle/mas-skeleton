@@ -3,6 +3,7 @@ package cat.urv.imas.behaviour.system;
 import cat.urv.imas.agent.SystemAgent;
 import cat.urv.imas.behaviour.ReceiverBehaviour;
 import cat.urv.imas.onthology.ActionList;
+import cat.urv.imas.onthology.GameSettings;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
@@ -10,6 +11,7 @@ import jade.core.behaviours.FSMBehaviour;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 
 public class StepBehaviour extends FSMBehaviour {
     private SystemAgent agent;
@@ -32,15 +34,25 @@ public class StepBehaviour extends FSMBehaviour {
             public void handle(ACLMessage m) {
                 super.handle(m);
                 try {
-                    ContentElement ce = agent.getContentManager().extractContent(m);
-                    if(ce instanceof ActionList) {
-                        ActionList agentActions = (ActionList) ce;
-                        // TODO later we should have one message with actions and stats
-                        agent.storeActions(agentActions);
-                    }
+                	if(m.getOntology() != null && m.getOntology().equals("digger-ontology")) {
+	                    ContentElement ce = agent.getContentManager().extractContent(m);
+	                    if(ce instanceof ActionList) {
+	                        ActionList agentActions = (ActionList) ce;
+	                        // TODO later we should have one message with actions and stats
+	                        agent.storeActions(agentActions);
+	                    }
+                	}else {
+                		Object contentObject = m.getContentObject();
+                		if(contentObject instanceof GameSettings) {
+	                        //This is just for printing the division done by prospector coordinator to explore the map.
+	                    	agent.getGame().setAreaDivision(((GameSettings) contentObject).getCellAssignement());
+	                    }
+                	}
                 } catch (Codec.CodecException | OntologyException e) {
                     e.printStackTrace();
-                }
+                } catch (UnreadableException e) {
+					e.printStackTrace();
+				}
             }
         };
         // we wait for the initialization of the game

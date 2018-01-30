@@ -457,13 +457,7 @@ public class GameSettings implements java.io.Serializable {
         	}
         }
         
-        
-        //this part is just used for testing, it will set a different color for the cells depending on the prospector assigned with a maximum of 9
-        for(int prospector : areaDivision.keySet()) {
-        	for(Cell cell : areaDivision.get(prospector)) {
-        		cell.prospectorDivision = prospector;
-        	}
-        }
+        updatePathColoring();
         
         return areaDivision;
         
@@ -475,7 +469,20 @@ public class GameSettings implements java.io.Serializable {
     
     public void setAreaDivision(Map<Integer, List<Cell>> areaDivision) {
 		this.areaDivision = areaDivision;
+		updatePathColoring();
 	}
+    
+    public void updatePathColoring() {
+    	//this part is just used for testing, it will set a different color for the cells depending on the prospector assigned with a maximum of 9
+        for(int prospector : areaDivision.keySet()) {
+        	for(Cell cell : areaDivision.get(prospector)) {
+        		Cell original = get(cell.getY(), cell.getX());
+        		original.prospectorDivision = prospector;
+        		//This will update the reference to actually be the real cell
+        		cell = original;
+        	}
+        }
+    }
 
 	public List<Cell> getExplorationArea(AID prospector){
     	if(!areaAssignament.containsKey(prospector)) {

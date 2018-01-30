@@ -167,4 +167,21 @@ public class CoordinatorAgent extends ImasAgent {
             log("Error filling message content");
         }
     }
+    
+    /**
+     * Method used to pass the information about the area division to the SystemAgent. Just for printing.
+     * @param ce
+     */
+	public void informAboutMapDivision(GameSettings game) {
+		log("Sending gameSettings with map division to the systemAgent");
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setSender(getAID());
+        message.addReceiver(systemAgent);
+        try {
+            message.setContentObject(game);
+            send(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 }
