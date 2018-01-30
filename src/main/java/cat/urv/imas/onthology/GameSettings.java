@@ -496,6 +496,9 @@ public class GameSettings implements java.io.Serializable {
             if(manufacturingCenter.getMetal() != currentMetal) {
                 continue;
             }
+            if(manufacturingCenter.adjacent(currentCell, true)) {
+                return manufacturingCenter;
+            }
             List<Cell> pathNeighbors = new ArrayList<>(getPathNeighbors(cell, true));
             List<Cell> shortestPath = getMapGraph().getShortestPath(currentCell, pathNeighbors);
             double ratio = ((double) manufacturingCenter.getPrice()) / ((double) shortestPath.size());

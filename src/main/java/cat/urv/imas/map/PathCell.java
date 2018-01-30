@@ -151,7 +151,7 @@ public class PathCell extends Cell {
     }
 
     public boolean collectingAllowed() {
-        return agents.get(AgentType.PROSPECTOR).size() + agents.get(AgentType.DIGGER).size() == 1;
+        return agents.get(AgentType.PROSPECTOR).size() + agents.get(AgentType.DIGGER).size() <= 1;
     }
 
     public void setDiggerWorking(boolean diggerWorking) {

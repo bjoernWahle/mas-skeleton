@@ -6,6 +6,7 @@ import cat.urv.imas.onthology.CollectMetalBid;
 import cat.urv.imas.onthology.DiggerTask;
 import cat.urv.imas.onthology.ProposeTask;
 import com.sun.xml.internal.ws.api.message.Message;
+import jade.content.ContentManager;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
 import jade.core.AID;
@@ -131,6 +132,11 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                         if (accept != null) {
                             diggerTasks.put(bestProposal.getAgent(), task);
                             agent.log("I am gonna accept proposal "+bestProposal+" from good ol' gold mining fella "+bestProposal.getAgent().getLocalName());
+                            try {
+                                agent.getContentManager().fillContent(accept, new ProposeTask(task));
+                            } catch (Codec.CodecException | OntologyException e1) {
+                                e1.printStackTrace();
+                            }
                             accept.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                         } else {
                             formCoalition(acceptances, messages, partialProposals);
@@ -157,7 +163,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
         for(CollectMetalBid c1 : partialProposals) {
             double remainingMetal = 1.0 - c1.getRemainingCapacity();
             for(CollectMetalBid c2 : partialProposals) {
-                if(c2 != c1 && c2.getRemainingCapacity() == remainingMetal) {
+                if(c2 != c1 && c2.getRemainingCapacity() >= remainingMetal) {
                     Set<CollectMetalBid> coalition = new HashSet<>();
                     coalition.add(c1);
                     coalition.add(c2);
@@ -181,9 +187,12 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
             acceptances.clear();
             agent.log("Guys, my home boys "+bestCoalition.stream().map(c -> c.getAgent().getLocalName()).collect( Collectors.joining( ", " ) ) + " will dig that metal.");
             agent.removeTask(task);
+            int remainingMetal = task.getAmount();
             for(CollectMetalBid cmb : bestCoalition) {
                 DiggerTask partTask = new DiggerTask(task);
-                partTask.setAmount((int) Math.ceil(cmb.getRemainingCapacity()*task.getAmount()));
+                int amount = Math.min((int) Math.ceil(cmb.getRemainingCapacity()*task.getAmount()), remainingMetal);
+                remainingMetal = remainingMetal - amount;
+                partTask.setAmount(amount);
                 diggerTasks.put(cmb.getAgent(), partTask);
             }
             Set<AID> aids = diggerTasks.keySet();
@@ -191,11 +200,41 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                 if(aids.contains(msg.getSender())) {
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+                    try {
+                        agent.getContentManager().fillContent(reply, new ProposeTask(diggerTasks.get(msg.getSender())));
+                    } catch (Codec.CodecException | OntologyException e) {
+                        e.printStackTrace();
+                    }
                     acceptances.addElement(reply);
                 } else {
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
                     acceptances.addElement(reply);
+                }
+            }
+        // no coalition could be formed, so go through the list of proposals again and find the one with the best ratio
+        } else {
+            double bestRatio = 0.0;
+            CollectMetalBid bestProposal = null;
+            for(CollectMetalBid cmb : partialProposals) {
+                double ratio = cmb.getTime() / cmb.getRemainingCapacity();
+                if(ratio < bestRatio) {
+                    bestRatio = ratio;
+                    bestProposal = cmb;
+                }
+            }
+            if(bestProposal != null) {
+                for (ACLMessage msg : messages) {
+                    if (bestProposal.getAgent().equals(msg.getSender())) {
+                        ACLMessage reply = msg.createReply();
+                        try {
+                            agent.getContentManager().fillContent(reply, new ProposeTask(diggerTasks.get(bestProposal.getAgent())));
+                        } catch (Codec.CodecException | OntologyException e) {
+                            e.printStackTrace();
+                        }
+                        reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+                        acceptances.addElement(reply);
+                    }
                 }
             }
         }
