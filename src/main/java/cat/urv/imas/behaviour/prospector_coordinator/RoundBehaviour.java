@@ -49,7 +49,8 @@ public class RoundBehaviour extends FSMBehaviour {
 	                            // set game
 	                            agent.log("I received the game settings for this round.");
 	                            GameSettings game = (GameSettings) contentObject;
-	                            game.setAreaAssignament(agent.areaAssignament);
+	                            game.setAreaDivision(agent.getAreaDivision());
+	                            game.setAreaAssignament(agent.getAreaAssignament());
 	                            agent.setGameSettings(game);
 	                            agent.informProspectors();
 	                            agent.resetRoundActions();
@@ -58,6 +59,7 @@ public class RoundBehaviour extends FSMBehaviour {
                             	// set game
 	                            agent.log("I received the game settings for this round.");
 	                            agent.setGameSettings((GameSettings) contentObject);
+	                            agent.calculateAreaDivision(agent.getProspectors().size());
 	                            agent.informProspectors();
 	                            agent.resetRoundActions();
                             	setExitCode(1);

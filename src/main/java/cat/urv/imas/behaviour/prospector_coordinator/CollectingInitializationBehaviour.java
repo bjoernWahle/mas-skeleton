@@ -1,11 +1,7 @@
 package cat.urv.imas.behaviour.prospector_coordinator;
 
-import cat.urv.imas.agent.AgentType;
 import cat.urv.imas.agent.ProspectorCoordinatorAgent;
-import cat.urv.imas.onthology.ActionType;
-import cat.urv.imas.onthology.InformAgentRound;
 import cat.urv.imas.onthology.InformProspectorInitialization;
-import cat.urv.imas.onthology.MobileAgentAction;
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
@@ -14,11 +10,8 @@ import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CollectingInitializationBehaviour extends SimpleBehaviour {
     ProspectorCoordinatorAgent agent;

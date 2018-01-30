@@ -37,6 +37,8 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
 
     private AID coordinatorAgent;
     
+    private Map<Integer,List<Cell>> areaDivision;
+    
     public Map<AID,Integer> areaAssignament;
 
     public ProspectorCoordinatorAgent() {
@@ -57,7 +59,28 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
         areaAssignament = new HashMap<AID,Integer>();
     }
     
-    public List<AID> getProspectors() {
+    
+    public Map<Integer, List<Cell>> getAreaDivision() {
+		return areaDivision;
+	}
+
+	public void setAreaDivision(Map<Integer, List<Cell>> areaDivision) {
+		this.areaDivision = areaDivision;
+	}
+	
+	public void calculateAreaDivision(int numProspectors) {
+		this.areaDivision = gameSettings.dividePathCellsInto(numProspectors);
+	}
+
+	public Map<AID, Integer> getAreaAssignament() {
+		return areaAssignament;
+	}
+
+	public void setAreaAssignament(Map<AID, Integer> areaAssignament) {
+		this.areaAssignament = areaAssignament;
+	}
+
+	public List<AID> getProspectors() {
         return getGameSettings().getAgentList().get(AgentType.PROSPECTOR).stream().flatMap(cell -> ((PathCell)cell).getAgents().get(AgentType.PROSPECTOR).stream().map(InfoAgent::getAID)).collect(Collectors.toList());
     }
     
@@ -97,23 +120,7 @@ public class ProspectorCoordinatorAgent extends ImasAgent {
     }
     
     public void informProspectors() {
-    	/*
-        for (Cell cell: (gameSettings.getAgentList().get(AgentType.PROSPECTOR))) {
-            PathCell pathCell = (PathCell) cell;
-            for(InfoAgent prospector: ((PathCell) cell).getAgents().get(AgentType.PROSPECTOR)) {
-                ACLMessage msg = prepareMessage(ACLMessage.INFORM);
-                msg.addReceiver(prospector.getAID());
-                try {
-                    getContentManager().fillContent(msg, new RoundStart(pathCell.getX(), pathCell.getY(), this.gameSettings.getCurrentRoundEnd()));
-                    send(msg);
-                } catch (Codec.CodecException e) {
-                    e.printStackTrace();
-                } catch (OntologyException e) {
-                    e.printStackTrace();
-                }
-            }
-        }*/
-        
+    	
     	ACLMessage message = new ACLMessage(ACLMessage.INFORM);
         message.setSender(getAID());
         for(AID prospector : getProspectors()) {
