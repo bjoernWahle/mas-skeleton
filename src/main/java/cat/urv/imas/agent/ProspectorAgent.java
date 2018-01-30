@@ -28,6 +28,8 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private Map<Cell,Integer> subMapToExplore = new HashMap<Cell,Integer>();
     private Plan currentMovementPlan;
     private List<Cell> currentExplorationArea;
+    private int ongoingDirection_x = 0; 
+    private int ongoingDirection_y = 0; 
     
     public ProspectorAgent() {
         super(AgentType.PROSPECTOR);
@@ -125,13 +127,13 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     }
     
     /**
-     * This private method updates the Map of cells to explore and last time it was explored. Every time is called, it assigns for the current cell (key)
-     * a new value (corresponding to the simulation step).
+     * This private method updates the Map of cells to explore and the number of times a cell was explored. Every time is called, it assigns for the current cell (key)
+     * a new value (corresponding to times it has been explored).
      */
     private void updateExploredMap() {
     	if(subMapToExplore.containsKey(game.get(currentY,currentX))) {
-        	//subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
-        	subMapToExplore.put(game.get(currentY,currentX),game.getCurrentSimulationStep());
+        	subMapToExplore.put(game.get(currentY,currentX),subMapToExplore.get(game.get(currentY,currentX))+1);
+        	//subMapToExplore.put(game.get(currentY,currentX),game.getCurrentSimulationStep());
         }
     }
     
@@ -203,9 +205,18 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
         			if (subMapToExplore.get(cell) < minimum) {
         				nextCell = cell;
         				minimum = subMapToExplore.get(cell);
+        			}else if(subMapToExplore.get(cell) == minimum) {
+        				//If there is no improvement we will prioritize going the same direction we were going
+        				if(((cell.getX()-currentX) == ongoingDirection_x) && ((cell.getY()-currentY) == ongoingDirection_y)) {
+        					nextCell = cell;
+            				minimum = subMapToExplore.get(cell);
+        				}
         			}
         		}
         	}
+        	ongoingDirection_x = nextCell.getX() - currentX;
+        	ongoingDirection_y = nextCell.getY() - currentY;
+        	
     	}else {
     		if(currentMovementPlan == null) {
     			currentMovementPlan = getNewPlan();

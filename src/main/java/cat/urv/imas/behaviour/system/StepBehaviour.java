@@ -24,6 +24,8 @@ public class StepBehaviour extends FSMBehaviour {
     public StepBehaviour(SystemAgent systemAgent) {
         agent = systemAgent;
         ReceiverBehaviour waiting = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), true) {
+        	
+        	private boolean finished = false;
             @Override
             public void onStart() {
                 super.onStart();
@@ -40,12 +42,14 @@ public class StepBehaviour extends FSMBehaviour {
 	                        ActionList agentActions = (ActionList) ce;
 	                        // TODO later we should have one message with actions and stats
 	                        agent.storeActions(agentActions);
+	                        finished = true;
 	                    }
                 	}else {
                 		Object contentObject = m.getContentObject();
                 		if(contentObject instanceof GameSettings) {
 	                        //This is just for printing the division done by prospector coordinator to explore the map.
 	                    	agent.getGame().setAreaDivision(((GameSettings) contentObject).getCellAssignement());
+	                    	finished = false;
 	                    }
                 	}
                 } catch (Codec.CodecException | OntologyException e) {
@@ -53,6 +57,24 @@ public class StepBehaviour extends FSMBehaviour {
                 } catch (UnreadableException e) {
 					e.printStackTrace();
 				}
+            }
+            
+            @Override
+            public int onEnd() {
+                this.reset();
+                agent.log("Collecting actions ended.");
+                return super.onEnd();
+            }
+
+            @Override
+            public boolean done() {
+                return finished;
+            }
+
+            @Override
+            public void reset() {
+                super.reset();
+                finished = false;
             }
         };
         // we wait for the initialization of the game
