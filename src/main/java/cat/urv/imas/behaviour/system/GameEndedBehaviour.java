@@ -12,16 +12,9 @@ import jade.lang.acl.ACLMessage;
  * just respond to everything that the game is over
  */
 public class GameEndedBehaviour extends SimpleBehaviour {
-    SystemAgent agent;
-    GameHasEnded gameHasEnded = new GameHasEnded();
-    public GameEndedBehaviour(SystemAgent agent) {
+    private SystemAgent agent;
+    GameEndedBehaviour(SystemAgent agent) {
         this.agent = agent;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        agent.log("Game ended behaviour started.");
     }
 
     @Override
@@ -31,7 +24,7 @@ public class GameEndedBehaviour extends SimpleBehaviour {
             ACLMessage response = agent.prepareMessage(ACLMessage.INFORM);
             response.addReceiver(msg.getSender());
             try {
-                agent.getContentManager().fillContent(response, gameHasEnded);
+                agent.getContentManager().fillContent(response, new GameHasEnded());
                 agent.send(response);
             } catch (Codec.CodecException e) {
                 e.printStackTrace();

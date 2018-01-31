@@ -448,7 +448,6 @@ public class InitialGameSettings extends GameSettings implements Predicate {
 
     public void advanceToNextRound() {
         this.currentSimulationStep++;
-        this.currentRoundEnd = System.currentTimeMillis() + stepTime;
     }
 
     public void applyCollectMetal(CollectMetalAction collectAction) {

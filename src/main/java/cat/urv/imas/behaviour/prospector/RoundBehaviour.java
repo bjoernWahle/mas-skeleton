@@ -27,7 +27,7 @@ public class RoundBehaviour extends FSMBehaviour {
     public RoundBehaviour(ProspectorAgent prospectorAgent) {
         agent = prospectorAgent;
         
-        ReceiverBehaviour start = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
+        ReceiverBehaviour start = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
 
 			@Override
             public void onStart() {

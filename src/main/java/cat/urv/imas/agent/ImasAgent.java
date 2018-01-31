@@ -21,7 +21,6 @@ import cat.urv.imas.onthology.DiggerOntology;
 import jade.content.ContentManager;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
-import jade.content.onto.BeanOntology;
 import jade.content.onto.BeanOntologyException;
 import jade.content.onto.Ontology;
 import jade.core.AID;
@@ -37,7 +36,7 @@ import jade.lang.acl.ACLMessage;
  * It gathers common attributes and functionality from all agents.
  */
 abstract public class ImasAgent extends Agent {
-    public ContentManager manager = getContentManager();
+    private ContentManager manager = getContentManager();
     // This agent "speaks" the SL language
     private Codec codec = new SLCodec();
     private Ontology ontology;
@@ -51,7 +50,7 @@ abstract public class ImasAgent extends Agent {
     /**
      * Agents' owner.
      */
-    public static final String OWNER = "urv";
+    private static final String OWNER = "urv";
     /**
      * Language used for communication.
      */
@@ -61,21 +60,12 @@ abstract public class ImasAgent extends Agent {
      */
     public static final String ONTOLOGY = "digger-ontology";
 
-    /**
-     *  when the current round ends
-     */
-    private long roundEnd;
-
-    /**
-     * how long a round is
-     */
-    private long roundTime = 20000; // TODO get from game settings
 
     /**
      * Creates the agent.
      * @param type type of agent to set.
      */
-    public ImasAgent(AgentType type) {
+    ImasAgent(AgentType type) {
         super();
         this.type = type;
     }
@@ -156,6 +146,10 @@ abstract public class ImasAgent extends Agent {
     }
 
 
+    /**
+     * Finds the AID of the SystemAgent
+     * @return AID of the SystemAgent
+     */
     AID findSystemAgent() {
         // search SystemAgent
         ServiceDescription searchCriterion = new ServiceDescription();
@@ -165,23 +159,16 @@ abstract public class ImasAgent extends Agent {
 
     }
 
-    public ACLMessage prepareMessage(int messageType) {
-        ACLMessage message = new ACLMessage(messageType);
+    /**
+     * prepare message with the ontology and language and sets the sender
+     * @param performative message performative
+     * @return prepared message
+     */
+    public ACLMessage prepareMessage(int performative) {
+        ACLMessage message = new ACLMessage(performative);
         message.setSender(getAID());
         message.setLanguage(LANGUAGE);
         message.setOntology(ONTOLOGY);
         return message;
-    }
-
-    public long getRoundEnd() {
-        return roundEnd;
-    }
-
-    public void setRoundEnd(long roundEnd) {
-        this.roundEnd = roundEnd;
-    }
-
-    public long getRoundTime() {
-        return roundTime;
     }
 }

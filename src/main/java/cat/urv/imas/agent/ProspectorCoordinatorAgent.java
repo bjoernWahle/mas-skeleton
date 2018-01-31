@@ -19,7 +19,6 @@ import jade.lang.acl.ACLMessage;
 
 public class ProspectorCoordinatorAgent extends ImasAgent {
 
-	private long roundEnd;
     private GameSettings gameSettings;
     private boolean prospectorsInicialized = false;
     private AID coordinatorAgent;

@@ -73,15 +73,6 @@ public class GameSettings implements java.io.Serializable {
      * Current simulation step.
      */
     int currentSimulationStep = 0;
-    /**
-     * current round end
-     */
-    long currentRoundEnd = 0;
-
-    /**
-     * how long a round is
-     */
-    int stepTime = 2000000;
 
     /**
      * City map.
@@ -250,8 +241,10 @@ public class GameSettings implements java.io.Serializable {
 	    			if (map[row+i][col+j].getCellType() == CellType.FIELD) {
 	    				FieldCell tempCell = (FieldCell) map[row+i][col+j];
 	    				if(!tempCell.detectMetal().isEmpty()) {
-	    					foundMetals.add(tempCell);
-	    					statisticsTracker.trackCellDiscovery(tempCell, currentSimulationStep);
+	    				    if(!foundMetals.contains(tempCell)) {
+                                foundMetals.add(tempCell);
+                                statisticsTracker.trackCellDiscovery(tempCell, currentSimulationStep);
+                            }
 	    				}
 	    			}
 	    		}
@@ -326,10 +319,6 @@ public class GameSettings implements java.io.Serializable {
 
     public boolean hasEnded() {
         return currentSimulationStep > simulationSteps;
-    }
-
-    public long getCurrentRoundEnd() {
-        return currentRoundEnd;
     }
 
     public Graph<Cell> getMapGraph() {

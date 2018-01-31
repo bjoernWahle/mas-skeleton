@@ -193,6 +193,7 @@ public class TaskContractNetInitiatorBehaviour extends SimpleBehaviour {
                 int amount = Math.min((int) Math.ceil(cmb.getRemainingCapacity()*task.getAmount()), remainingMetal);
                 remainingMetal = remainingMetal - amount;
                 partTask.setAmount(amount);
+                agent.addTask(partTask);
                 diggerTasks.put(cmb.getAgent(), partTask);
             }
             Set<AID> aids = diggerTasks.keySet();

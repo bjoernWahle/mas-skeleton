@@ -12,7 +12,6 @@ import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +24,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     public void startRound(int x, int y, int currentCapacity) {
         setCurrentPosition(x, y);
         this.currentCapacity = currentCapacity;
-        roundEnd = game.getCurrentRoundEnd();
         logPosition();
     }
 
@@ -56,7 +54,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private DiggerTask currentTask;
     private Plan currentMovementPlan;
-    private long roundEnd;
 
     private MobileAgentAction currentAction;
 
@@ -170,6 +167,10 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     }
 
     private void notifyDiggerCoordinator() {
+        if(currentAction == null) {
+            log("No action was set. This should not happpen.");
+            currentAction = new IdleAction();
+        }
         ACLMessage message = prepareMessage(Performatives.INFORM_AGENT_ACTION);
         message.addReceiver(diggerCoordinator);
         try {
@@ -241,7 +242,7 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
         PathCell currentCell = (PathCell) game.get(currentY, currentX);
         int metalCapacity;
         metalCapacity = fieldCell.getMetalAmount();
-        if(currentCapacity < maxCapacity && metalCapacity > 0) {
+        if(currentCapacity < maxCapacity && metalCapacity > 0 && fieldCell.wasFound()) {
             if(currentCell.collectingAllowed()) {
                 this.currentAction = new CollectMetalAction(x, y);
                 log("I gonna collect that metal now.");
@@ -265,6 +266,9 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
                         if(!possibleNeighborCells.isEmpty()) {
                             PathCell newTargetCell = possibleNeighborCells.get(0);
                             currentAction = new MoveAction(newTargetCell.getX(), newTargetCell.getY());
+                        } else {
+                            // if no place to go, stay. (hopefully not producing deadlock)...
+                            currentAction = new IdleAction();
                         }
                     }
                 }
@@ -344,10 +348,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private void logPosition() {
         log("I am at ("+ currentX +","+ currentY +")");
-    }
-
-    public long getRoundEnd() {
-        return roundEnd;
     }
 
     public GameSettings getGame() {

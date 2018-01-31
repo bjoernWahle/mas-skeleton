@@ -34,7 +34,6 @@ import java.util.List;
 
 /**
  * System agent that controls the GUI and loads initial configuration settings.
- * TODO: You have to decide the onthology and protocol when interacting among
  * the Coordinator agent.
  */
 public class SystemAgent extends ImasAgent {
@@ -56,8 +55,6 @@ public class SystemAgent extends ImasAgent {
      * round.
      */
     private AID coordinatorAgent;
-    private List<InfoAgent> diggerAgents;
-    private List<InfoAgent> prospectorAgents;
 
     /**
      * Builds the System agent.
@@ -153,15 +150,13 @@ public class SystemAgent extends ImasAgent {
         //game.dividePathCellsInto(10);
     }
 
+    /**
+     * Starts the simulation and begins the first round.
+     */
     public void startSimulation() {
         game.setCurrentSimulationStep(0);
         game.advanceToNextRound();
         requestedActions = new LinkedList<>();
-    }
-
-    @Override
-    public long getRoundEnd() {
-        return game.getCurrentRoundEnd();
     }
 
     /**
@@ -176,8 +171,6 @@ public class SystemAgent extends ImasAgent {
         }
         int diggerAgentsIndex = 0;
         int prospectorAgentsIndex = 0;
-        diggerAgents = new LinkedList<>();
-        prospectorAgents = new LinkedList<>();
         jade.wrapper.AgentContainer diggerContainer = null;
         jade.wrapper.AgentContainer prospectorContainer = null;
         // start digger agents
@@ -195,7 +188,6 @@ public class SystemAgent extends ImasAgent {
                     UtilsAgents.createAgent(diggerContainer, name, agent.getType().getClassName(), args);
                 }
                 agent.setAID(new AID(name, AID.ISLOCALNAME));
-                diggerAgents.add(agent);
             }
         }
         // start prospector agents
@@ -212,7 +204,6 @@ public class SystemAgent extends ImasAgent {
                     UtilsAgents.createAgent(prospectorContainer, name, agent.getType().getClassName(), args);
                 }
                 agent.setAID(new AID(name, AID.ISLOCALNAME));
-                prospectorAgents.add(agent);
             }
         }
 
@@ -230,13 +221,21 @@ public class SystemAgent extends ImasAgent {
 
     }
 
-    public void updateGUI() {
+    /**
+     *  Update the GUI with the current game status.
+     */
+    private void updateGUI() {
         this.gui.updateGame();
     }
 
+    /**
+     * Advances the simulation to the next round by
+     * 1) checking and applying actions
+     * 2) adding new metal fields
+     * 3) updating GUI and stats
+     * 4) starting next round
+     */
     public void advanceToNextRound() {
-        // TODO get planned actions for this round and apply them (started...)
-        // TODO add stats for last round
         checkAndApplyActions();
         addElementsForThisSimulationStep();
         updateStats();
@@ -246,6 +245,9 @@ public class SystemAgent extends ImasAgent {
         this.game.advanceToNextRound();
     }
 
+    /**
+     * Adds this rounds statistics to the statistics panel in the GUI.
+     */
     private void updateStats() {
         DecimalFormat f = new DecimalFormat("##.00");
         StringBuilder sb = new StringBuilder();
@@ -269,7 +271,7 @@ public class SystemAgent extends ImasAgent {
         if(totalManufacturedMetal == 0) {
             sb.append("NaN");
         } else {
-            sb.append(game.getCollectedPoints() / ((double) totalManufacturedMetal));
+            sb.append(f.format(game.getCollectedPoints() / ((double) totalManufacturedMetal)));
         }
         sb.append(", Average time for discovery: ");
         double avgDiscoveryTime = game.getAverageDiscoveryTime();
@@ -295,8 +297,15 @@ public class SystemAgent extends ImasAgent {
         gui.showStatistics(sb.toString());
     }
 
+    /**
+     * Checks and applies agent actions in the following order (and preference)
+     * 1) Collect metal (can have conflicts)
+     * 2) Move (can have conflicts)
+     * 3) Return
+     * 4) Detect
+     *
+     */
     private void checkAndApplyActions() {
-        // TODO maybe deep clone gameSettings before
         // check actions
         for(MobileAgentAction action : requestedActions) {
             if(action instanceof CollectMetalAction) {
@@ -338,19 +347,23 @@ public class SystemAgent extends ImasAgent {
         }
         //Clear requested actions because they have already been checked
         requestedActions.clear();
-
-        // TODO blame agents that wanna be idle
     }
 
-    public void storeActions(ActionList agentActions) {
-        log("Storing actions");
+    /**
+     * Store collected agent actions for applying them later.
+     * @param agentActions List of the agent actions
+     */
+    public void storeActions(List<MobileAgentAction> agentActions) {
         // remove last rounds actions (just in case - they should be deleted after being applied)
         requestedActions = new LinkedList<>();
         // store actions
-        requestedActions.addAll(agentActions.getAgentActions());
+        requestedActions.addAll(agentActions);
     }
 
-    public void notifyCoordinator() {
+    /**
+     * Notifies the CoordinatorAgent about the current game status
+     */
+    public void notifyCoordinatorAboutGameStatus() {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.setSender(getAID());
         msg.addReceiver(coordinatorAgent);
