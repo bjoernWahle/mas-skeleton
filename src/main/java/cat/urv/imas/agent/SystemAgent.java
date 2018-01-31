@@ -150,7 +150,7 @@ public class SystemAgent extends ImasAgent {
         addBehaviour(new StepBehaviour(this));
         
         //This statement is just for testing the division of the map
-        //game.dividePathCellsInto(this.game.getAgentList().get(AgentType.PROSPECTOR).size());
+        //game.dividePathCellsInto(10);
     }
 
     public void startSimulation() {

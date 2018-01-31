@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+
 import cat.urv.imas.behaviour.prospector.ProspectorBehaviour;
 import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
@@ -29,7 +31,9 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private Plan currentMovementPlan;
     private List<Cell> currentExplorationArea;
     private int ongoingDirection_x = 0; 
-    private int ongoingDirection_y = 0; 
+    private int ongoingDirection_y = 0;
+    private Float maximumRate;
+    private int minUnexplored;
     
     public ProspectorAgent() {
         super(AgentType.PROSPECTOR);
@@ -194,6 +198,12 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private PathCell getNextCellToExplore(List<PathCell> possibleMovements) {
     	Cell nextCell = null;
     	List<Cell> keysSubMap = new ArrayList<Cell>(subMapToExplore.keySet());
+    	List<Cell> explorationPlan;
+    	/*
+    	if(subMapToExplore.containsKey(game.get(currentY, currentX)) && this.getLocalName().equals("Prospector_1")) {
+    		explorationPlan = findBestPlanToExplore(game.get(currentY, currentX),subMapToExplore);
+    		System.out.println(explorationPlan);
+    	}*/
     	keysSubMap.retainAll(possibleMovements);
     	if(!keysSubMap.isEmpty()) {
         	int minimum = 0;
@@ -279,7 +289,56 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
             e.printStackTrace();
             log("Some error while sending?");
         }     
-		
-		
 	}
+	
+	public List<Cell> findBestPlanToExplore(Cell startingPoint, Map<Cell,Integer> input_map) {
+		Map<Cell,Integer> map = new HashMap<Cell,Integer>(input_map);
+		maximumRate = new Float(0);
+		minUnexplored = map.size();
+		for (Cell el: map.keySet()){
+        	map.put(el, new Integer(0));
+        }
+		
+		return explorePaths(startingPoint, map, startingPoint);
+	}
+	
+	private List<Cell> explorePaths(Cell cell, Map<Cell,Integer> exploredMap, Cell startingPoint){
+		exploredMap.put(cell,new Integer(exploredMap.get(cell)+1));
+		List<Integer> values = new ArrayList<Integer>(exploredMap.values());
+		int unexploredCells = (int) values.stream().filter(s -> s == 0).count();
+		int exploredCells = (int) values.stream().filter(s -> s != 0).count();
+		int totalexploration = values.stream().mapToInt(Integer::intValue).sum();
+		Float newRate = (new Float(exploredCells)/(new Float(totalexploration)));
+		
+		List<Cell> path = new ArrayList<Cell>();
+		
+		if(unexploredCells == 0 /*&& cell.equals(startingPoint)*/) {
+			return path;
+		}else {
+			if((newRate >= maximumRate*0.8) && unexploredCells <= (minUnexplored+1)) {
+				if(maximumRate<newRate) {
+					maximumRate = newRate;
+				}
+				if(minUnexplored > unexploredCells) {
+					minUnexplored = unexploredCells;
+					maximumRate = new Float(0);
+				}
+				for(PathCell new_cell : game.getPathNeighbors(cell, false)) {
+					if(exploredMap.containsKey(new_cell)) {
+						List<Cell> final_path = explorePaths((Cell) new_cell, new HashMap<Cell,Integer>(exploredMap), startingPoint);
+						if(final_path != null) {
+							if(!final_path.isEmpty()) {
+								path.addAll(final_path);
+							}
+							return path;
+						}	
+					}
+				}
+				
+			}
+		}
+		return null;
+	}
+	
+	
 }

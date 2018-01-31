@@ -395,12 +395,15 @@ public class GameSettings implements java.io.Serializable {
     	LinkedList<Cell> unAssignedCells = new LinkedList(this.getCellsOfType().get(CellType.PATH));
     	LinkedList<Cell> temporalCells = new LinkedList<Cell>();
     	areaDivision = new HashMap<Integer,List<Cell>>();
-    	final int paramExpansion = 2;
+    	final int paramExpansion = 10;
     	int totalPathCells = unAssignedCells.size();
         int cellsPerAgent = totalPathCells/numOfProspectors;
         Cell tempCell = null;
+        LinkedList<Cell> seeds = new LinkedList<Cell>();
+    
+        // FIRST VERSION: This is the version that works better for most cases.
+        seeds.add(unAssignedCells.get(0));
         temporalCells.add(unAssignedCells.get(0));
-        
         for (int i = 0; i < numOfProspectors; i++) {
 			for (int j = 0; j < cellsPerAgent; j++) {
 				if(temporalCells.isEmpty()) {
@@ -415,14 +418,15 @@ public class GameSettings implements java.io.Serializable {
 				unAssignedCells.remove(tempCell);
 				
 				//add neighbors to the temporal list
-				temporalCells.addAll(getPathNeighbors(tempCell, true));		
+				temporalCells.addAll(0,getPathNeighbors(tempCell, false));
 				//remove from temporal list all elements already assigned.
 				temporalCells.removeIf(s -> !unAssignedCells.contains(s));
 				//We will try to force the expansion in only one direction
 				int currentX = tempCell.getX();
 				int currentY = tempCell.getY();
-				temporalCells.removeIf(s -> (Math.abs(currentX-s.getX()) + Math.abs(currentY-s.getY())> paramExpansion));
+				//temporalCells.removeIf(s -> (Math.pow((currentX-s.getX()),2) + Math.pow((currentY-s.getY()),2)> paramExpansion));
 			}
+			
 			if(unAssignedCells.isEmpty()) {
 				break;
 			}else if(temporalCells.isEmpty()) {
@@ -432,8 +436,52 @@ public class GameSettings implements java.io.Serializable {
 				temporalCells.clear();
 				temporalCells.add(tempCell);
 			}
+			
 		}
         
+        /*
+        //SECOND VERSION: This version places equidistant seeds separated with euclidean distance and assigns the cell to the closest seed. Works well for less than 4 prospectors.
+        //get the seeds;
+        seeds.add(unAssignedCells.pop());
+        for (int i = 1; i < numOfProspectors; i++) {
+			Cell best_seed = null;
+			int max_diff_x = 0;
+			int max_diff_y = 0;
+			for(Cell possible_seed : unAssignedCells) {
+				int diff_x = 0;
+				int diff_y = 0;
+				for(Cell old_seed : seeds) {
+					diff_x = diff_x + (int)Math.pow(old_seed.getX()-possible_seed.getX(),2);
+					diff_y = diff_y + (int)Math.pow(old_seed.getY()-possible_seed.getY(),2);
+				}
+				if (best_seed == null) {
+					best_seed = possible_seed;
+					max_diff_x = diff_x;
+					max_diff_y = diff_y;
+				}else if((diff_x+diff_y)> (max_diff_x+max_diff_y)) {
+					best_seed = possible_seed;
+					max_diff_x = diff_x;
+					max_diff_y = diff_y;
+				}
+			}
+			seeds.add(best_seed);
+			unAssignedCells.remove(best_seed);
+        }
+        
+        for (int i = 0; i < numOfProspectors; i++) {
+        	if(unAssignedCells.isEmpty()) {
+				break;
+			}
+			if(!areaDivision.containsKey(i)) {
+				areaDivision.put(i,new ArrayList<Cell>());
+			}
+			tempCell = seeds.pop();
+			//Assing the Cell to the current prospector
+			areaDivision.get(i).add(tempCell);
+        }
+         */
+        
+        //This part assigns the rest of the cells that couldn't be assigned in the step before.
         //deep copy of map
         Map<Integer,List<Cell>> copyCellAssignement = new HashMap<Integer,List<Cell>>();
         for(int i = 0; i < numOfProspectors; i++) {
