@@ -23,8 +23,6 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     List<DiggerTask> tasks;
-    
-    private long roundEnd;
 
     List<MobileAgentAction> roundActions;
 
@@ -89,14 +87,6 @@ public class DiggerCoordinatorAgent extends ImasAgent {
         } catch (Codec.CodecException | OntologyException e) {
             e.printStackTrace();
         }
-    }
-
-    public long getRoundEnd() {
-        return roundEnd;
-    }
-
-    public void setRoundEnd(long roundEnd) {
-        this.roundEnd = roundEnd;
     }
 
     public void informDiggers() {

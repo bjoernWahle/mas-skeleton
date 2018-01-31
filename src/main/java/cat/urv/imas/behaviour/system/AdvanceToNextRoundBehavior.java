@@ -1,32 +1,33 @@
 package cat.urv.imas.behaviour.system;
 
 import cat.urv.imas.agent.SystemAgent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
 
 public class AdvanceToNextRoundBehavior extends OneShotBehaviour {
-    SystemAgent agent;
-    public AdvanceToNextRoundBehavior(SystemAgent agent) {
+
+    /**
+     *  Milliseconds to wait before advancing to next round.
+     */
+    private static final int ROUND_TIMEOUT = 1000;
+
+    private SystemAgent agent;
+
+    AdvanceToNextRoundBehavior(SystemAgent agent) {
         super(agent);
         this.agent = agent;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
     public void action() {
         // check and apply actions
         agent.advanceToNextRound();
-        // send game settings to the agents
         try {
-            Thread.sleep(1000);
+            Thread.sleep(ROUND_TIMEOUT);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        agent.notifyCoordinator();
+        // send game settings to the agents
+        agent.notifyCoordinatorAboutGameStatus();
     }
 
     @Override

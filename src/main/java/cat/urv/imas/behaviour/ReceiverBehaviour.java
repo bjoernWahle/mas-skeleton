@@ -12,23 +12,15 @@ public class ReceiverBehaviour extends SimpleBehaviour
     private MessageTemplate template;
     private boolean finished = false;
     private int exitCode = 0;
-    boolean waitTillRoundEnd = false;
 
     private ACLMessage msg;
 
     public ACLMessage getMessage() { return msg; }
 
-    public ReceiverBehaviour(ImasAgent a, MessageTemplate mt) {
+    protected ReceiverBehaviour(ImasAgent a, MessageTemplate mt) {
         super(a);
         agent = a;
         template = mt;
-    }
-
-    public ReceiverBehaviour(ImasAgent a, MessageTemplate mt, boolean waitTillRoundEnd) {
-        super(a);
-        agent = a;
-        template = mt;
-        this.waitTillRoundEnd = waitTillRoundEnd;
     }
 
     public void onStart() {
@@ -58,16 +50,7 @@ public class ReceiverBehaviour extends SimpleBehaviour
             finished = true;
             return;
         }
-        if(waitTillRoundEnd) {
-            long dt = agent.getRoundEnd() - System.currentTimeMillis();
-            if ( dt > 0 )
-                block(dt);
-            else {
-                finished = true;
-            }
-        } else {
-            block();
-        }
+        block();
     }
 
     public void handle( ACLMessage m) {
@@ -81,11 +64,7 @@ public class ReceiverBehaviour extends SimpleBehaviour
         super.reset();
     }
 
-    public int getExitCode() {
-        return exitCode;
-    }
-
-    public void setExitCode(int exitCode) {
+    protected void setExitCode(int exitCode) {
         this.exitCode = exitCode;
     }
 }

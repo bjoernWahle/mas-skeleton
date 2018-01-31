@@ -51,7 +51,7 @@ public class CoordinatorBehaviour extends FSMBehaviour {
         registerState(send, SENDING);
 
         // TODO MatchPerformative (protocol + only accept messages from SystemAgent)
-        ReceiverBehaviour waiting = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
+        ReceiverBehaviour waiting = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
             @Override
             public void handle(ACLMessage m) {
                 super.handle(m);

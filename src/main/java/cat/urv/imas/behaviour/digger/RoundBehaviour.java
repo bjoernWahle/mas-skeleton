@@ -30,7 +30,7 @@ public class RoundBehaviour extends FSMBehaviour {
     public RoundBehaviour(DiggerAgent diggerAgent) {
         agent = diggerAgent;
 
-        ReceiverBehaviour rs = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
+        ReceiverBehaviour rs = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
             @Override
             public void onStart() {
                 super.onStart();

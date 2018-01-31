@@ -23,7 +23,7 @@ public class StepBehaviour extends FSMBehaviour {
 
     public StepBehaviour(SystemAgent systemAgent) {
         agent = systemAgent;
-        ReceiverBehaviour waiting = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM), true) {
+        ReceiverBehaviour waiting = new ReceiverBehaviour(agent, MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
         	
         	private boolean finished = false;
             @Override
@@ -40,8 +40,7 @@ public class StepBehaviour extends FSMBehaviour {
 	                    ContentElement ce = agent.getContentManager().extractContent(m);
 	                    if(ce instanceof ActionList) {
 	                        ActionList agentActions = (ActionList) ce;
-	                        // TODO later we should have one message with actions and stats
-	                        agent.storeActions(agentActions);
+	                        agent.storeActions(agentActions.getAgentActions());
 	                        finished = true;
 	                    }
                 	}else {
@@ -52,17 +51,14 @@ public class StepBehaviour extends FSMBehaviour {
 	                    	finished = false;
 	                    }
                 	}
-                } catch (Codec.CodecException | OntologyException e) {
+                } catch (Codec.CodecException | OntologyException | UnreadableException e) {
                     e.printStackTrace();
-                } catch (UnreadableException e) {
-					e.printStackTrace();
-				}
+                }
             }
             
             @Override
             public int onEnd() {
                 this.reset();
-                agent.log("Collecting actions ended.");
                 return super.onEnd();
             }
 
@@ -77,7 +73,7 @@ public class StepBehaviour extends FSMBehaviour {
                 finished = false;
             }
         };
-        // we wait for the initialization of the game
+
         MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST), MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
         registerFirstState(new RequestResponseBehaviour(agent, mt), INIT);
         registerState(waiting, WAITING);

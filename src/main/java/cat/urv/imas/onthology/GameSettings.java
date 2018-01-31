@@ -73,15 +73,6 @@ public class GameSettings implements java.io.Serializable {
      * Current simulation step.
      */
     int currentSimulationStep = 0;
-    /**
-     * current round end
-     */
-    long currentRoundEnd = 0;
-
-    /**
-     * how long a round is
-     */
-    int stepTime = 2000000;
 
     /**
      * City map.
@@ -326,10 +317,6 @@ public class GameSettings implements java.io.Serializable {
 
     public boolean hasEnded() {
         return currentSimulationStep > simulationSteps;
-    }
-
-    public long getCurrentRoundEnd() {
-        return currentRoundEnd;
     }
 
     public Graph<Cell> getMapGraph() {

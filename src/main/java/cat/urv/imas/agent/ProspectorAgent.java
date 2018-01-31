@@ -23,7 +23,6 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
     private int currentY;
     private AID prospectorCoordinator;
     private GameSettings game;
-    private long roundEnd;
     private MobileAgentAction currentAction;
     private Map<Cell,Integer> subMapToExplore = new HashMap<Cell,Integer>();
     private Plan currentMovementPlan;
@@ -77,7 +76,6 @@ public class ProspectorAgent extends ImasAgent implements MovingAgentInterface {
      */
     public void startRound(int x, int y) {
         setCurrentPosition(x, y);
-        roundEnd = game.getCurrentRoundEnd();
     }
     
     /**

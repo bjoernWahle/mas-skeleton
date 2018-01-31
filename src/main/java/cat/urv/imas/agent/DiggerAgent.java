@@ -12,7 +12,6 @@ import jade.core.AID;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +24,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
     public void startRound(int x, int y, int currentCapacity) {
         setCurrentPosition(x, y);
         this.currentCapacity = currentCapacity;
-        roundEnd = game.getCurrentRoundEnd();
         logPosition();
     }
 
@@ -56,7 +54,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private DiggerTask currentTask;
     private Plan currentMovementPlan;
-    private long roundEnd;
 
     private MobileAgentAction currentAction;
 
@@ -344,10 +341,6 @@ public class DiggerAgent extends ImasAgent implements MovingAgentInterface  {
 
     private void logPosition() {
         log("I am at ("+ currentX +","+ currentY +")");
-    }
-
-    public long getRoundEnd() {
-        return roundEnd;
     }
 
     public GameSettings getGame() {

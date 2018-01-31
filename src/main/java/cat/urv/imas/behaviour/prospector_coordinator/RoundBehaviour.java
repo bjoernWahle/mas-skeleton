@@ -26,7 +26,7 @@ public class RoundBehaviour extends FSMBehaviour {
         super(a);
         this.agent = a;
 
-        ReceiverBehaviour waiting = new ReceiverBehaviour(a,  MessageTemplate.MatchPerformative(ACLMessage.INFORM), false) {
+        ReceiverBehaviour waiting = new ReceiverBehaviour(a,  MessageTemplate.MatchPerformative(ACLMessage.INFORM)) {
             @Override
             public void handle(ACLMessage m) {
                 agent.log("Received message.");
