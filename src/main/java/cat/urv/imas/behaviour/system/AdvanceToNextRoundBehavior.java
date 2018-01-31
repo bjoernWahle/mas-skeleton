@@ -8,7 +8,7 @@ public class AdvanceToNextRoundBehavior extends OneShotBehaviour {
     /**
      *  Milliseconds to wait before advancing to next round.
      */
-    private static final int ROUND_TIMEOUT = 1000;
+    private static final int ROUND_TIMEOUT = 500;
 
     private SystemAgent agent;
 

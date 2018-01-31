@@ -1,8 +1,7 @@
 package cat.urv.imas.agent;
 
 import cat.urv.imas.behaviour.digger_coordinator.RoundBehaviour;
-import cat.urv.imas.map.FieldCell;
-import cat.urv.imas.map.PathCell;
+import cat.urv.imas.map.*;
 import cat.urv.imas.onthology.*;
 import jade.content.lang.Codec;
 import jade.content.onto.OntologyException;
@@ -23,6 +22,8 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     List<DiggerTask> tasks;
+
+    public Map<ManufacturingCenterCell, Map<Cell, Integer>> mfcDistances;
 
     List<MobileAgentAction> roundActions;
 
@@ -115,8 +116,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
     }
 
     public List<FieldCell> getMetalsBeingCollected() {
-        return tasks.stream().filter(t -> !t.getCurrentState().equals(TaskState.DONE.toString()))
-                .map(t -> (FieldCell) gameSettings.get(t.y, t.x)).collect(Collectors.toList());
+        return tasks.stream().map(t -> (FieldCell) gameSettings.get(t.y, t.x)).collect(Collectors.toList());
     }
 
     public List<DiggerTask> getNotStartedTasks() {
@@ -129,7 +129,7 @@ public class DiggerCoordinatorAgent extends ImasAgent {
             finishedTask.setCurrentState(TaskState.IN_PROGRESS.toString());
             Optional<DiggerTask> task = tasks.stream().filter(t -> t.equals(finishedTask)).findFirst();
             if(task.isPresent()) {
-                task.get().finishTask();
+                removeTask(task.get());
             } else {
                 log("Task was not found in list: "+finishedTask);
             }
@@ -152,5 +152,50 @@ public class DiggerCoordinatorAgent extends ImasAgent {
             e.printStackTrace();
         }
         send(message);
+    }
+
+    public void initManufacturingCenterDistances() {
+        log("Initializing distances to manufacturing centers. This takes some seconds, but is only done once.");
+        this.mfcDistances = new HashMap<>();
+        for(Cell cell : gameSettings.getCellsOfType().get(CellType.MANUFACTURING_CENTER)) {
+            Map<Cell, Integer> mfcDistances = new HashMap<>();
+            ManufacturingCenterCell mfc = (ManufacturingCenterCell) cell;
+            List<PathCell> mNeighbors = gameSettings.getPathNeighbors(mfc, true);
+            for(Cell fieldCell : gameSettings.getCellsOfType().get(CellType.FIELD)) {
+                Integer shortestDistance = Integer.MAX_VALUE;
+                for(PathCell pc : mNeighbors) {
+                    Map<Cell, Integer> distances = gameSettings.getMapGraph().getDistances(pc);
+                    List<PathCell> fNeighbors = gameSettings.getPathNeighbors(fieldCell, true);
+                    int tempDistance = distances.get(fNeighbors.stream().min(Comparator.comparingInt(distances::get)).get());
+                    if(tempDistance < shortestDistance) {
+                        shortestDistance = tempDistance;
+                    }
+                }
+                mfcDistances.put(fieldCell, shortestDistance);
+            }
+            this.mfcDistances.put(mfc, mfcDistances);
+        }
+        log("Initializing done.");
+    }
+
+    public void sortDiggerTasks() {
+        tasks.sort(Comparator.comparingDouble(this::getBestMFCRatio));
+        Collections.reverse(tasks);
+    }
+
+    private double getBestMFCRatio(DiggerTask task) {
+        Cell cell = gameSettings.get(task.y, task.x);
+        MetalType metalType = task.getMetal();
+        double bestRatio = 0.0;
+        for(ManufacturingCenterCell mfc : mfcDistances.keySet()) {
+            if(mfc.getMetal() == metalType) {
+                // calculating points per round
+                double ratio = ((double) mfc.getPrice()*task.getAmount()) / ((double) mfcDistances.get(mfc).get(cell)+task.getAmount());
+                if(ratio > bestRatio) {
+                    bestRatio = ratio;
+                }
+            }
+        }
+        return bestRatio;
     }
 }

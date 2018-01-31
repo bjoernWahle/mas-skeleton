@@ -42,6 +42,10 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
             List<AID> receivers;
 
             public void onStart() {
+                finished = false;
+                if(agent.mfcDistances == null) {
+                    agent.initManufacturingCenterDistances();
+                }
                 for(FieldCell foundCell: agent.getGameSettings().getFoundMetals()) {
                     if (!agent.getMetalsBeingCollected().contains(foundCell)) {
                         agent.addTask(new DiggerTask(foundCell.getX(), foundCell.getY()
@@ -49,7 +53,7 @@ public class DelegateTasksBehaviour extends FSMBehaviour {
                                 , foundCell.getMetalAmount()));
                     }
                 }
-                finished = false;
+                agent.sortDiggerTasks();
                 receivers = new LinkedList<>();
                 receivers.addAll(agent.getDiggers());
                 if(agent.getNotStartedTasks().isEmpty()) {

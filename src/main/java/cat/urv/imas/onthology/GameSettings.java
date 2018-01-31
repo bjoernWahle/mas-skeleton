@@ -241,8 +241,10 @@ public class GameSettings implements java.io.Serializable {
 	    			if (map[row+i][col+j].getCellType() == CellType.FIELD) {
 	    				FieldCell tempCell = (FieldCell) map[row+i][col+j];
 	    				if(!tempCell.detectMetal().isEmpty()) {
-	    					foundMetals.add(tempCell);
-	    					statisticsTracker.trackCellDiscovery(tempCell, currentSimulationStep);
+	    				    if(!foundMetals.contains(tempCell)) {
+                                foundMetals.add(tempCell);
+                                statisticsTracker.trackCellDiscovery(tempCell, currentSimulationStep);
+                            }
 	    				}
 	    			}
 	    		}

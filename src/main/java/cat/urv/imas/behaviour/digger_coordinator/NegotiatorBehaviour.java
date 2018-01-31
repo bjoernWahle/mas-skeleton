@@ -7,7 +7,7 @@ import jade.core.behaviours.SequentialBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
 
 public class NegotiatorBehaviour extends SimpleBehaviour {
-    private static final int MAX_CN = 20;
+    private static final int MAX_CN = 10;
 
     private DiggerCoordinatorAgent agent;
     private SequentialBehaviour sequentialBehaviour;

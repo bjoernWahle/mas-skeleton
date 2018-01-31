@@ -232,4 +232,14 @@ public class Graph<T> implements java.io.Serializable {
         }
         return minDistance;
         }
+
+    public Map<T, Integer> getDistances(T label) {
+        Vertex<T> startVertex =  this.getVertex(label);
+        DijkstraAlgorithm algo = new DijkstraAlgorithm(this);
+        algo.execute(startVertex);
+        Map<Vertex, Integer> distances = algo.distance;
+        Map<T, Integer> labelDistances = new HashMap<>();
+        distances.forEach((k, v) -> labelDistances.put((T) k.getLabel(), v));
+        return labelDistances;
+    }
 }

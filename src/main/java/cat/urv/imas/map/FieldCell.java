@@ -95,6 +95,9 @@ public class FieldCell extends Cell {
     }
 
     public int getMetalAmount() {
+        if(!wasFound()) {
+            return 0;
+        }
         for (Map.Entry<MetalType, Integer> entry: metal.entrySet()) {
             return entry.getValue();
         }
