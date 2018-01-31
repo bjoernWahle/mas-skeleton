@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f8c25162-fe6f-4781-b33f-540ef32b2d6d" name="Default" comment="">
+    <list default="true" id="f8c25162-fe6f-4781-b33f-540ef32b2d6d" name="Default" comment="some further improvements in digger task delegation">
+      <change beforePath="" afterPath="$PROJECT_DIR$/game.settings_sample.settings" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/FieldCell.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/FieldCell.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Graph.java" afterPath="$PROJECT_DIR$/src/main/java/cat/urv/imas/util/Graph.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,27 +17,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SystemAgent.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SystemAgent.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1134">
-              <caret line="43" column="33" lean-forward="true" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
+            <state relative-caret-position="216">
+              <caret line="115" column="7" lean-forward="true" selection-start-line="115" selection-start-column="7" selection-end-line="115" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3077#3078#0" expanded="true" />
                 <element signature="e#3137#3138#0" expanded="true" />
-                <element signature="e#8198#8199#0" expanded="true" />
-                <element signature="e#8235#8236#0" expanded="true" />
+                <element signature="e#8158#8159#0" expanded="true" />
+                <element signature="e#8195#8196#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game2.settings" pinned="false" current-in-tab="true">
+      <file leaf-file-name="game2.settings" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game2.settings">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+            <state relative-caret-position="180">
+              <caret line="10" column="58" lean-forward="true" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -52,8 +46,8 @@
       <file leaf-file-name="InitialGameSettings.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="476" column="9" lean-forward="true" selection-start-line="476" selection-start-column="9" selection-end-line="476" selection-end-column="9" />
+            <state relative-caret-position="72">
+              <caret line="479" column="11" lean-forward="false" selection-start-line="479" selection-start-column="11" selection-end-line="479" selection-end-column="11" />
               <folding>
                 <element signature="e#18209#18210#0" expanded="true" />
                 <element signature="e#18253#18254#0" expanded="true" />
@@ -65,8 +59,8 @@
       <file leaf-file-name="AdvanceToNextRoundBehavior.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="10" column="49" lean-forward="true" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+            <state relative-caret-position="198">
+              <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -75,7 +69,7 @@
       <file leaf-file-name="TaskContractNetInitiatorBehaviour.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
+            <state relative-caret-position="3024">
               <caret line="187" column="115" lean-forward="false" selection-start-line="187" selection-start-column="115" selection-end-line="187" selection-end-column="115" />
               <folding />
             </state>
@@ -85,7 +79,7 @@
       <file leaf-file-name="DelegateTasksBehaviour.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
+            <state relative-caret-position="702">
               <caret line="55" column="27" lean-forward="false" selection-start-line="55" selection-start-column="27" selection-end-line="55" selection-end-column="27" />
               <folding>
                 <element signature="e#3294#3295#0" expanded="true" />
@@ -95,21 +89,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NegotiatorBehaviour.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="DiggerCoordinatorAgent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="195" column="17" lean-forward="true" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
+            <state relative-caret-position="3060">
+              <caret line="195" column="17" lean-forward="false" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
               <folding>
                 <element signature="e#4408#4409#0" expanded="true" />
                 <element signature="e#4442#4443#0" expanded="true" />
@@ -121,8 +105,8 @@
       <file leaf-file-name="DiggerAgent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="277" column="44" lean-forward="true" selection-start-line="277" selection-start-column="44" selection-end-line="277" selection-end-column="44" />
+            <state relative-caret-position="4842">
+              <caret line="277" column="44" lean-forward="false" selection-start-line="277" selection-start-column="44" selection-end-line="277" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#13512#13513#0" expanded="true" />
@@ -245,7 +229,6 @@
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java" />
         <option value="$PROJECT_DIR$/game2.settings" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/CoordinatorAgent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/ImasAgent.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/GameEndedBehaviour.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/ReceiverBehaviour.java" />
@@ -265,10 +248,11 @@
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/GameSettings.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/map/FieldCell.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java" />
         <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java" />
       </list>
     </option>
   </component>
@@ -299,9 +283,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -314,13 +297,14 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/JADE-examples-4.5.0/jade" />
-    <property name="SearchEverywhereHistoryKey" value="syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;dele&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;adva&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java&#10;negot&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java&#10;diggerInf&#9;PSI&#9;JAVA://cat.urv.imas.onthology.DiggerInfoAgent&#10;infoa&#9;PSI&#9;JAVA://cat.urv.imas.onthology.InfoAgent&#10;digger&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;ini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;games&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/GameSettings.java&#10;syste&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;task&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;getShort&#9;PSI&#9;JAVA://cat.urv.imas.onthology.GameSettings#getShortestPlan&#10;diggera&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;step&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java&#10;round&#9;PSI&#9;JAVA://cat.urv.imas.behaviour.prospector_coordinator.RoundBehaviour&#10;pro&#9;PSI&#9;JAVA://cat.urv.imas.agent.ProspectorCoordinatorAgent&#10;diggerco&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java&#10;coor&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;sys&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;onto&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/DiggerOntology.java&#10;Syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;contractnet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;collectMetal&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#collectMetal&#10;dig&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;Dele&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;agen&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;init&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;cont&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;system&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;coord&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;coll&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;resp&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;startTas&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startTask&#10;movet&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#moveTowards&#10;grap&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/util/Graph.java&#10;startReturn&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startReturnMetal&#10;fini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tas&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tasknet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;colle&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;setElements&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell#setElements&#10;settab&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell&#10;field&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/map/FieldCell.java&#10;manu&#9;PSI&#9;JAVA://cat.urv.imas.map.ManufacturingCenterCell&#10;adjacent&#9;PSI&#9;JAVA://cat.urv.imas.map.Cell#adjacent&#10;d&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;delegate&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;taskneti&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;diggerbe&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java&#10;Coordi&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java" />
+    <property name="SearchEverywhereHistoryKey" value="advance&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java&#10;syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;dele&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;adva&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java&#10;negot&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java&#10;diggerInf&#9;PSI&#9;JAVA://cat.urv.imas.onthology.DiggerInfoAgent&#10;infoa&#9;PSI&#9;JAVA://cat.urv.imas.onthology.InfoAgent&#10;digger&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;ini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;games&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/GameSettings.java&#10;syste&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;task&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;getShort&#9;PSI&#9;JAVA://cat.urv.imas.onthology.GameSettings#getShortestPlan&#10;diggera&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;step&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/system/StepBehaviour.java&#10;round&#9;PSI&#9;JAVA://cat.urv.imas.behaviour.prospector_coordinator.RoundBehaviour&#10;pro&#9;PSI&#9;JAVA://cat.urv.imas.agent.ProspectorCoordinatorAgent&#10;diggerco&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java&#10;coor&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;sys&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;onto&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/DiggerOntology.java&#10;Syst&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;contractnet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;collectMetal&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#collectMetal&#10;dig&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;Dele&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;agen&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;init&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java&#10;cont&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;system&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/SystemAgent.java&#10;coord&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/coordinator/CoordinatorBehaviour.java&#10;coll&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;resp&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;startTas&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startTask&#10;movet&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#moveTowards&#10;grap&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/util/Graph.java&#10;startReturn&#9;PSI&#9;JAVA://cat.urv.imas.agent.DiggerAgent#startReturnMetal&#10;fini&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tas&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/onthology/TaskFinished.java&#10;tasknet&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/TaskContractNetResponder.java&#10;colle&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/CollectingActionsBehaviour.java&#10;setElements&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell#setElements&#10;settab&#9;PSI&#9;JAVA://cat.urv.imas.map.SettableFieldCell&#10;field&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/map/FieldCell.java&#10;manu&#9;PSI&#9;JAVA://cat.urv.imas.map.ManufacturingCenterCell&#10;adjacent&#9;PSI&#9;JAVA://cat.urv.imas.map.Cell#adjacent&#10;d&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/agent/DiggerAgent.java&#10;delegate&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java&#10;taskneti&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java&#10;diggerbe&#9;FILE&#9;file:///home/bjoern/IdeaProjects/mas-welovejade/src/main/java/cat/urv/imas/behaviour/digger/DiggerBehaviour.java" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -524,7 +508,9 @@
       <workItem from="1517167038975" duration="5920000" />
       <workItem from="1517220563240" duration="26260000" />
       <workItem from="1517310062769" duration="16293000" />
-      <workItem from="1517395450658" duration="15071000" />
+      <workItem from="1517395450658" duration="15189000" />
+      <workItem from="1517419376561" duration="136000" />
+      <workItem from="1517424013011" duration="2089000" />
     </task>
     <task id="LOCAL-00001" summary="some updates for the gui and the project">
       <created>1514293661817</created>
@@ -701,11 +687,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517397609776</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="some further improvements in digger task delegation">
+      <created>1517414574723</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1517414574723</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="209702000" />
+    <option name="totallyTimeSpent" value="212204000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -728,24 +721,45 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44816753" sideWeight="0.50193477" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5183246" sideWeight="0.49806523" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5434555" sideWeight="0.49806523" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18352681" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18794914" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.460733" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5057592" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5057592" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44816753" sideWeight="0.50193477" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5057592" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879582" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5434555" sideWeight="0.49806523" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18794914" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.460733" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -844,7 +858,8 @@
     <MESSAGE value="coalition formation and conflict resolutions" />
     <MESSAGE value="some clean up, game end bugs fixed" />
     <MESSAGE value="refactoring, cleaning" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring, cleaning" />
+    <MESSAGE value="some further improvements in digger task delegation" />
+    <option name="LAST_COMMIT_MESSAGE" value="some further improvements in digger task delegation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -935,20 +950,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/MobileAgentAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InformAgentRound.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/ProposeTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -960,7 +961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -968,7 +968,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1836">
           <caret line="132" column="19" lean-forward="false" selection-start-line="132" selection-start-column="19" selection-end-line="132" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -983,13 +982,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="134" column="33" lean-forward="false" selection-start-line="134" selection-start-column="33" selection-end-line="134" selection-end-column="33" />
-          <folding>
-            <element signature="e#2911#2912#0" expanded="false" />
-            <element signature="e#2980#2981#0" expanded="false" />
-            <element signature="e#3018#3019#0" expanded="false" />
-            <element signature="e#3091#3092#0" expanded="false" />
-            <element signature="e#3180#3181#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -997,7 +989,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1012,9 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="29" column="29" lean-forward="false" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1022,7 +1010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,22 +1017,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-          <folding>
-            <element signature="e#337#338#0" expanded="false" />
-            <element signature="e#370#371#0" expanded="false" />
-            <element signature="e#754#755#0" expanded="false" />
-            <element signature="e#785#786#0" expanded="false" />
-            <element signature="e#868#869#0" expanded="false" />
-            <element signature="e#899#900#0" expanded="false" />
-            <element signature="e#995#996#0" expanded="false" />
-            <element signature="e#1029#1030#0" expanded="false" />
-            <element signature="e#1142#1143#0" expanded="false" />
-            <element signature="e#1178#1179#0" expanded="false" />
-            <element signature="e#1636#1637#0" expanded="false" />
-            <element signature="e#1685#1686#0" expanded="false" />
-            <element signature="e#1798#1799#0" expanded="false" />
-            <element signature="e#1867#1868#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1067,7 +1038,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="153" column="95" lean-forward="false" selection-start-line="153" selection-start-column="95" selection-end-line="153" selection-end-column="95" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1075,10 +1045,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="86" column="25" lean-forward="false" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
-          <folding>
-            <element signature="e#5677#5678#0" expanded="false" />
-            <element signature="e#5739#5740#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1086,7 +1052,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="158" column="29" lean-forward="false" selection-start-line="158" selection-start-column="29" selection-end-line="158" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1094,7 +1059,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="22" column="36" lean-forward="false" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1102,7 +1066,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1110,7 +1073,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-846">
           <caret line="37" column="13" lean-forward="false" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1118,7 +1080,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
           <caret line="52" column="84" lean-forward="true" selection-start-line="52" selection-start-column="84" selection-end-line="52" selection-end-column="84" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1126,7 +1087,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
           <caret line="19" column="20" lean-forward="false" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1134,7 +1094,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="23" column="37" lean-forward="false" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1142,7 +1101,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="90" column="52" lean-forward="false" selection-start-line="90" selection-start-column="52" selection-end-line="90" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1150,7 +1108,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="29" column="37" lean-forward="false" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1158,7 +1115,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="29" column="115" lean-forward="false" selection-start-line="29" selection-start-column="115" selection-end-line="29" selection-end-column="115" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1166,7 +1122,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="28" column="114" lean-forward="false" selection-start-line="28" selection-start-column="114" selection-end-line="28" selection-end-column="114" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1174,10 +1129,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
-          <folding>
-            <element signature="e#2641#2642#0" expanded="false" />
-            <element signature="e#2688#2689#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1185,11 +1136,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="71">
           <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2479#2480#0" expanded="false" />
-            <element signature="e#2519#2520#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1197,23 +1143,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/RoundStart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/RoundStart.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/DiggerOntology.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="29" column="39" lean-forward="false" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1221,7 +1158,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="61" column="66" lean-forward="false" selection-start-line="61" selection-start-column="66" selection-end-line="61" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1229,7 +1165,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1237,7 +1172,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="333">
           <caret line="242" column="30" lean-forward="false" selection-start-line="242" selection-start-column="30" selection-end-line="242" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1245,7 +1179,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="46" column="17" lean-forward="false" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1253,7 +1186,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
           <caret line="33" column="16" lean-forward="false" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1261,30 +1193,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
           <caret line="246" column="29" lean-forward="true" selection-start-line="246" selection-start-column="29" selection-end-line="246" selection-end-column="29" />
-          <folding>
-            <element signature="e#7536#7537#0" expanded="true" />
-            <element signature="e#7572#7573#0" expanded="true" />
-            <element signature="e#7646#7647#0" expanded="true" />
-            <element signature="e#7678#7679#0" expanded="true" />
-            <element signature="e#7748#7749#0" expanded="true" />
-            <element signature="e#7790#7791#0" expanded="true" />
-            <element signature="e#8132#8133#0" expanded="true" />
-            <element signature="e#8166#8167#0" expanded="true" />
-            <element signature="e#8233#8234#0" expanded="true" />
-            <element signature="e#8268#8269#0" expanded="true" />
-            <element signature="e#8324#8325#0" expanded="true" />
-            <element signature="e#8375#8376#0" expanded="true" />
-            <element signature="e#9153#9154#0" expanded="true" />
-            <element signature="e#9197#9198#0" expanded="true" />
-            <element signature="e#9230#9231#0" expanded="true" />
-            <element signature="e#9292#9293#0" expanded="true" />
-            <element signature="e#9332#9333#0" expanded="true" />
-            <element signature="e#9363#9364#0" expanded="true" />
-            <element signature="e#10766#10767#0" expanded="true" />
-            <element signature="e#10835#10836#0" expanded="true" />
-            <element signature="e#14199#14200#0" expanded="true" />
-            <element signature="e#14225#14226#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1292,7 +1200,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1300,7 +1207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="17" column="7" lean-forward="true" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1308,23 +1214,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="10" column="49" lean-forward="true" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/NegotiatorBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-          <folding />
+          <caret line="9" column="41" lean-forward="false" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -1341,7 +1237,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/TaskContractNetInitiatorBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
+        <state relative-caret-position="3024">
           <caret line="187" column="115" lean-forward="false" selection-start-line="187" selection-start-column="115" selection-end-line="187" selection-end-column="115" />
           <folding />
         </state>
@@ -1349,8 +1245,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="277" column="44" lean-forward="true" selection-start-line="277" selection-start-column="44" selection-end-line="277" selection-end-column="44" />
+        <state relative-caret-position="4842">
+          <caret line="277" column="44" lean-forward="false" selection-start-line="277" selection-start-column="44" selection-end-line="277" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#13512#13513#0" expanded="true" />
@@ -1373,7 +1269,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/digger_coordinator/DelegateTasksBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
+        <state relative-caret-position="702">
           <caret line="55" column="27" lean-forward="false" selection-start-line="55" selection-start-column="27" selection-end-line="55" selection-end-column="27" />
           <folding>
             <element signature="e#3294#3295#0" expanded="true" />
@@ -1384,8 +1280,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/DiggerCoordinatorAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="195" column="17" lean-forward="true" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
+        <state relative-caret-position="3060">
+          <caret line="195" column="17" lean-forward="false" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
           <folding>
             <element signature="e#4408#4409#0" expanded="true" />
             <element signature="e#4442#4443#0" expanded="true" />
@@ -1393,10 +1289,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.project">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game2.settings">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="58" lean-forward="true" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/onthology/InitialGameSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="476" column="9" lean-forward="true" selection-start-line="476" selection-start-column="9" selection-end-line="476" selection-end-column="9" />
+        <state relative-caret-position="72">
+          <caret line="479" column="11" lean-forward="false" selection-start-line="479" selection-start-column="11" selection-end-line="479" selection-end-column="11" />
           <folding>
             <element signature="e#18209#18210#0" expanded="true" />
             <element signature="e#18253#18254#0" expanded="true" />
@@ -1404,25 +1315,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/game.settings_sample.settings">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/behaviour/system/AdvanceToNextRoundBehavior.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="12" column="30" lean-forward="true" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cat/urv/imas/agent/SystemAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1134">
-          <caret line="43" column="33" lean-forward="true" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
+        <state relative-caret-position="216">
+          <caret line="115" column="7" lean-forward="true" selection-start-line="115" selection-start-column="7" selection-end-line="115" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3077#3078#0" expanded="true" />
             <element signature="e#3137#3138#0" expanded="true" />
-            <element signature="e#8198#8199#0" expanded="true" />
-            <element signature="e#8235#8236#0" expanded="true" />
+            <element signature="e#8158#8159#0" expanded="true" />
+            <element signature="e#8195#8196#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game2.settings">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
