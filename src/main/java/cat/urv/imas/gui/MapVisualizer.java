@@ -23,7 +23,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class MapVisualizer extends JPanel implements CellVisualizer {
 	
-	private final static boolean TEST_DIVISION_PROSPECTORS = true;
+	private final static boolean TEST_DIVISION_PROSPECTORS = false;
 	
     /**
      * Margin area surrouding the city map.
