@@ -1,0 +1,21 @@
+In this section we describe the main aspects that could be improved in the future to get a better performance. These are the main weaknesses of our work and we propose some possible solutions to improve them. 
+
+\subsection{Map distribution}
+
+The way the prospector coordinator divides the map and the way each sub-area is assigned to each prospector can be clearly improved. On the one hand, the algorithm to find the optimal division give relatively good results, but it is far from optimal. It is implemented using a sequential assignation of cells for each prospector, instead of doing a global division. It was done this way to reduce computational cost and complexity, since finding an optimal division in complex maps can be very time consuming and the algorithm can be really complex. 
+
+On the other hand, the way each sub-area is assigned to each prospector is clearly not the best one. We decided that this improvement was not really important, since this only affects the first steps, when the prospectors go to their assigned area. However, we can notice in the simulations than sometimes this assignment could be done better. For example, a better solution could be using a Contract Net mechanism to do it, where the prospector coordinator could judge which is the best assignment in each scenario.
+
+\subsection{Prospector exploration algorithm}
+
+So far, the way prospectors explore the map once they arrive to the assigned area is in a reactive way. They decide the next move based on what they see in each round, moving to the cell less explored so far. This sometimes leads to inefficient explorations, since the decision is only based on the neighbour cells. A better implementation that could be done in future works is making the prospectors plan the best exploration path when they arrive to the assigned sub-area. This is an optimization problem, where the goal is finding the way to visit all cells minimizing the number of steps to do it. 
+
+\subsection{Conflict situations}
+
+As it was stated in Section \ref{sec_differences}, we could not implement a better way for dealing with path conflicts, when an agent finds a digger working in the middle of the way. This is also a very important point that could be improved in future works, by modifying the algorithm for finding the optimal path. 
+
+\subsection{Computational performance}
+
+We can notice that the simulations slows down when we keep it running for a while. We assume the memory usage is increasing with each round, probably due to programming bad practices. The program should be debugged in order to find those mistakes that lead to this effect. 
+
+Furthermore, the algorithms to find the optimal path and the best division are far from computationally optimal. A good improvement for future works could be improving the way these were program to reduce computational time. 
