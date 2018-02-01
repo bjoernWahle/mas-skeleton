@@ -1,1 +1,9 @@
-Overall, it was quite straightforward to implement the project as we had planned. However, we were glad to not have chosen other coordination methods, as they would have been very complicated to implement by involving many exchanges of messages or time in general to be executed (e.g. auctions and partial global planning).
+During the work, we could implement most of the project as we planned in past activities for both the prospectors part and the diggers part. 
+
+Firstly we implemented the implicit coordination for the prospectors part. We realized that this coordination work pretty well even when not getting optimal solutions. It was easy to implement and the benefits of implementing other more complex alternatives were not important. 
+
+Secondly, we implemented the Contract Net for the diggers part. This worked really well as it was expected, giving really good results in terms of performance. Contract Net also allowed us to improve the performance by adding a sorting mechanism, that gave a global optimization of the problem digging first the elements that were more beneficial. 
+
+In conclusion, we saw that using implicit coordination was usually better when possible. Used in the prospectors part and in the path conflicts solution, gave surprisingly good results without complex coordination mechanisms. However, at the end, in order to obtain results close to the optimal ones, some more complex cooperation mechanisms were necessary. 
+
+In general, working with a Multi agent System using JADE was complicated at the beginning, since we had to set up all the communications and get used to the parallelism problems involved in this systems. However, once the communications were set up and after working a while with it, it was beneficial since we could treat the agents as separated problems and work independently on the different problems.  

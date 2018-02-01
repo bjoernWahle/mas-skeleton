@@ -41,7 +41,6 @@ To distribute the mining tasks amongst the digger agents we implemented Contract
 
 We don’t consider the manufacturing of the ore to be part of the coordination mechanisms. This is handled implicitly by each agent, based on the amount of ore they are carrying, the distance from the manufacturing centers and the price each manufacturing center pays for one unit of the metal.
 
-
 Additionally we changed the strategy for giving out the tasks for the digger agents. The tasks are sorted by the distance/points ratio (distance to the next manufacturing center plus rounds to finish collection and total points paid for the amount of metal the agent is carrying) before they are announced sequentially for the contract net. This leads to diggers working in the neighborhood of the manufacturing centers as long as there is ore available, and speeds up the collection process. As shown in table 1, the average time for collecting the metal when sorting the tasks is less than the half of the time without sorting, and we obtain an increase of more than 50\% in the total benefits.
 
 \input{table_statistics.tex}
