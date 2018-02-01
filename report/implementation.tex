@@ -1,6 +1,6 @@
 In general, we did execute our plan (given in the previous submission) for the actual implementation, with only slight changes outlined below (Section \ref{sec_differences}). In the final implementation of the metal manufacturing simulation we implemented two cooperation mechanisms; the prospector agents employ implicit cooperation for the assignment of sub-areas of the map, and the digger agents and the digger coordinator cooperate via coalitions and contract net to distribute the mining tasks. 
 
-\subsection{Prospectors: Implicit Coordination}
+\subsection{Prospectors}
 
 Initially, the list of sub-areas to observe is empty. The Prospector Coordinator (PC) then separates the map into as many sub-areas as there are prospectors in the system. This division is approximate, the algorithm tries to make this sub-areas as equally-sized as possible, but in order to ensure that the areas are compact, they may be slightly different. The algorithm ensures that all cells are assigned to one group, but it does not guarantee that all groups are equally sized. Figure \ref{fig:map_division} shows some examples of this division using different number of prospectors.
 
@@ -26,18 +26,18 @@ In the worst case scenario multiple agents select the same sub-area to observe a
 This solution was relatively simple to implement, and did not need require any complex calculations for finding the best distribution, or communication between the agents.
 
 
-\subsection{Diggers: Contract Net}
+\subsection{Diggers}
 
-To distribute the mining tasks amongst the digger agents we implemented Contract Net.
+To distribute the mining tasks amongst the digger agents we implemented Contract Net. The main steps involved where developed using the following behaviours:
 
-Digger Coordinator Agent - DelegateTasksBehaviour:
-During the first stage, the Digger Coordinator agent assesses the current state and recognizes if there is metal which still need to be assigned to a digger agent. The Digger Coordinator then adds the task to the list which will include its constraints, like which metal and how many units are involved, and where is it located. 
-
-Digger Coordinator Agent -TaskContractNetInitiatorBehaviour:
-Announcements of new tasks are broadcasted to all of the digger agents. After all of the digger agents reply, the Digger coordinator accepts the best proposal. 
-
-Digger Agents - TaskContractNetResponderBehaviour:
-Each Agent decides if they want to bid for the task, depending on the type of metal and its carrying capacity, and sends a proposal or refuses.
+\begin{enumerate}
+	\item \textbf{Digger Coordinator Agent - DelegateTasksBehaviour}:\\
+	During the first stage, the Digger Coordinator agent assesses the current state and recognizes if there is metal which still need to be assigned to a digger agent. The Digger Coordinator then adds the task to the list which will include its constraints, like which metal and how many units are involved, and where is it located.
+	\item \textbf{Digger Coordinator Agent -TaskContractNetInitiatorBehaviour}:\\
+	Announcements of new tasks are broadcasted to all of the digger agents. After all of the digger agents reply, the Digger coordinator accepts the best proposal. 
+	\item \textbf{Digger Agents - TaskContractNetResponderBehaviour:}\\
+	Each Agent decides if they want to bid for the task, depending on the type of metal and its carrying capacity, and sends a proposal or refuses.
+\end{enumerate}
 
 We don’t consider the manufacturing of the ore to be part of the coordination mechanisms. This is handled implicitly by each agent, based on the amount of ore they are carrying, the distance from the manufacturing centers and the price each manufacturing center pays for one unit of the metal.
 
